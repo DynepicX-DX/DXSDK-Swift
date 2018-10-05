@@ -223,7 +223,7 @@ class PPUserService {
 
     func getAppNameFromBundle() -> String {
         let items = Bundle.main.bundleIdentifier!.split(separator: ".")
-        return String(items.last!)
+        return String(items.last!).lowercased()
     }
     
     func getMyDataStorageName() -> String {
@@ -235,7 +235,7 @@ class PPUserService {
     }
     
     func getMyAppGlobalDataStorageName() -> String {
-        return getAppNameFromBundle() + "@globalAppData"
+        return "globalAppData@" + getAppNameFromBundle()
     }
     
 
