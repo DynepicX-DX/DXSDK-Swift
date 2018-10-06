@@ -48,6 +48,19 @@ class PPDataService {
         }
     }
  }
+    func writeBucketKV(bucketName:String, key:String, value:String, completion: @escaping PPDataCompletion) {
+        print("writeBucketKV: \(bucketName) for key: \( key ) with value: \( value )" )
+        PPManager.sharedInstance.PPwebapi.writeBucketKV(bucketName: bucketName, key: key, value:value) { succeeded, response, responseObject in
+            if(succeeded) {
+                print("writeBucketKV response: \(String(describing: response ))" )
+                print("writeBucketKV responseObject: \(String(describing: responseObject ))" )
+                completion(true, response, responseObject)
+            } else {
+                completion(false, response, nil)
+            }
+        }
+    }
+    
     
     func writeBucket(bucketName:String, key:String, value:Dictionary<String, Any>, completion: @escaping PPDataCompletion) {
         print("writeBucket: \(bucketName) for key: \( key ) with value: \( value )" )

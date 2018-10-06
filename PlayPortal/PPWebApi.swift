@@ -316,13 +316,38 @@ class PPWebApi {
         }
     }
     
-    // Upserts a single KV pair
+    // Upserts a single KV pair, where V is a String
+    func writeBucketKV(bucketName: String, key:String, value:String, completion: @escaping PPWebApiCompletion ) {
+        let urlString = baseUrl +  "/app/v1/bucket"
+        let url = URL(string: urlString)
+        var urlRequest = URLRequest(url: url!)
+        urlRequest.httpMethod = "POST"
+        let parameters = ["id": bucketName, "key": key, "value": value] as [String : Any]
+        do {
+            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        } catch {
+        }
+        
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("Bearer " + self.at, forHTTPHeaderField: "Authorization")
+        
+        sessionManager.request(urlRequest).validate(statusCode: 200..<300).responseJSON { response  in
+            switch response.result {
+            case .success:
+                completion(true, response, response.value)
+            case .failure(let error):
+                print("writeBucket error: \( error )" )
+                completion(false, nil, nil)
+            }
+        }
+    }
+    
+        // Upserts a KV pair where V is a dictionary
     func writeBucket(bucketName: String, key:String, value:Dictionary<String, Any>, completion: @escaping PPWebApiCompletion ) {
         let urlString = baseUrl +  "/app/v1/bucket"
         let url = URL(string: urlString)
         var urlRequest = URLRequest(url: url!)
         urlRequest.httpMethod = "POST"
-
         let parameters = ["id": bucketName, "key": key, "value": value] as [String : Any]
         do {
             urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
