@@ -215,6 +215,14 @@ class PPManager {
         topController.dismiss(animated:true, completion:nil)
     }
     
+    func getAPNSdDeviceToken() -> String? {
+        let a = keychain.get("apnsDeviceToken")
+        return a
+    }
+    
+    func setAPNSDeviceToken(token: String) {
+         PPManager.sharedInstance.keychain.set("", forKey:"apnsDeviceToken")
+    }
     
     func storeTokensInKeychain() ->  Void {
         PPManager.sharedInstance.keychain.set(refreshToken, forKey:"refresh_token")
