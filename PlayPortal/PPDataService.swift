@@ -48,12 +48,12 @@ class PPDataService {
         }
     }
  }
-    func writeBucketKV(bucketName:String, key:String, value:String, completion: @escaping PPDataCompletion) {
-        print("writeBucketKV: \(bucketName) for key: \( key ) with value: \( value )" )
-        PPManager.sharedInstance.PPwebapi.writeBucketKV(bucketName: bucketName, key: key, value:value) { succeeded, response, responseObject in
+    func writeBucketKVstring(bucketName:String, key:String, value:String, completion: @escaping PPDataCompletion) {
+        print("writeBucketKVstring: \(bucketName) for key: \( key ) with value: \( value )" )
+        PPManager.sharedInstance.PPwebapi.writeBucketKVstring(bucketName: bucketName, key: key, value:value) { succeeded, response, responseObject in
             if(succeeded) {
-                print("writeBucketKV response: \(String(describing: response ))" )
-                print("writeBucketKV responseObject: \(String(describing: responseObject ))" )
+                print("writeBucketKVstring response: \(String(describing: response ))" )
+                print("writeBucketKVstring responseObject: \(String(describing: responseObject ))" )
                 completion(true, response, responseObject)
             } else {
                 completion(false, response, nil)
@@ -61,6 +61,19 @@ class PPDataService {
         }
     }
     
+
+    func writeBucketKVbool(bucketName:String, key:String, value:Bool, completion: @escaping PPDataCompletion) {
+        print("writeBucketKVbool: \(bucketName) for key: \( key ) with value: \( value )" )
+        PPManager.sharedInstance.PPwebapi.writeBucketKVbool(bucketName: bucketName, key: key, value:value) { succeeded, response, responseObject in
+            if(succeeded) {
+                print("writeBucketKVbool response: \(String(describing: response ))" )
+                print("writeBucketKVbool responseObject: \(String(describing: responseObject ))" )
+                completion(true, response, responseObject)
+            } else {
+                completion(false, response, nil)
+            }
+        }
+    }
     
     func writeBucket(bucketName:String, key:String, value:Dictionary<String, Any>, completion: @escaping PPDataCompletion) {
         print("writeBucket: \(bucketName) for key: \( key ) with value: \( value )" )
