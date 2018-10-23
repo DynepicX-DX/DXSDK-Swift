@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "PPSDK-Swift"
-  spec.version      = "0.0.8"
+  spec.version      = "0.0.9"
   spec.summary      = "playPORTAL SDK in Swift."
   spec.description  = <<-DESC
   Swift SDK allowing providing to playPORTAL services.
@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   spec.license      = "Apache"
   spec.author             = { "Lincoln Fraley" => "lincoln@dynepic.com" }
   spec.source       = { :git => "https://github.com/playportal-studio/PPSDK-Swift.git", :branch => "refactor", :tag => spec.version.to_s }
-  spec.source_files  = "Source/*.swift"
+  spec.source_files  = "Source/*.swift", "Source/Assets.xcassets/**/*"
   spec.swift_version = '4.1'
   spec.ios.deployment_target = '10.0'
   spec.dependency 'Alamofire', '~> 4.7'
