@@ -15,4 +15,7 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target = '10.0'
   spec.dependency 'Alamofire', '~> 4.7'
   spec.dependency 'KeychainSwift', '~> 12.0'
+  spec.resource_bundles = {
+    'PPSDK-Swift' => ["Source/Assets.xcassets/"]
+  }
 end

@@ -9,34 +9,50 @@
 import Foundation
 import UIKit
 
-class PPLoginButton : UIButton {
-    init() {
-
-        
-        //Ratio is 279w / 55h
+/**
+ Responsible for opening SSO WebView when tapped and initializing auth flow
+ */
+public class PlayPortalLoginButton: UIButton {
+    
+    /**
+     Create login button.
+     
+     - Parameter atCenter: Where in view to center the button.
+    */
+    public init(atCenter center: CGPoint? = nil) {
+        // Ratio is 279w / 55h
         var buttonWidth: CGFloat = UIScreen.main.bounds.size.width * 0.7
         if buttonWidth > 300 {
             buttonWidth = 300
         }
-        let buttonHeight: CGFloat = buttonWidth * 55 / 279
+        let buttonHeight: CGFloat = buttonWidth * (55 / 279)
         let rect = CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight)
 
         super.init(frame: rect)
         
+        if let center = center {
+            self.center = center
+        }
+        
         addImage()
-        addTarget(self, action: #selector(PPLoginButton.didTouch), for: .touchUpInside)
+        addTarget(self, action: #selector(PlayPortalLoginButton.didTouch), for: .touchUpInside)
         layer.cornerRadius = buttonHeight / 2
         layer.masksToBounds = true
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func addImage() {
-        let bundle = Bundle(for: PPLoginButton.self)
+        let bundle = Bundle(for: PlayPortalLoginButton.self)
         let image = UIImage(named: "SSOButtonImage", in: bundle, compatibleWith: traitCollection)
+        if let i = image {
+            print()
+        } else {
+            print()
+        }
         let ssoButtonImage = UIImageView(image: image)
         ssoButtonImage.frame = bounds
         ssoButtonImage.contentMode = .scaleAspectFit
@@ -45,6 +61,6 @@ class PPLoginButton : UIButton {
     }
     
     @objc func didTouch() {
-        PPManager.sharedInstance.PPusersvc.login()
+//        PPManager.sharedInstance.PPusersvc.login()
     }
 }
