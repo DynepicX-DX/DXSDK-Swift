@@ -13,7 +13,6 @@
 		1CD1E3F1217F45E100C2B083 /* PPUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3E7217F45E000C2B083 /* PPUtils.swift */; };
 		1CD1E3F2217F45E100C2B083 /* RemoteNotificationsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3E8217F45E100C2B083 /* RemoteNotificationsHandler.swift */; };
 		1CD1E3F3217F45E100C2B083 /* PPLeaderboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3E9217F45E100C2B083 /* PPLeaderboardService.swift */; };
-		1CD1E3F5217F45E100C2B083 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3EB217F45E100C2B083 /* KeychainWrapper.swift */; };
 		1CD1E3F6217F45E100C2B083 /* PPDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3EC217F45E100C2B083 /* PPDataService.swift */; };
 		1CD1E3F7217F45E100C2B083 /* PPLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3ED217F45E100C2B083 /* PPLoginButton.swift */; };
 		1CD1E3F8217F45E100C2B083 /* PPWebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3EE217F45E100C2B083 /* PPWebApi.swift */; };
@@ -43,7 +42,6 @@
 		1CD1E3E7217F45E000C2B083 /* PPUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPUtils.swift; sourceTree = "<group>"; };
 		1CD1E3E8217F45E100C2B083 /* RemoteNotificationsHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationsHandler.swift; sourceTree = "<group>"; };
 		1CD1E3E9217F45E100C2B083 /* PPLeaderboardService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPLeaderboardService.swift; sourceTree = "<group>"; };
-		1CD1E3EB217F45E100C2B083 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		1CD1E3EC217F45E100C2B083 /* PPDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPDataService.swift; sourceTree = "<group>"; };
 		1CD1E3ED217F45E100C2B083 /* PPLoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPLoginButton.swift; sourceTree = "<group>"; };
 		1CD1E3EE217F45E100C2B083 /* PPWebApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPWebApi.swift; sourceTree = "<group>"; };
@@ -122,7 +120,6 @@
 			children = (
 				1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */,
 				1CD1E3FB217F45E600C2B083 /* Assets.xcassets */,
-				1CD1E3EB217F45E100C2B083 /* KeychainWrapper.swift */,
 				1CD1E3EC217F45E100C2B083 /* PPDataService.swift */,
 				1CD1E3E9217F45E100C2B083 /* PPLeaderboardService.swift */,
 				1CD1E3ED217F45E100C2B083 /* PPLoginButton.swift */,
@@ -312,7 +309,6 @@
 				1CD1E3F3217F45E100C2B083 /* PPLeaderboardService.swift in Sources */,
 				1CD1E3F6217F45E100C2B083 /* PPDataService.swift in Sources */,
 				1CD1E3FA217F45E100C2B083 /* PPUserService.swift in Sources */,
-				1CD1E3F5217F45E100C2B083 /* KeychainWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,7 +383,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -445,7 +442,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

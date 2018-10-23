@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import QuartzCore
 
 class PPLoginButton : UIButton {
     init() {

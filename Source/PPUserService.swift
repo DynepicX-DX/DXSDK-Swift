@@ -10,7 +10,6 @@ import Foundation
 
 import Foundation
 import UIKit
-import QuartzCore
 import SafariServices
 import Alamofire
 import KeychainSwift
