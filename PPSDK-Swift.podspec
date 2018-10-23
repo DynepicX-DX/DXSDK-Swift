@@ -3,7 +3,7 @@ Pod::Spec.new do |spec|
   spec.version      = "0.0.8"
   spec.summary      = "playPORTAL SDK in Swift."
   spec.description  = <<-DESC
-  Swift SDK allowing access to playPORTAL services.
+  Swift SDK allowing providing to playPORTAL services.
                    DESC
 
   spec.homepage     = "https://github.com/playportal-studio/PPSDK-Swift.git"
