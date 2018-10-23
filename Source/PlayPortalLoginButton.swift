@@ -47,6 +47,7 @@ public class PlayPortalLoginButton: UIButton {
     
     func addImage() {
         let bundle = Bundle(identifier: "PPSDK-Swift")
+        
         let image = UIImage(named: "SSOButtonImage", in: bundle, compatibleWith: traitCollection)
         if let i = image {
             print()
