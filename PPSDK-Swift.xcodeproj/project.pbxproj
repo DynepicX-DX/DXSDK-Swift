@@ -10,6 +10,16 @@
 		1CD1E3D4217F441900C2B083 /* PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */; };
 		1CD1E3D9217F441900C2B083 /* PPSDK_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */; };
 		1CD1E3DB217F441900C2B083 /* PPSDK_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1CD1E3F1217F45E100C2B083 /* PPUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3E7217F45E000C2B083 /* PPUtils.swift */; };
+		1CD1E3F2217F45E100C2B083 /* RemoteNotificationsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3E8217F45E100C2B083 /* RemoteNotificationsHandler.swift */; };
+		1CD1E3F3217F45E100C2B083 /* PPLeaderboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3E9217F45E100C2B083 /* PPLeaderboardService.swift */; };
+		1CD1E3F4217F45E100C2B083 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3EA217F45E100C2B083 /* Utils.swift */; };
+		1CD1E3F5217F45E100C2B083 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3EB217F45E100C2B083 /* KeychainWrapper.swift */; };
+		1CD1E3F6217F45E100C2B083 /* PPDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3EC217F45E100C2B083 /* PPDataService.swift */; };
+		1CD1E3F7217F45E100C2B083 /* PPLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3ED217F45E100C2B083 /* PPLoginButton.swift */; };
+		1CD1E3F8217F45E100C2B083 /* PPWebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3EE217F45E100C2B083 /* PPWebApi.swift */; };
+		1CD1E3F9217F45E100C2B083 /* PPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3EF217F45E100C2B083 /* PPManager.swift */; };
+		1CD1E3FA217F45E100C2B083 /* PPUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3F0217F45E100C2B083 /* PPUserService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +39,17 @@
 		1CD1E3D3217F441900C2B083 /* PPSDK-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PPSDK-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPSDK_SwiftTests.swift; sourceTree = "<group>"; };
 		1CD1E3DA217F441900C2B083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CD1E3E7217F45E000C2B083 /* PPUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPUtils.swift; sourceTree = "<group>"; };
+		1CD1E3E8217F45E100C2B083 /* RemoteNotificationsHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationsHandler.swift; sourceTree = "<group>"; };
+		1CD1E3E9217F45E100C2B083 /* PPLeaderboardService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPLeaderboardService.swift; sourceTree = "<group>"; };
+		1CD1E3EA217F45E100C2B083 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		1CD1E3EB217F45E100C2B083 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		1CD1E3EC217F45E100C2B083 /* PPDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPDataService.swift; sourceTree = "<group>"; };
+		1CD1E3ED217F45E100C2B083 /* PPLoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPLoginButton.swift; sourceTree = "<group>"; };
+		1CD1E3EE217F45E100C2B083 /* PPWebApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPWebApi.swift; sourceTree = "<group>"; };
+		1CD1E3EF217F45E100C2B083 /* PPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPManager.swift; sourceTree = "<group>"; };
+		1CD1E3F0217F45E100C2B083 /* PPUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPUserService.swift; sourceTree = "<group>"; };
+		1CD1E3FB217F45E600C2B083 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +74,7 @@
 		1CD1E3C0217F441900C2B083 = {
 			isa = PBXGroup;
 			children = (
+				1CD1E3E6217F45D700C2B083 /* Source */,
 				1CD1E3CC217F441900C2B083 /* PPSDK-Swift */,
 				1CD1E3D7217F441900C2B083 /* PPSDK-SwiftTests */,
 				1CD1E3CB217F441900C2B083 /* Products */,
@@ -71,7 +93,6 @@
 		1CD1E3CC217F441900C2B083 /* PPSDK-Swift */ = {
 			isa = PBXGroup;
 			children = (
-				1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */,
 				1CD1E3CE217F441900C2B083 /* Info.plist */,
 			);
 			path = "PPSDK-Swift";
@@ -84,6 +105,25 @@
 				1CD1E3DA217F441900C2B083 /* Info.plist */,
 			);
 			path = "PPSDK-SwiftTests";
+			sourceTree = "<group>";
+		};
+		1CD1E3E6217F45D700C2B083 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */,
+				1CD1E3FB217F45E600C2B083 /* Assets.xcassets */,
+				1CD1E3EB217F45E100C2B083 /* KeychainWrapper.swift */,
+				1CD1E3EC217F45E100C2B083 /* PPDataService.swift */,
+				1CD1E3E9217F45E100C2B083 /* PPLeaderboardService.swift */,
+				1CD1E3ED217F45E100C2B083 /* PPLoginButton.swift */,
+				1CD1E3EF217F45E100C2B083 /* PPManager.swift */,
+				1CD1E3F0217F45E100C2B083 /* PPUserService.swift */,
+				1CD1E3E7217F45E000C2B083 /* PPUtils.swift */,
+				1CD1E3EE217F45E100C2B083 /* PPWebApi.swift */,
+				1CD1E3E8217F45E100C2B083 /* RemoteNotificationsHandler.swift */,
+				1CD1E3EA217F45E100C2B083 /* Utils.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +234,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CD1E3F7217F45E100C2B083 /* PPLoginButton.swift in Sources */,
+				1CD1E3F8217F45E100C2B083 /* PPWebApi.swift in Sources */,
+				1CD1E3F9217F45E100C2B083 /* PPManager.swift in Sources */,
+				1CD1E3F2217F45E100C2B083 /* RemoteNotificationsHandler.swift in Sources */,
+				1CD1E3F1217F45E100C2B083 /* PPUtils.swift in Sources */,
+				1CD1E3F3217F45E100C2B083 /* PPLeaderboardService.swift in Sources */,
+				1CD1E3F6217F45E100C2B083 /* PPDataService.swift in Sources */,
+				1CD1E3F4217F45E100C2B083 /* Utils.swift in Sources */,
+				1CD1E3FA217F45E100C2B083 /* PPUserService.swift in Sources */,
+				1CD1E3F5217F45E100C2B083 /* KeychainWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +439,7 @@
 		1CD1E3E2217F441900C2B083 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SA5YU43KDL;
 				INFOPLIST_FILE = "PPSDK-SwiftTests/Info.plist";
@@ -407,6 +458,7 @@
 		1CD1E3E3217F441900C2B083 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SA5YU43KDL;
 				INFOPLIST_FILE = "PPSDK-SwiftTests/Info.plist";
