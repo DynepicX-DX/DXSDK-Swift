@@ -45,7 +45,6 @@
 		1CD1E3D3217F441900C2B083 /* PPSDK-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PPSDK-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPSDK_SwiftTests.swift; sourceTree = "<group>"; };
 		1CD1E3DA217F441900C2B083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1CD1E3FB217F45E600C2B083 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49D0A53B87D85EE8CCCCAAE5 /* Pods-PPSDK-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift.debug.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift/Pods-PPSDK-Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		69479C60CBE99044F3C31BB7 /* Pods-PPSDK-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-SwiftTests/Pods-PPSDK-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		9E3C56CF9D74175435F4ACDD /* Pods-PPSDK-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift/Pods-PPSDK-Swift.release.xcconfig"; sourceTree = "<group>"; };
@@ -107,7 +106,6 @@
 		1CD1E3CC217F441900C2B083 /* PPSDK-Swift */ = {
 			isa = PBXGroup;
 			children = (
-				1CD1E3FB217F45E600C2B083 /* Assets.xcassets */,
 				1CD1E3CE217F441900C2B083 /* Info.plist */,
 			);
 			path = "PPSDK-Swift";

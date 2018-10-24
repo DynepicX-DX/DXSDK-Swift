@@ -10,17 +10,15 @@ import Foundation
 import UIKit
 
 /**
- Responsible for opening SSO WebView when tapped and initializing auth flow
+ Responsible for initializing auth flow when tapped
  */
 public class PlayPortalLoginButton: UIButton {
     
     /**
      Create login button.
-     
-     - Parameter atCenter: Where in view to center the button.
     */
-    public init(atCenter center: CGPoint? = nil) {
-        // Ratio is 279w / 55h
+    public init() {
+        // Width ratio is 279w / 55h
         var buttonWidth: CGFloat = UIScreen.main.bounds.size.width * 0.7
         if buttonWidth > 300 {
             buttonWidth = 300
@@ -30,50 +28,28 @@ public class PlayPortalLoginButton: UIButton {
 
         super.init(frame: rect)
         
-        if let center = center {
-            self.center = center
-        }
-        
-        addImage()
-        addTarget(self, action: #selector(PlayPortalLoginButton.didTouch), for: .touchUpInside)
         layer.cornerRadius = buttonHeight / 2
         layer.masksToBounds = true
         
+        addTarget(self, action: #selector(PlayPortalLoginButton.loginTapped), for: .touchUpInside)
+        
+        let frameworkBundle = Bundle(for: PlayPortalLoginButton.self)
+        guard let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("PPSDK-Swift-Assets.bundle")
+            , let resourceBundle = Bundle(url: bundleURL)
+            , let image = UIImage(named: "anonUser", in: resourceBundle, compatibleWith: traitCollection)
+            else { return }
+        let ssoButtonImage = UIImageView(image: image)
+        ssoButtonImage.frame = bounds
+        ssoButtonImage.contentMode = .scaleAspectFit
+        addSubview(ssoButtonImage)
+        sendSubview(toBack: ssoButtonImage)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addImage() {
-        
-        let frameworkBundle = Bundle(for: PlayPortalLoginButton.self)
-        let url = frameworkBundle.resourceURL?.appendingPathComponent("PPSDK-Swift-Assets.bundle")
-        
-        guard let bundleURL = url else {
-            print()
-            return
-        }
-        
-        if let resourceBundle = Bundle(url: bundleURL) {
-            let image = UIImage(named: "anonUser", in: frameworkBundle, compatibleWith: traitCollection)
-            if image != nil {
-                print()
-            } else {
-                print()
-            }
-            
-            let ssoButtonImage = UIImageView(image: image)
-            ssoButtonImage.frame = bounds
-            ssoButtonImage.contentMode = .scaleAspectFit
-            addSubview(ssoButtonImage)
-            sendSubview(toBack: ssoButtonImage)
-        } else {
-            print()
-        }
-    }
-    
-    @objc func didTouch() {
+    @objc func loginTapped() {
 //        PPManager.sharedInstance.PPusersvc.login()
     }
 }
