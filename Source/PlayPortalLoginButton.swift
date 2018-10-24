@@ -48,24 +48,20 @@ public class PlayPortalLoginButton: UIButton {
     func addImage() {
         
         let frameworkBundle = Bundle(for: PlayPortalLoginButton.self)
-        let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("PPSDK-Swift.bundle")
-        if let url = bundleURL {
-            let r = Bundle(url: url)
-            let image = UIImage(named: "SSOButtonImage", in: r, compatibleWith: traitCollection)
-            if let i = image {
-                print()
-            } else {
-                print()
-            }
-            
-            let ssoButtonImage = UIImageView(image: image)
-            ssoButtonImage.frame = bounds
-            ssoButtonImage.contentMode = .scaleAspectFit
-            addSubview(ssoButtonImage)
-            sendSubview(toBack: ssoButtonImage)
+        let bundleURL = frameworkBundle.url(forResource: "PPSDK-SwiftAssets", withExtension: "bundle")
+        
+        let image = UIImage(named: "SSOButtonImage", in: frameworkBundle, compatibleWith: traitCollection)
+        if let i = image {
+            print()
         } else {
             print()
         }
+        
+        let ssoButtonImage = UIImageView(image: image)
+        ssoButtonImage.frame = bounds
+        ssoButtonImage.contentMode = .scaleAspectFit
+        addSubview(ssoButtonImage)
+        sendSubview(toBack: ssoButtonImage)
     }
     
     @objc func didTouch() {
