@@ -48,9 +48,9 @@ public class PlayPortalLoginButton: UIButton {
     func addImage() {
         
         let frameworkBundle = Bundle(for: PlayPortalLoginButton.self)
-        let burl = frameworkBundle.url(forResource: "PPSDK-Swift-Assets", withExtension: "bundle")
+        let url = frameworkBundle.resourceURL?.appendingPathComponent("PPSDK-Swift-Assets.bundle")
         
-        guard let bundleURL = burl else {
+        guard let bundleURL = url else {
             print()
             return
         }
