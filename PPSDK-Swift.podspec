@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "PPSDK-Swift"
-  spec.version      = "0.0.9"
+  spec.version      = "0.0.10"
   spec.summary      = "playPORTAL SDK in Swift."
   spec.description  = <<-DESC
   Swift SDK providing access to playPORTAL services.
