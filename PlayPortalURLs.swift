@@ -19,6 +19,11 @@ internal struct PlayPortalURLs {
     static let developHost = "https://develop-api.goplayportal.com"
     
     
+    //  MARK: - Initializers
+    
+    private init() {}
+    
+    
     //  MARK: - Methods
     
     /**
@@ -44,15 +49,38 @@ internal struct PlayPortalURLs {
     
     internal struct OAuth {
         
+        //  MARK: - Initializers
+        
+        private init() {}
+        
+        
+        //  MARK: - Properties
+        
         static let signIn = "/oauth/signin"
+        
+        static let token = "/oauth/token"
     }
     
     internal struct User {
+        
+        //  MARK: - Initializers
+        
+        private init() {}
+        
+        
+        //  MARK: - Properties
         
         static let userProfile = "/user/v1/my/profile"
     }
     
     internal struct Image {
+        
+        //  MARK: - Initializers
+        
+        private init() {}
+        
+        
+        //  MARK: - Properties
         
         static let staticImage = "/image/v1/static"
     }

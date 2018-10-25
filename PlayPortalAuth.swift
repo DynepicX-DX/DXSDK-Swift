@@ -172,6 +172,56 @@ public final class PlayPortalAuth {
             PlayPortalAuth.shared.isAuthenticatedCompletion?(error, userProfile)
         }
     }
+    
+    /**
+     Called when a refresh is required.
+     
+     - Parameter completion: The closure called when the request finishes.
+     - Parameter error: The error returned on an unsuccessful request.
+     - Parameter accessToken: The new access token returned on a successful request.
+     - Parameter refreshToken: The new refresh token returned on a successful request.
+     
+     - Returns: Void
+    */
+    internal func refresh(completion: @escaping (_ error: Error?, _ accessToken: String?, _ refreshToken: String?) -> Void) -> Void {
+        //  Create url request
+        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
+        let path = PlayPortalURLs.OAuth.token
+        
+        guard let url = URL(string: host + path)
+            , let accessToken = requestHandler.accessToken
+            , let refreshToken = requestHandler.refreshToken
+        else {
+            completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil, nil)
+            return
+        }
+        let queryParams: [String: String] = [
+            "access_token": accessToken,
+            "refresh_token": refreshToken,
+            "client_id": PlayPortalAuth.shared.clientId,
+            "client_secret": PlayPortalAuth.shared.clientSecret,
+            "grant_type": "refresh_token"
+        ]
+        guard let baseURL = URL(string: host + path), let urlWithParams = baseURL.with(queryParams: queryParams) else {
+            completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil, nil)
+            return
+        }
+        
+        var urlRequest = URLRequest(url: urlWithParams)
+        urlRequest.httpMethod = "POST"
+        
+        //  Make request
+        requestHandler.requestJSON(urlRequest) { error, json in
+            guard let json = json
+                , let accessToken = json["access_token"] as? String
+                , let refreshToken = json["refresh_token"] as? String
+            else {
+                completion(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize JSON from result."), nil, nil)
+                return
+            }
+            completion(nil, accessToken, refreshToken)
+        }
+    }
 }
 
 

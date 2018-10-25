@@ -136,14 +136,18 @@ fileprivate class TokenRetrier {
     //  Lock when refreshing
     fileprivate let lock = NSLock()
     
+    //  Flag to indicate if a refresh is currently underway
     fileprivate var isRefreshing = false
+    
+    //  Requests to retry once refresh has finished
+    fileprivate var requestsToRetry = [RequestRetryCompletion]()
 }
 
 extension TokenRetrier: RequestRetrier {
     
     //  Requests should be retried when there is a refresh error
     func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: @escaping RequestRetryCompletion) {
-        //  Lock to allow one refresh at a time
+        //  Lock so refresh only occurs once
         lock.lock(); defer { lock.unlock() }
         
         if let response = request.task?.response as? HTTPURLResponse {
@@ -153,12 +157,28 @@ extension TokenRetrier: RequestRetrier {
                 switch error {
                 //  Refresh should only occur on 4010 error
                 case .tokenRefreshRequired:
-                    //  TODO: implement refresh
-                    break
+                    if !isRefreshing {
+                        isRefreshing = true
+                        PlayPortalAuth.shared.refresh { [weak self] error, accessToken, refreshToken in
+                            guard let strongSelf = self
+                                , error == nil
+                                , let accessToken = accessToken
+                                , let refreshToken = refreshToken
+                                else {
+                                    //  TODO: Handle logout
+                                    return
+                            }
+                            strongSelf.lock.lock(); defer { strongSelf.lock.unlock() }
+                            AlamofireRequestHandler.shared.accessToken = accessToken
+                            AlamofireRequestHandler.shared.refreshToken = refreshToken
+                            strongSelf.requestsToRetry.forEach { $0(true, 0.0) }
+                            strongSelf.requestsToRetry.removeAll()
+                            strongSelf.isRefreshing = false
+                        }
+                    }
                 default:
                     completion(false, 0.0)
                 }
-                break
             default:
                 //  TODO: should logout
                 break
