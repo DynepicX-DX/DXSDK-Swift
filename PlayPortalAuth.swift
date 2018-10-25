@@ -38,13 +38,13 @@ public final class PlayPortalAuth {
     private var isConfigured = false
     
     //  Completion that will be called once user is authenticated through auth flow.
-    private var isAuthenticatedCompletion: ((_ error: Error?, _ isAuthenticated: Bool, _ userProfile: PlayPortalProfile?) -> Void)?
+    private var isAuthenticatedCompletion: ((_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void)?
     
     //  Delegate used for login; will be passed any errors during SSO
     private weak var loginDelegate: PlayPortalLoginDelegate?
     
     //  Handler for making api requests
-    private var requestHandler: RequestHandler?
+    private var requestHandler: RequestHandler = globalRequestHandler
     
     //  Maintain refrence to safari view controller so that it can be dismissed when SSO finishes
     private weak var safariViewController: SFSafariViewController?
@@ -53,10 +53,7 @@ public final class PlayPortalAuth {
     //  MARK: - Initializers
     
     //  Private init to force use of singleton
-    private init() {
-        //  Set `AlamofireRequestHandler.shared` as `requestHandler`
-        requestHandler = AlamofireRequestHandler.shared
-    }
+    private init() {}
     
     
     //  MARK: - Methods
@@ -80,9 +77,9 @@ public final class PlayPortalAuth {
         andRedirectURI redirectURI: String
     ) throws -> Void {
         //  Check for correct configuration inputs
-        guard !clientId.isEmpty else { throw PlayPortalError.Configuration.invalidClientId(message: "Client id must not be empty.") }
-        guard !clientSecret.isEmpty else { throw PlayPortalError.Configuration.invalidClientSecret(message: "Client secret must not be empty.") }
-        guard !redirectURI.isEmpty else { throw PlayPortalError.Configuration.invalidRedirectURI(message: "Redirect URI must not be empty.") }
+        guard !clientId.isEmpty else { throw PlayPortalError.Configuration.invalidConfiguration(message: "Client id must not be empty.") }
+        guard !clientSecret.isEmpty else { throw PlayPortalError.Configuration.invalidConfiguration(message: "Client secret must not be empty.") }
+        guard !redirectURI.isEmpty else { throw PlayPortalError.Configuration.invalidConfiguration(message: "Redirect URI must not be empty.") }
         
         //  Set configuration
         PlayPortalAuth.shared.environment = environment
@@ -97,18 +94,22 @@ public final class PlayPortalAuth {
     /**
      Check if current user is authenticated. If not, SSO flow will need to be initiated.
      
+     - Parameter completion: The closure called after requesting the user's profile.
+     - Parameter error: The error returned from an unsuccessful request.
+     - Parameter userProfile: The playPORTAL user profile returned from a successful request.
      
+     - Returns: Void
     */
-    public func isAuthenticated(_ completion: @escaping (_ error: Error?, _ isAuthenticated: Bool, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
-        if requestHandler?.isAuthenticated ?? false {
+    public func isAuthenticated(_ completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
+        if requestHandler.isAuthenticated {
             //  If authenticated, request current user's profile
             PlayPortalUser.shared.getProfile { error, userProfile in
-                completion(error, userProfile != nil, userProfile)
+                completion(error, userProfile)
             }
         } else {
             //  If not authenticated, set `isAuthenticatedCompletion` to be used after SSO flow finishes
             PlayPortalAuth.shared.isAuthenticatedCompletion = completion
-            completion(nil, false, nil)
+            completion(nil, nil)
         }
     }
     
@@ -163,12 +164,12 @@ public final class PlayPortalAuth {
         guard let accessToken = url.getParameter(for: "access_token") else { throw PlayPortalError.SSO.parameterNotInRedirect(message: "Could not extract access token from redirect uri.") }
         guard let refreshToken = url.getParameter(for: "refresh_token") else { throw PlayPortalError.SSO.parameterNotInRedirect(message: "Could not extract refresh token from redirect uri.") }
         
-        requestHandler?.accessToken = accessToken
-        requestHandler?.refreshToken = refreshToken
+        requestHandler.accessToken = accessToken
+        requestHandler.refreshToken = refreshToken
         
         //  Request current user's profile
         PlayPortalUser.shared.getProfile { error, userProfile in
-            PlayPortalAuth.shared.isAuthenticatedCompletion?(error, userProfile != nil, userProfile)
+            PlayPortalAuth.shared.isAuthenticatedCompletion?(error, userProfile)
         }
     }
 }

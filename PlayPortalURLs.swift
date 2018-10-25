@@ -51,4 +51,9 @@ internal struct PlayPortalURLs {
         
         static let userProfile = "/user/v1/my/profile"
     }
+    
+    internal struct Image {
+        
+        static let staticImage = "/image/v1/static"
+    }
 }

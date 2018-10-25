@@ -16,16 +16,13 @@ public final class PlayPortalUser {
     public static let shared = PlayPortalUser()
     
     //  Handler for making api requests
-    private var requestHandler: RequestHandler?
+    private var requestHandler: RequestHandler = globalRequestHandler
     
     
     //  MARK: - Initializers
     
     //  Private init to force use of singleton
-    private init() {
-        //  Set `AlamofireRequestHandler.shared` as `requestHandler`
-        requestHandler = AlamofireRequestHandler.shared
-    }
+    private init() {}
     
     
     //  MARK: - Methods
@@ -45,7 +42,7 @@ public final class PlayPortalUser {
         let path = PlayPortalURLs.User.userProfile
         
         guard let url = URL(string: host + path) else {
-            completion(PlayPortalError.API.unableToConstructURL, nil)
+            completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil)
             return
         }
         
@@ -53,13 +50,13 @@ public final class PlayPortalUser {
         urlRequest.httpMethod = "GET"
         
         //  Make request
-        requestHandler?.request(urlRequest) { error, result in
-            guard let result = result as? [String: Any] else {
-                completion(error, nil)
-                return
+        requestHandler.requestJSON(urlRequest) { error, json in
+            guard let json = json else {
+                completion(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize JSON from result."), nil)
+                return 
             }
             do {
-                let userProfile = try PlayPortalProfile.factory(from: result)
+                let userProfile = try PlayPortalProfile.factory(from: json)
                 completion(nil, userProfile)
             } catch {
                 completion(error, nil)

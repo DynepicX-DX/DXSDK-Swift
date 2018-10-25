@@ -11,9 +11,7 @@ public enum PlayPortalError {
     
     public enum Configuration: Error {
         case notFullyConfigured
-        case invalidClientId(message: String)
-        case invalidClientSecret(message: String)
-        case invalidRedirectURI(message: String)
+        case invalidConfiguration(message: String)
     }
     
     public enum SSO: Error {
@@ -23,14 +21,9 @@ public enum PlayPortalError {
     
     public enum API: Error {
         
-        //  Miscellaneous
-        case unableToConstructURL
-        case unableToCreateError(message: String)
-        
-        case requestFailed(error: API.ErrorCode, description: String)
-        
+        case failedToMakeRequest(message: String)
+        case requestFailed(errorCode: API.ErrorCode, description: String)
         case unableToDeserializeResult(message: String)
-        
         
         //  Error codes
         public enum ErrorCode: Int {
@@ -104,9 +97,9 @@ public enum PlayPortalError {
             guard let errorCode = response.allHeaderFields["errorcode"] as? String
                 , let code = Int(errorCode)
                 , let description = response.allHeaderFields["errordescription"] as? String
-                else { return .unableToCreateError(message: "Unable to parse 'errorcode' or 'errordescription' from response headers.") }
-            guard let error = ErrorCode(rawValue: code) else { return .unableToCreateError(message: "Error code '\(code)' did not match any known types.") }
-            return .requestFailed(error: error, description: description)
+                else { return .failedToMakeRequest(message: "Unable to parse 'errorcode' or 'errordescription' from response headers.") }
+            guard let error = ErrorCode(rawValue: code) else { return .failedToMakeRequest(message: "Error code '\(code)' did not match any known types.") }
+            return .requestFailed(errorCode: error, description: description)
         }
     }
 }

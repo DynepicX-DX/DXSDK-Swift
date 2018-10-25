@@ -69,11 +69,8 @@ public class PlayPortalLoginButton: UIButton {
         
         addTarget(self, action: #selector(PlayPortalLoginButton.loginTapped), for: .touchUpInside)
         
-        let frameworkBundle = Bundle(for: PlayPortalLoginButton.self)
-        guard let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("PPSDK-Swift-Assets.bundle")
-            , let resourceBundle = Bundle(url: bundleURL)
-            , let image = UIImage(named: "SSOButton", in: resourceBundle, compatibleWith: traitCollection)
-            else { return }
+        //  Set image
+        guard let image = Utils.getImageAsset(byName: "SSOButton") else { return }
         let ssoButtonImage = UIImageView(image: image)
         ssoButtonImage.frame = bounds
         ssoButtonImage.contentMode = .scaleAspectFit

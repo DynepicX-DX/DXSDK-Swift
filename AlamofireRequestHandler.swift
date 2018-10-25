@@ -39,7 +39,7 @@ internal class AlamofireRequestHandler {
 
 //  `RequestHandler` conformance
 extension AlamofireRequestHandler: RequestHandler {
-
+    
     //  MARK: - Properties
     
     //  playPORTAL SSO tokens
@@ -62,9 +62,9 @@ extension AlamofireRequestHandler: RequestHandler {
     //  MARK: - Methods
     
     /**
-     Make request using internal `sessionManager` instance
+     Make request for JSON using internal `sessionManager` instance
     */
-    func request(_ request: URLRequest, _ completion: ((Error?, Any?) -> Void)?) {
+    func requestJSON(_ request: URLRequest, _ completion: ((Error?, [String: Any]?) -> Void)?) {
         AlamofireRequestHandler.sessionManager
             .request(request)
             .validate(statusCode: 200..<300)
@@ -76,7 +76,33 @@ extension AlamofireRequestHandler: RequestHandler {
                         return
                     }
                     let error = PlayPortalError.API.createError(from: urlResponse)
-                    completion?(error, urlResponse)
+                    completion?(error, nil)
+                case let .success(value):
+                    guard let value = value as? [String: Any] else {
+                        completion?(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize JSON from result."), nil)
+                        return
+                    }
+                    completion?(nil, value)
+                }
+        }
+    }
+    
+    /**
+     Make request for data using internal `sessionManager` instance
+     */
+    func requestData(_ request: URLRequest, _ completion: ((Error?, Data?) -> Void)?) {
+        AlamofireRequestHandler.sessionManager
+            .request(request)
+            .validate(statusCode: 200..<300)
+            .responseData { response in
+                switch response.result {
+                case let .failure(error):
+                    guard let urlResponse = response.response else {
+                        completion?(error, nil)
+                        return
+                    }
+                    let error = PlayPortalError.API.createError(from: urlResponse)
+                    completion?(error, nil)
                 case let .success(value):
                     completion?(nil, value)
                 }
