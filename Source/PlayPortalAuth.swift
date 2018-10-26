@@ -74,8 +74,8 @@ public final class PlayPortalAuth {
         forEnvironment environment: PlayPortalEnvironment,
         withClientId clientId: String,
         andClientSecret clientSecret: String,
-        andRedirectURI redirectURI: String
-        ) throws -> Void {
+        andRedirectURI redirectURI: String)
+        throws -> Void {
         
         //  Check for correct configuration inputs
         guard !clientId.isEmpty else {

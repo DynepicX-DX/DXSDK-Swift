@@ -16,8 +16,8 @@ open class PlayPortalProfile {
     public let userType: PlayPortalProfile.UserType
     public let accountType: PlayPortalProfile.AccountType
     public let handle: String
-    public let firstName: String
-    public let lastName: String
+    public var firstName: String?
+    public var lastName: String?
     public var profilePic: String?
     public var coverPhoto: String?
     public let country: String
@@ -43,6 +43,10 @@ open class PlayPortalProfile {
         case kid = "Kid"
         
         case adult = "Adult"
+        
+        case character = "Character"
+        
+        case community = "Community"
     }
     
     
@@ -60,24 +64,36 @@ open class PlayPortalProfile {
     public init(from json: [String: Any]) throws {
         
         //  Deserialize all properties
-        guard let userId = json["userId"] as? String
-            , let userType = PlayPortalProfile.userType(from: json)
-            , let accountType = PlayPortalProfile.accountType(from: json)
-            , let handle = json["handle"] as? String
-            , let firstName = json["firstName"] as? String
-            , let lastName = json["lastName"] as? String
-            , let country = json["country"] as? String
-            else {
-                throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize one or more properties from JSON.")
+        guard let userId = json["userId"] as? String else {
+            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'userId' from JSON.")
+        }
+        guard let userType = PlayPortalProfile.userType(from: json) else {
+            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'userType' from JSON.")
+        }
+        guard let accountType = PlayPortalProfile.accountType(from: json) else {
+            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'accountType' from JSON.")
+        }
+        guard let handle = json["handle"] as? String else {
+            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'handle' from JSON.")
+        }
+        guard let country = json["country"] as? String else {
+            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'country' from JSON.")
         }
         
         self.userId = userId
         self.userType = userType
         self.accountType = accountType
         self.handle = handle
-        self.firstName = firstName
-        self.lastName = lastName
         self.country = country
+        
+        //  `character` and `community` `PlayPortalProfile.AccountTypes` don't have a `firstName` or `lastName` property
+        if let firstName = json["firstName"] as? String {
+            self.firstName = firstName
+        }
+        
+        if let lastName = json["lastName"] as? String {
+            self.lastName = lastName
+        }
         
         //  Profile pic and cover photo may be nil
         if let profilePic = json["profilePic"] as? String? {
@@ -92,16 +108,37 @@ open class PlayPortalProfile {
     /**
      Create `PlayPortalProfile` based on account type.
      
+     - Parameter from: JSON representing playPORTAL profile.
+     
      - Throws: If any of the properties are unable to be deserialized from the JSON.
      
-     - Returns: `PlayPortalProfile`
+     - Returns: `PlayPortalProfile` instance
      */
     internal static func factory(from json: [String: Any]) throws -> PlayPortalProfile {
         guard let accountType = PlayPortalProfile.accountType(from: json) else {
-            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize account type from JSON.")
+            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'accountType' from JSON.")
         }
-        
         return try PlayPortalProfile(from: json)
+    }
+    
+    /**
+     Create array of `PlayPortalProfile` instances from json array.
+     
+     - Parameter from: JSON array representing playPORTAL profile objects.
+     
+     - Throws: If any of the properties are unable to be deserialized from any of the JSON objects.
+     
+     - Returns: `PlayPortalProfile` instances
+    */
+    internal static func factory(fromArray jsonArray: [[String: Any]]) throws -> [PlayPortalProfile] {
+        var profiles = [PlayPortalProfile]()
+        for json in jsonArray {
+            do {
+                let profile = try PlayPortalProfile.factory(from: json)
+                profiles.append(profile)
+            }
+        }
+        return profiles
     }
     
     /**

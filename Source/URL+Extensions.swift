@@ -18,14 +18,15 @@ internal extension URL {
      - Returns: URL with query parameters if successful, nil otherwise.
      */
     func with(queryParams params: [String: String]) -> URL? {
-        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else { return nil }
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+            return nil
+        }
         var queryItems = [URLQueryItem]()
         for (name, value) in params {
             queryItems.append(URLQueryItem(name: name, value: value))
         }
         components.queryItems = queryItems
-        guard let url = try? components.asURL() else { return nil }
-        return url
+        return try? components.asURL()
     }
     
     /**
@@ -36,7 +37,9 @@ internal extension URL {
      - Returns: Parameter if successful, nil otherwise.
      */
     func getParameter(for name: String) -> String? {
-        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true) else { return nil }
+        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+            return nil
+        }
         return components.queryItems?.first { $0.name == name }?.value
     }
 }

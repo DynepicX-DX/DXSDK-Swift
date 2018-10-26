@@ -54,9 +54,10 @@ public final class PlayPortalImage {
         //  Make request
         requestHandler.requestData(urlRequest) { error, data in
             guard error == nil
-                , let data = data else {
-                completion(error, nil)
-                return
+                , let data = data
+                else {
+                    completion(error, nil)
+                    return
             }
             completion(nil, data)
         }

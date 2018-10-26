@@ -22,7 +22,9 @@ internal class Utils {
         let frameworkBundle = Bundle(for: Utils.self)
         guard let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("PPSDK-Swift-Assets.bundle")
             , let resourceBundle = Bundle(url: bundleURL)
-            else { return nil }
+            else {
+                return nil
+        }
         return UIImage(named: name, in: resourceBundle, compatibleWith: nil)
     }
 }

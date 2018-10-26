@@ -34,6 +34,18 @@ internal protocol RequestHandler {
     func requestJSON(_ request: URLRequest, _ completion: ((_ error: Error?, _ json: [String: Any]?) -> Void)?) -> Void
     
     /**
+     Make request to playPORTAL api where the expected result is a JSON array.
+     
+     - Parameter request: The request being made.
+     - Parameter completion: The closure called after the request is made.
+     - Parameter error: The error returned for an unsuccessful request.
+     - Parameter json: The JSON array returned for a successful request.
+     
+     - Returns: Void
+     */
+    func requestJSONArray(_ request: URLRequest, _ completion: ((_ error: Error?, _ json: [[String: Any]]?) -> Void)?) -> Void
+    
+    /**
      Make request to playPORTAL api where the expected result is data.
      
      - Parameter request: The request being made.

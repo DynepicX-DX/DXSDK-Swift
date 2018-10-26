@@ -45,7 +45,7 @@ internal struct PlayPortalURLs {
     }
     
     
-    //  MARK: - Internal structs for available apis
+    //  MARK: - Internal structs for representing available apis and their endpoints
     
     internal struct OAuth {
         
@@ -71,6 +71,8 @@ internal struct PlayPortalURLs {
         //  MARK: - Properties
         
         internal static let userProfile = "/user/v1/my/profile"
+        
+        internal static let friendProfiles = "/user/v1/my/friends"
     }
     
     internal struct Image {
