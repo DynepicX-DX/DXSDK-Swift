@@ -20,7 +20,7 @@ public protocol PlayPortalLoginDelegate: class {
      - Parameter error: The error that occurred.
      
      - Returns: Void
-    */
+     */
     func playPortalLoginButtonDidFinishWithError(_ loginButton: PlayPortalLoginButton, error: Error) -> Void 
 }
 
@@ -46,11 +46,8 @@ public class PlayPortalLoginButton: UIButton {
      
      - Parameter delegate: PlayPortalLoginDelegate that will handle playPORTAL SSO errors.
      - Parameter from: UIViewController that will present SFSafariViewController; defaults to topmost UIViewController.
-    */
-    public init(
-        delegate: PlayPortalLoginDelegate? = nil,
-        from viewController: UIViewController? = nil
-    ) {
+     */
+    public init(delegate: PlayPortalLoginDelegate? = nil, from viewController: UIViewController? = nil) {
         self.delegate = delegate
         self.from = viewController
         
@@ -61,7 +58,7 @@ public class PlayPortalLoginButton: UIButton {
         }
         let buttonHeight: CGFloat = buttonWidth * (55 / 279)
         let rect = CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight)
-
+        
         super.init(frame: rect)
         
         layer.cornerRadius = buttonHeight / 2
@@ -89,7 +86,7 @@ public class PlayPortalLoginButton: UIButton {
      When PlayPortalLoginButton is tapped, SSO flow will begin.
      
      - Returns: Void
-    */
+     */
     @objc func loginTapped() {
         do {
             try PlayPortalAuth.shared.login(from: from)

@@ -69,17 +69,24 @@ public final class PlayPortalAuth {
      - Throws: If any configuration arguments are invalid.
      
      - Returns: Void
-    */
+     */
     public func configure(
         forEnvironment environment: PlayPortalEnvironment,
         withClientId clientId: String,
         andClientSecret clientSecret: String,
         andRedirectURI redirectURI: String
-    ) throws -> Void {
+        ) throws -> Void {
+        
         //  Check for correct configuration inputs
-        guard !clientId.isEmpty else { throw PlayPortalError.Configuration.invalidConfiguration(message: "Client id must not be empty.") }
-        guard !clientSecret.isEmpty else { throw PlayPortalError.Configuration.invalidConfiguration(message: "Client secret must not be empty.") }
-        guard !redirectURI.isEmpty else { throw PlayPortalError.Configuration.invalidConfiguration(message: "Redirect URI must not be empty.") }
+        guard !clientId.isEmpty else {
+            throw PlayPortalError.Configuration.invalidConfiguration(message: "Client id must not be empty.")
+        }
+        guard !clientSecret.isEmpty else {
+            throw PlayPortalError.Configuration.invalidConfiguration(message: "Client secret must not be empty.")
+        }
+        guard !redirectURI.isEmpty else {
+            throw PlayPortalError.Configuration.invalidConfiguration(message: "Redirect URI must not be empty.")
+        }
         
         //  Set configuration
         PlayPortalAuth.shared.environment = environment
@@ -99,7 +106,7 @@ public final class PlayPortalAuth {
      - Parameter userProfile: The playPORTAL user profile returned from a successful request.
      
      - Returns: Void
-    */
+     */
     public func isAuthenticated(_ completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
         if requestHandler.isAuthenticated {
             //  If authenticated, request current user's profile
@@ -121,13 +128,14 @@ public final class PlayPortalAuth {
      
      - Throws: If sdk is not fully configured or unable to create an SSO URL with query parameters.
      */
-    internal func login(
-        from viewController: UIViewController? = UIApplication.topMostViewController()
-    ) throws {
-        //  Ensure sdk is configured before starting SSO.
-        guard PlayPortalAuth.shared.isConfigured else { throw PlayPortalError.Configuration.notFullyConfigured }
+    internal func login(from viewController: UIViewController? = UIApplication.topMostViewController()) throws {
         
-        //  Create SSO sign in url
+        //  Ensure sdk is configured before starting SSO.
+        guard PlayPortalAuth.shared.isConfigured else {
+            throw PlayPortalError.Configuration.notFullyConfigured
+        }
+        
+        //  Construct sign in url
         let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
         let path = PlayPortalURLs.OAuth.signIn
         let queryParams = [
@@ -155,14 +163,21 @@ public final class PlayPortalAuth {
      - Throws: If unable to extract parameters from redirect url.
      
      - Returns: Void
-    */
+     */
     public func open(url: URL) throws -> Void {
+        
         //  Dismiss safari view controller
-        defer { safariViewController?.dismiss(animated: true, completion: nil) }
+        defer {
+            safariViewController?.dismiss(animated: true, completion: nil)
+        }
         
         //  Extract tokens
-        guard let accessToken = url.getParameter(for: "access_token") else { throw PlayPortalError.SSO.parameterNotInRedirect(message: "Could not extract access token from redirect uri.") }
-        guard let refreshToken = url.getParameter(for: "refresh_token") else { throw PlayPortalError.SSO.parameterNotInRedirect(message: "Could not extract refresh token from redirect uri.") }
+        guard let accessToken = url.getParameter(for: "access_token") else {
+            throw PlayPortalError.SSO.parameterNotInRedirect(message: "Could not extract access token from redirect uri.")
+        }
+        guard let refreshToken = url.getParameter(for: "refresh_token") else {
+            throw PlayPortalError.SSO.parameterNotInRedirect(message: "Could not extract refresh token from redirect uri.")
+        }
         
         requestHandler.accessToken = accessToken
         requestHandler.refreshToken = refreshToken
@@ -182,8 +197,9 @@ public final class PlayPortalAuth {
      - Parameter refreshToken: The new refresh token returned on a successful request.
      
      - Returns: Void
-    */
+     */
     internal func refresh(completion: @escaping (_ error: Error?, _ accessToken: String?, _ refreshToken: String?) -> Void) -> Void {
+        
         //  Create url request
         let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
         let path = PlayPortalURLs.OAuth.token
@@ -191,9 +207,9 @@ public final class PlayPortalAuth {
         guard let url = URL(string: host + path)
             , let accessToken = requestHandler.accessToken
             , let refreshToken = requestHandler.refreshToken
-        else {
-            completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil, nil)
-            return
+            else {
+                completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil, nil)
+                return
         }
         let queryParams: [String: String] = [
             "access_token": accessToken,
@@ -215,32 +231,11 @@ public final class PlayPortalAuth {
             guard let json = json
                 , let accessToken = json["access_token"] as? String
                 , let refreshToken = json["refresh_token"] as? String
-            else {
-                completion(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize JSON from result."), nil, nil)
-                return
+                else {
+                    completion(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize JSON from result."), nil, nil)
+                    return
             }
             completion(nil, accessToken, refreshToken)
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -16,7 +16,7 @@ internal extension URL {
      - Parameter queryParams: Dictionary from which to create query parameters.
      
      - Returns: URL with query parameters if successful, nil otherwise.
-    */
+     */
     func with(queryParams params: [String: String]) -> URL? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else { return nil }
         var queryItems = [URLQueryItem]()
@@ -34,7 +34,7 @@ internal extension URL {
      - Parameter for: Name of parameter to return.
      
      - Returns: Parameter if successful, nil otherwise.
-    */
+     */
     func getParameter(for name: String) -> String? {
         guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true) else { return nil }
         return components.queryItems?.first { $0.name == name }?.value

@@ -35,8 +35,9 @@ public final class PlayPortalUser {
      - Parameter userProfile: The current user's profile returned on a successful request.
      
      - Returns: Void
-    */
+     */
     public func getProfile(completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
+        
         //  Create url request
         let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
         let path = PlayPortalURLs.User.userProfile

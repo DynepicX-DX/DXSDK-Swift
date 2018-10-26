@@ -56,8 +56,9 @@ open class PlayPortalProfile {
      - Throws: If any of the properties are unable to be deserialized from the JSON.
      
      - Returns: `PlayPortalProfile`
-    */
+     */
     public init(from json: [String: Any]) throws {
+        
         //  Deserialize all properties
         guard let userId = json["userId"] as? String
             , let userType = PlayPortalProfile.userType(from: json)
@@ -66,8 +67,8 @@ open class PlayPortalProfile {
             , let firstName = json["firstName"] as? String
             , let lastName = json["lastName"] as? String
             , let country = json["country"] as? String
-        else {
-            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize one or more properties from JSON.")
+            else {
+                throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize one or more properties from JSON.")
         }
         
         self.userId = userId
@@ -94,7 +95,7 @@ open class PlayPortalProfile {
      - Throws: If any of the properties are unable to be deserialized from the JSON.
      
      - Returns: `PlayPortalProfile`
-    */
+     */
     internal static func factory(from json: [String: Any]) throws -> PlayPortalProfile {
         guard let accountType = PlayPortalProfile.accountType(from: json) else {
             throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize account type from JSON.")
@@ -109,9 +110,11 @@ open class PlayPortalProfile {
      - Parameter from: JSON to extract account type from.
      
      - Returns: `PlayPortalProfile.AccountType` if able to extract account type, nil otherwise.
-    */
+     */
     private static func accountType(from json: [String: Any]) -> PlayPortalProfile.AccountType? {
-        guard let accountTypeRawValue = json["accountType"] as? String else { return nil }
+        guard let accountTypeRawValue = json["accountType"] as? String else {
+            return nil
+        }
         return PlayPortalProfile.AccountType.init(rawValue: accountTypeRawValue)
     }
     
@@ -123,7 +126,9 @@ open class PlayPortalProfile {
      - Returns: `PlayPortalProfile.UserType` if able to extract user type, nil otherwise.
      */
     private static func userType(from json: [String: Any]) -> PlayPortalProfile.UserType? {
-        guard let userTypeRawValue = json["userType"] as? String else { return nil }
+        guard let userTypeRawValue = json["userType"] as? String else {
+            return nil
+        }
         return PlayPortalProfile.UserType.init(rawValue: userTypeRawValue)
     }
 }

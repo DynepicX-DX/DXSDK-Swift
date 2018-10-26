@@ -36,8 +36,9 @@ public final class PlayPortalImage {
      - Parameter data: The data representing the image returned for a successful request.
      
      - Returns: Void
-    */
+     */
     public func getImage(forImageId imageId: String, _ completion: @escaping (_ error: Error?, _ data: Data?) -> Void) -> Void {
+        
         //  Create url request
         let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
         let path = PlayPortalURLs.Image.staticImage

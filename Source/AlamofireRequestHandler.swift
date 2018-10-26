@@ -47,23 +47,23 @@ extension AlamofireRequestHandler: RequestHandler {
         get { return _accessToken }
         set { _accessToken = newValue }
     }
-
+    
     var refreshToken: String? {
         get { return _refreshToken }
         set { _refreshToken = newValue }
     }
-
+    
     //  User is authenticated if both `accessToken` and `refreshToken` aren't nil
     var isAuthenticated: Bool {
         return AlamofireRequestHandler.shared.accessToken != nil && AlamofireRequestHandler.shared.refreshToken != nil
     }
-
+    
     
     //  MARK: - Methods
     
     /**
      Make request for JSON using internal `sessionManager` instance
-    */
+     */
     func requestJSON(_ request: URLRequest, _ completion: ((Error?, [String: Any]?) -> Void)?) {
         AlamofireRequestHandler.sessionManager
             .request(request)
@@ -188,22 +188,3 @@ extension TokenRetrier: RequestRetrier {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

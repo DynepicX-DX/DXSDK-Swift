@@ -17,7 +17,7 @@ internal class Utils {
      - Parameter byName: Name of the asset to get
      
      - Returns: UIImage of asset if found, nil otherwise.
-    */
+     */
     static func getImageAsset(byName name: String) -> UIImage? {
         let frameworkBundle = Bundle(for: Utils.self)
         guard let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("PPSDK-Swift-Assets.bundle")

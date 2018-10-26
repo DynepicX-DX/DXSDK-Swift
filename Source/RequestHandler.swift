@@ -30,7 +30,7 @@ internal protocol RequestHandler {
      - Parameter json: The JSON returned for a successful request.
      
      - Returns: Void
-    */
+     */
     func requestJSON(_ request: URLRequest, _ completion: ((_ error: Error?, _ json: [String: Any]?) -> Void)?) -> Void
     
     /**

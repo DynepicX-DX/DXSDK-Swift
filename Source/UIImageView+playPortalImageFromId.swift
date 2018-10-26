@@ -19,7 +19,7 @@ public extension UIImageView {
      - Parameter error: The error returned for an unsuccessful request.
      
      - Returns: Void
-    */
+     */
     func playPortalImage(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
         guard let imageId = imageId else {
             return
@@ -28,9 +28,9 @@ public extension UIImageView {
             guard let strongSelf = self
                 , let data = data
                 , let image = UIImage(data: data)
-            else {
-                completion?(error)
-                return
+                else {
+                    completion?(error)
+                    return
             }
             strongSelf.image = image
             completion?(nil)

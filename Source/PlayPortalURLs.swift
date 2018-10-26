@@ -12,11 +12,11 @@ internal struct PlayPortalURLs {
     
     //  MARK: - Properties
     
-    static let sandboxHost = "https://sandbox.playportal.io"
+    internal static let sandboxHost = "https://sandbox.playportal.io"
     
-    static let productionHost = "https://api.playportal.io"
+    internal static let productionHost = "https://api.playportal.io"
     
-    static let developHost = "https://develop-api.goplayportal.com"
+    internal static let developHost = "https://develop-api.goplayportal.com"
     
     
     //  MARK: - Initializers
@@ -32,8 +32,8 @@ internal struct PlayPortalURLs {
      - Paramenter forEnvironment: The playPORTAL environment currently being executed in.
      
      - Returns: The host.
-    */
-    static func getHost(forEnvironment environment: PlayPortalEnvironment) -> String {
+     */
+    internal static func getHost(forEnvironment environment: PlayPortalEnvironment) -> String {
         switch environment {
         case .sandbox:
             return PlayPortalURLs.sandboxHost
@@ -56,9 +56,9 @@ internal struct PlayPortalURLs {
         
         //  MARK: - Properties
         
-        static let signIn = "/oauth/signin"
+        internal static let signIn = "/oauth/signin"
         
-        static let token = "/oauth/token"
+        internal static let token = "/oauth/token"
     }
     
     internal struct User {
@@ -70,7 +70,7 @@ internal struct PlayPortalURLs {
         
         //  MARK: - Properties
         
-        static let userProfile = "/user/v1/my/profile"
+        internal static let userProfile = "/user/v1/my/profile"
     }
     
     internal struct Image {
@@ -82,6 +82,6 @@ internal struct PlayPortalURLs {
         
         //  MARK: - Properties
         
-        static let staticImage = "/image/v1/static"
+        internal static let staticImage = "/image/v1/static"
     }
 }
