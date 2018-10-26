@@ -36,8 +36,6 @@ internal class AlamofireRequestHandler {
     private init() {}
 }
 
-
-//  `RequestHandler` conformance
 extension AlamofireRequestHandler: RequestHandler {
     
     //  MARK: - Properties
@@ -109,6 +107,7 @@ extension AlamofireRequestHandler: RequestHandler {
         }
     }
 }
+
 
 //  Class implementing Alamofire `RequestAdapter`
 fileprivate class TokenAdapter {

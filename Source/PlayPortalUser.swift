@@ -52,8 +52,9 @@ public final class PlayPortalUser {
         
         //  Make request
         requestHandler.requestJSON(urlRequest) { error, json in
-            guard let json = json else {
-                completion(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize JSON from result."), nil)
+            guard error == nil
+                , let json = json else {
+                completion(error, nil)
                 return 
             }
             do {

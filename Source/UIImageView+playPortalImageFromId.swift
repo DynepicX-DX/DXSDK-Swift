@@ -25,11 +25,15 @@ public extension UIImageView {
             return
         }
         PlayPortalImage.shared.getImage(forImageId: imageId) { [weak self] error, data in
+            guard error == nil else {
+                completion?(error)
+                return
+            }
             guard let strongSelf = self
                 , let data = data
                 , let image = UIImage(data: data)
                 else {
-                    completion?(error)
+                    completion?(PlayPortalError.API.requestFailedForUnknownReason(message: "Unable to deserialize image data."))
                     return
             }
             strongSelf.image = image
@@ -53,12 +57,16 @@ public extension UIImageView {
             return
         }
         PlayPortalImage.shared.getImage(forImageId: imageId) { [weak self] error, data in
+            guard error == nil else {
+                completion?(error)
+                return
+            }
             guard let strongSelf = self
                 , let data = data
                 , let image = UIImage(data: data)
                 else {
                     self?.image = Utils.getImageAsset(byName: "AnonUser")
-                    completion?(error)
+                    completion?(PlayPortalError.API.requestFailedForUnknownReason(message: "Unable to deserialize image data."))
                     return
             }
             strongSelf.image = image
@@ -82,12 +90,16 @@ public extension UIImageView {
             return
         }
         PlayPortalImage.shared.getImage(forImageId: imageId) { [weak self] error, data in
+            guard error == nil else {
+                completion?(error)
+                return
+            }
             guard let strongSelf = self
                 , let data = data
                 , let image = UIImage(data: data)
                 else {
                     self?.image = Utils.getImageAsset(byName: "AnonUserCover")
-                    completion?(error)
+                    completion?(PlayPortalError.API.requestFailedForUnknownReason(message: "Unable to deserialize image data."))
                     return
             }
             strongSelf.image = image

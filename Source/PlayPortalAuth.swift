@@ -204,8 +204,7 @@ public final class PlayPortalAuth {
         let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
         let path = PlayPortalURLs.OAuth.token
         
-        guard let url = URL(string: host + path)
-            , let accessToken = requestHandler.accessToken
+        guard let accessToken = requestHandler.accessToken
             , let refreshToken = requestHandler.refreshToken
             else {
                 completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil, nil)
@@ -228,6 +227,10 @@ public final class PlayPortalAuth {
         
         //  Make request
         requestHandler.requestJSON(urlRequest) { error, json in
+            guard error == nil else {
+                completion(error, nil, nil)
+                return
+            }
             guard let json = json
                 , let accessToken = json["access_token"] as? String
                 , let refreshToken = json["refresh_token"] as? String

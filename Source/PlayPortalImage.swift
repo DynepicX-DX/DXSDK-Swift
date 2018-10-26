@@ -53,8 +53,9 @@ public final class PlayPortalImage {
         
         //  Make request
         requestHandler.requestData(urlRequest) { error, data in
-            guard let data = data else {
-                completion(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize data from result."), nil)
+            guard error == nil
+                , let data = data else {
+                completion(error, nil)
                 return
             }
             completion(nil, data)
