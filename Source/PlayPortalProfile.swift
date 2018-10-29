@@ -59,7 +59,7 @@ open class PlayPortalProfile {
      
      - Throws: If any of the properties are unable to be deserialized from the JSON.
      
-     - Returns: `PlayPortalProfile`
+     - Returns: `PlayPortalProfile` instance.
      */
     public init(from json: [String: Any]) throws {
         
