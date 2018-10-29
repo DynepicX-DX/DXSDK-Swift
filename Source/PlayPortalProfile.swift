@@ -8,7 +8,7 @@
 import Foundation
 
 //  Class representing a playPORTAL user's profile.
-open class PlayPortalProfile {
+public struct PlayPortalProfile {
     
     //  MARK: - Properties
     
@@ -61,9 +61,9 @@ open class PlayPortalProfile {
      
      - Returns: `PlayPortalProfile` instance.
      */
-    public init(from json: [String: Any]) throws {
+    internal init(from json: [String: Any]) throws {
         
-        //  Deserialize all properties
+        //  Deserialize properties
         guard let userId = json["userId"] as? String else {
             throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'userId' from JSON.")
         }
@@ -103,42 +103,6 @@ open class PlayPortalProfile {
         if let coverPhoto = json["coverPhoto"] as? String? {
             self.coverPhoto = coverPhoto
         }
-    }
-    
-    /**
-     Create `PlayPortalProfile` based on account type.
-     
-     - Parameter from: JSON representing playPORTAL profile.
-     
-     - Throws: If any of the properties are unable to be deserialized from the JSON.
-     
-     - Returns: `PlayPortalProfile` instance
-     */
-    internal static func factory(from json: [String: Any]) throws -> PlayPortalProfile {
-        guard let accountType = PlayPortalProfile.accountType(from: json) else {
-            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'accountType' from JSON.")
-        }
-        return try PlayPortalProfile(from: json)
-    }
-    
-    /**
-     Create array of `PlayPortalProfile` instances from json array.
-     
-     - Parameter from: JSON array representing playPORTAL profile objects.
-     
-     - Throws: If any of the properties are unable to be deserialized from any of the JSON objects.
-     
-     - Returns: `PlayPortalProfile` instances
-    */
-    internal static func factory(fromArray jsonArray: [[String: Any]]) throws -> [PlayPortalProfile] {
-        var profiles = [PlayPortalProfile]()
-        for json in jsonArray {
-            do {
-                let profile = try PlayPortalProfile.factory(from: json)
-                profiles.append(profile)
-            }
-        }
-        return profiles
     }
     
     /**

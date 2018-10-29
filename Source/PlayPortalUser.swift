@@ -59,7 +59,7 @@ public final class PlayPortalUser {
                     return
             }
             do {
-                let userProfile = try PlayPortalProfile.factory(from: json)
+                let userProfile = try PlayPortalProfile(from: json)
                 completion(nil, userProfile)
             } catch {
                 completion(error, nil)
@@ -98,12 +98,8 @@ public final class PlayPortalUser {
                     completion(error, nil)
                     return
             }
-            do {
-                let userProfiles = try PlayPortalProfile.factory(fromArray: jsonArray)
-                completion(nil, userProfiles)
-            } catch {
-                completion(error, nil)
-            }
+            let userProfiles = jsonArray.compactMap { try? PlayPortalProfile(from: $0) }
+            completion(nil, userProfiles)
         }
     }
 }

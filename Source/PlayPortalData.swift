@@ -300,20 +300,6 @@ public final class PlayPortalData {
         }
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, json in
-            guard error == nil
-//                , let json = json
-                else {
-                    completion?(error)
-                    return
-            }
-            print(json)
-            print()
-            do {
-                completion?(nil)
-            } catch {
-                completion?(error)
-            }
-        }
+        requestHandler.requestJSON(urlRequest) { error, _ in completion?(error) }
     }
 }
