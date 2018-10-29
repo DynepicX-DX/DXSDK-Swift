@@ -14,6 +14,20 @@
 		1C477F92217F977600B42160 /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8B217F977600B42160 /* RequestHandler.swift */; };
 		1C477F93217F977600B42160 /* PlayPortalLeaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8C217F977600B42160 /* PlayPortalLeaderboard.swift */; };
 		1C477F94217F977600B42160 /* PlayPortalLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */; };
+		1C89E5542184BD2B00CA3528 /* PlayPortalProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */; };
+		1C89E5552184BD2B00CA3528 /* AlamofireRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54B2184BD2A00CA3528 /* AlamofireRequestHandler.swift */; };
+		1C89E5562184BD2B00CA3528 /* KeychainStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54C2184BD2A00CA3528 /* KeychainStorageManager.swift */; };
+		1C89E5572184BD2B00CA3528 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54D2184BD2A00CA3528 /* URL+Extensions.swift */; };
+		1C89E5582184BD2B00CA3528 /* PlayPortalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54E2184BD2A00CA3528 /* PlayPortalImage.swift */; };
+		1C89E5592184BD2B00CA3528 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54F2184BD2A00CA3528 /* StorageManager.swift */; };
+		1C89E55A2184BD2B00CA3528 /* PlayPortalURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E5502184BD2B00CA3528 /* PlayPortalURLs.swift */; };
+		1C89E55B2184BD2B00CA3528 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E5512184BD2B00CA3528 /* UIApplication+Extensions.swift */; };
+		1C89E55C2184BD2B00CA3528 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E5522184BD2B00CA3528 /* Utils.swift */; };
+		1C89E55D2184BD2B00CA3528 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E5532184BD2B00CA3528 /* UIImageView+Extensions.swift */; };
+		1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55E2184BD3200CA3528 /* AnonUser.png */; };
+		1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55F2184BD3200CA3528 /* AnonUserCover.png */; };
+		1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5602184BD3200CA3528 /* QuestionMark.jpg */; };
+		1C89E5652184BD3200CA3528 /* SSOButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5612184BD3200CA3528 /* SSOButton.png */; };
 		1CD1E3D4217F441900C2B083 /* PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */; };
 		1CD1E3D9217F441900C2B083 /* PPSDK_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */; };
 		1CD1E3DB217F441900C2B083 /* PPSDK_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -39,6 +53,20 @@
 		1C477F8B217F977600B42160 /* RequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		1C477F8C217F977600B42160 /* PlayPortalLeaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboard.swift; sourceTree = "<group>"; };
 		1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLoginButton.swift; sourceTree = "<group>"; };
+		1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalProfile.swift; sourceTree = "<group>"; };
+		1C89E54B2184BD2A00CA3528 /* AlamofireRequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireRequestHandler.swift; sourceTree = "<group>"; };
+		1C89E54C2184BD2A00CA3528 /* KeychainStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorageManager.swift; sourceTree = "<group>"; };
+		1C89E54D2184BD2A00CA3528 /* URL+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
+		1C89E54E2184BD2A00CA3528 /* PlayPortalImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalImage.swift; sourceTree = "<group>"; };
+		1C89E54F2184BD2A00CA3528 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		1C89E5502184BD2B00CA3528 /* PlayPortalURLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalURLs.swift; sourceTree = "<group>"; };
+		1C89E5512184BD2B00CA3528 /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
+		1C89E5522184BD2B00CA3528 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		1C89E5532184BD2B00CA3528 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
+		1C89E55E2184BD3200CA3528 /* AnonUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUser.png; sourceTree = "<group>"; };
+		1C89E55F2184BD3200CA3528 /* AnonUserCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUserCover.png; sourceTree = "<group>"; };
+		1C89E5602184BD3200CA3528 /* QuestionMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = QuestionMark.jpg; sourceTree = "<group>"; };
+		1C89E5612184BD3200CA3528 /* SSOButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButton.png; sourceTree = "<group>"; };
 		1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PPSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPSDK_Swift.h; sourceTree = "<group>"; };
 		1CD1E3CE217F441900C2B083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -77,6 +105,10 @@
 		1CC6076A2180B5D600B47385 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1C89E55E2184BD3200CA3528 /* AnonUser.png */,
+				1C89E55F2184BD3200CA3528 /* AnonUserCover.png */,
+				1C89E5602184BD3200CA3528 /* QuestionMark.jpg */,
+				1C89E5612184BD3200CA3528 /* SSOButton.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -123,6 +155,16 @@
 		1CD1E3E6217F45D700C2B083 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1C89E54B2184BD2A00CA3528 /* AlamofireRequestHandler.swift */,
+				1C89E54C2184BD2A00CA3528 /* KeychainStorageManager.swift */,
+				1C89E54E2184BD2A00CA3528 /* PlayPortalImage.swift */,
+				1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */,
+				1C89E5502184BD2B00CA3528 /* PlayPortalURLs.swift */,
+				1C89E54F2184BD2A00CA3528 /* StorageManager.swift */,
+				1C89E5512184BD2B00CA3528 /* UIApplication+Extensions.swift */,
+				1C89E5532184BD2B00CA3528 /* UIImageView+Extensions.swift */,
+				1C89E54D2184BD2A00CA3528 /* URL+Extensions.swift */,
+				1C89E5522184BD2B00CA3528 /* Utils.swift */,
 				1C477F89217F977500B42160 /* PlayPortalAuth.swift */,
 				1C477F88217F977500B42160 /* PlayPortalData.swift */,
 				1C477F87217F977500B42160 /* PlayPortalError.swift */,
@@ -248,6 +290,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */,
+				1C89E5652184BD3200CA3528 /* SSOButton.png in Resources */,
+				1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */,
+				1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,13 +350,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C89E5572184BD2B00CA3528 /* URL+Extensions.swift in Sources */,
 				1C477F94217F977600B42160 /* PlayPortalLoginButton.swift in Sources */,
+				1C89E5562184BD2B00CA3528 /* KeychainStorageManager.swift in Sources */,
 				1C477F8E217F977600B42160 /* PlayPortalError.swift in Sources */,
+				1C89E55D2184BD2B00CA3528 /* UIImageView+Extensions.swift in Sources */,
 				1C477F91217F977600B42160 /* PlayPortalUser.swift in Sources */,
+				1C89E55B2184BD2B00CA3528 /* UIApplication+Extensions.swift in Sources */,
+				1C89E5542184BD2B00CA3528 /* PlayPortalProfile.swift in Sources */,
+				1C89E55C2184BD2B00CA3528 /* Utils.swift in Sources */,
 				1C477F92217F977600B42160 /* RequestHandler.swift in Sources */,
+				1C89E5552184BD2B00CA3528 /* AlamofireRequestHandler.swift in Sources */,
 				1C477F90217F977600B42160 /* PlayPortalAuth.swift in Sources */,
+				1C89E55A2184BD2B00CA3528 /* PlayPortalURLs.swift in Sources */,
 				1C477F8F217F977600B42160 /* PlayPortalData.swift in Sources */,
 				1C477F93217F977600B42160 /* PlayPortalLeaderboard.swift in Sources */,
+				1C89E5582184BD2B00CA3528 /* PlayPortalImage.swift in Sources */,
+				1C89E5592184BD2B00CA3528 /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

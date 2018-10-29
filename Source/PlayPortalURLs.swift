@@ -86,4 +86,28 @@ internal struct PlayPortalURLs {
         
         internal static let staticImage = "/image/v1/static"
     }
+    
+    internal struct Leaderboard {
+        
+        //  MARK: - Initializers
+        
+        private init() {}
+        
+        
+        //  MARK: - Properties
+        
+        internal static let leaderboard = "/leaderboard/v1"
+    }
+    
+    internal struct App {
+        
+        //  MARK: - Initializers
+        
+        private init() {}
+        
+        
+        //  MARK: - Properties
+        
+        internal static let bucket = "/app/v1/bucket"
+    }
 }

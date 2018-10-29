@@ -75,7 +75,8 @@ public final class PlayPortalAuth {
         withClientId clientId: String,
         andClientSecret clientSecret: String,
         andRedirectURI redirectURI: String)
-        throws -> Void {
+        throws -> Void
+    {
         
         //  Check for correct configuration inputs
         guard !clientId.isEmpty else {

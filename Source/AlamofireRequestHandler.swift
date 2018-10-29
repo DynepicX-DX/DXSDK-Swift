@@ -42,13 +42,25 @@ extension AlamofireRequestHandler: RequestHandler {
     
     //  playPORTAL SSO tokens
     var accessToken: String? {
-        get { return _accessToken }
-        set { _accessToken = newValue }
+        get {
+            return globalStorageManager.get("accessToken")
+        }
+        set {
+            if let accessToken = newValue {
+                globalStorageManager.set(accessToken, atKey: "accessToken")
+            }
+        }
     }
     
     var refreshToken: String? {
-        get { return _refreshToken }
-        set { _refreshToken = newValue }
+        get {
+            return globalStorageManager.get("refreshToken")
+        }
+        set {
+            if let refreshToken = newValue {
+                globalStorageManager.set(refreshToken, atKey: "refreshToken")
+            }
+        }
     }
     
     //  User is authenticated if both `accessToken` and `refreshToken` aren't nil
