@@ -14,6 +14,8 @@
 		1C477F92217F977600B42160 /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8B217F977600B42160 /* RequestHandler.swift */; };
 		1C477F93217F977600B42160 /* PlayPortalLeaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8C217F977600B42160 /* PlayPortalLeaderboard.swift */; };
 		1C477F94217F977600B42160 /* PlayPortalLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */; };
+		1C70554C218892CA007EB006 /* PlayPortalDataBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70554A218892CA007EB006 /* PlayPortalDataBucket.swift */; };
+		1C70554D218892CA007EB006 /* PlayPortalLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */; };
 		1C89E5542184BD2B00CA3528 /* PlayPortalProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */; };
 		1C89E5552184BD2B00CA3528 /* AlamofireRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54B2184BD2A00CA3528 /* AlamofireRequestHandler.swift */; };
 		1C89E5562184BD2B00CA3528 /* KeychainStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54C2184BD2A00CA3528 /* KeychainStorageManager.swift */; };
@@ -53,6 +55,8 @@
 		1C477F8B217F977600B42160 /* RequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		1C477F8C217F977600B42160 /* PlayPortalLeaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboard.swift; sourceTree = "<group>"; };
 		1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLoginButton.swift; sourceTree = "<group>"; };
+		1C70554A218892CA007EB006 /* PlayPortalDataBucket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalDataBucket.swift; sourceTree = "<group>"; };
+		1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboardEntry.swift; sourceTree = "<group>"; };
 		1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalProfile.swift; sourceTree = "<group>"; };
 		1C89E54B2184BD2A00CA3528 /* AlamofireRequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireRequestHandler.swift; sourceTree = "<group>"; };
 		1C89E54C2184BD2A00CA3528 /* KeychainStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorageManager.swift; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 		1CD1E3E6217F45D700C2B083 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1C70554A218892CA007EB006 /* PlayPortalDataBucket.swift */,
+				1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */,
 				1C89E54B2184BD2A00CA3528 /* AlamofireRequestHandler.swift */,
 				1C89E54C2184BD2A00CA3528 /* KeychainStorageManager.swift */,
 				1C89E54E2184BD2A00CA3528 /* PlayPortalImage.swift */,
@@ -357,7 +363,9 @@
 				1C89E55D2184BD2B00CA3528 /* UIImageView+Extensions.swift in Sources */,
 				1C477F91217F977600B42160 /* PlayPortalUser.swift in Sources */,
 				1C89E55B2184BD2B00CA3528 /* UIApplication+Extensions.swift in Sources */,
+				1C70554C218892CA007EB006 /* PlayPortalDataBucket.swift in Sources */,
 				1C89E5542184BD2B00CA3528 /* PlayPortalProfile.swift in Sources */,
+				1C70554D218892CA007EB006 /* PlayPortalLeaderboardEntry.swift in Sources */,
 				1C89E55C2184BD2B00CA3528 /* Utils.swift in Sources */,
 				1C477F92217F977600B42160 /* RequestHandler.swift in Sources */,
 				1C89E5552184BD2B00CA3528 /* AlamofireRequestHandler.swift in Sources */,
