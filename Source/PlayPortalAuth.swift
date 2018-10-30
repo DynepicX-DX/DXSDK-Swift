@@ -20,6 +20,36 @@ public enum PlayPortalEnvironment: String {
 }
 
 
+//  Can be optionally implemented to handle any SSO errors, errors during refresh, or successful logouts
+@objc public protocol PlayPortalLoginDelegate: class {
+    
+    /**
+     Called when an error occurs during SSO flow.
+     
+     - Parameter with: The error that occurred.
+     
+     - Returns: Void
+     */
+    @objc optional func didFailToLogin(with error: Error) -> Void
+    
+    /**
+     Called when an error occurs during refresh or logout.
+     
+     - Parameter with: The error that occurred.
+     
+     - Returns: Void
+    */
+    @objc optional func didLogout(with error: Error) -> Void
+    
+    /**
+     Called when logout occurs without error.
+     
+     - Returns: Void
+    */
+    @objc optional func didLogoutSuccessfully() -> Void
+}
+
+
 //  Responsible for user authentication and token management
 public final class PlayPortalAuth {
     
@@ -102,13 +132,17 @@ public final class PlayPortalAuth {
     /**
      Check if current user is authenticated. If not, SSO flow will need to be initiated.
      
+     - Parameter loginDelegate: Optionally include login delegate.
      - Parameter completion: The closure called after requesting the user's profile.
      - Parameter error: The error returned from an unsuccessful request.
      - Parameter userProfile: The playPORTAL user profile returned from a successful request.
      
      - Returns: Void
      */
-    public func isAuthenticated(_ completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
+    public func isAuthenticated(loginDelegate: PlayPortalLoginDelegate? = nil, _ completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
+        
+        PlayPortalAuth.shared.loginDelegate = loginDelegate
+        
         if requestHandler.isAuthenticated {
             //  If authenticated, request current user's profile
             PlayPortalUser.shared.getProfile { error, userProfile in
@@ -127,13 +161,14 @@ public final class PlayPortalAuth {
      - Parameter delegate: PlayPortalLoginDelegate to handle any SSO errors.
      - Parameter from: UIViewController to present SFSafariViewController; defaults to topmost view controller.
      
-     - Throws: If sdk is not fully configured or unable to create an SSO URL with query parameters.
+     - Returns: Void
      */
-    internal func login(from viewController: UIViewController? = UIApplication.topMostViewController()) throws {
+    internal func login(from viewController: UIViewController? = UIApplication.topMostViewController()) {
         
         //  Ensure sdk is configured before starting SSO.
         guard PlayPortalAuth.shared.isConfigured else {
-            throw PlayPortalError.Configuration.notFullyConfigured
+            PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.Configuration.notFullyConfigured)
+            return
         }
         
         //  Construct sign in url
@@ -147,7 +182,8 @@ public final class PlayPortalAuth {
             "state": "state"
         ]
         guard let baseURL = URL(string: host + path), let urlWithParams = baseURL.with(queryParams: queryParams) else {
-            throw PlayPortalError.SSO.unableToOpenSSO(message: "Could not construct SSO SignIn URL.")
+            PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.Configuration.notFullyConfigured)
+            return
         }
         
         //  Open SSO sign in with safari view controller
@@ -161,11 +197,9 @@ public final class PlayPortalAuth {
      
      - Parameters url: The redirect URI called by playPORTAL SSO containing a user's tokens.
      
-     - Throws: If unable to extract parameters from redirect url.
-     
      - Returns: Void
      */
-    public func open(url: URL) throws -> Void {
+    public func open(url: URL) -> Void {
         
         //  Dismiss safari view controller
         defer {
@@ -174,10 +208,12 @@ public final class PlayPortalAuth {
         
         //  Extract tokens
         guard let accessToken = url.getParameter(for: "access_token") else {
-            throw PlayPortalError.SSO.parameterNotInRedirect(message: "Could not extract access token from redirect uri.")
+            PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.SSO.ssoFailed(message: "Could not extract access token from redirect uri."))
+            return
         }
         guard let refreshToken = url.getParameter(for: "refresh_token") else {
-            throw PlayPortalError.SSO.parameterNotInRedirect(message: "Could not extract refresh token from redirect uri.")
+            PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.SSO.ssoFailed(message: "Could not extract refresh token from redirect uri."))
+            return
         }
         
         requestHandler.accessToken = accessToken

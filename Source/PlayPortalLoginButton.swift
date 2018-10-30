@@ -9,21 +9,6 @@
 import Foundation
 import UIKit
 
-//  This protocol should be implemented by the UIViewController using the PlayPortalLoginButton.
-//  It includes methods for handling errors during playPORTAL SSO.
-public protocol PlayPortalLoginDelegate: class {
-    
-    /**
-     Called when an error occurs during SSO flow.
-     
-     - Parameter loginButton: The PlayPortalLoginButton that was used.
-     - Parameter error: The error that occurred.
-     
-     - Returns: Void
-     */
-    func playPortalLoginButtonDidFinishWithError(_ loginButton: PlayPortalLoginButton, error: Error) -> Void 
-}
-
 
 /**
  Responsible for initializing SSO flow when tapped.
@@ -31,9 +16,6 @@ public protocol PlayPortalLoginDelegate: class {
 public class PlayPortalLoginButton: UIButton {
     
     //  MARK: - Properties
-    
-    //  Handles playPORTAL SSO errors
-    private weak var delegate: PlayPortalLoginDelegate?
     
     //  The UIViewController to present the SSO web view
     private weak var from: UIViewController?
@@ -44,11 +26,9 @@ public class PlayPortalLoginButton: UIButton {
     /**
      Create login button.
      
-     - Parameter delegate: PlayPortalLoginDelegate that will handle playPORTAL SSO errors.
      - Parameter from: UIViewController that will present SFSafariViewController; defaults to topmost UIViewController.
      */
-    public init(delegate: PlayPortalLoginDelegate? = nil, from viewController: UIViewController? = nil) {
-        self.delegate = delegate
+    public init(from viewController: UIViewController? = nil) {
         self.from = viewController
         
         // Width ratio is 279w / 55h
@@ -72,7 +52,7 @@ public class PlayPortalLoginButton: UIButton {
         ssoButtonImage.frame = bounds
         ssoButtonImage.contentMode = .scaleAspectFit
         addSubview(ssoButtonImage)
-        sendSubviewToBack(ssoButtonImage)
+        sendSubview(toBack: ssoButtonImage)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -88,10 +68,6 @@ public class PlayPortalLoginButton: UIButton {
      - Returns: Void
      */
     @objc func loginTapped() {
-        do {
-            try PlayPortalAuth.shared.login(from: from)
-        } catch {
-            delegate?.playPortalLoginButtonDidFinishWithError(self, error: error)
-        }
+        PlayPortalAuth.shared.login(from: from)
     }
 }

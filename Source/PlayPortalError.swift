@@ -15,8 +15,7 @@ public enum PlayPortalError {
     }
     
     public enum SSO: Error {
-        case unableToOpenSSO(message: String)
-        case parameterNotInRedirect(message: String)
+        case ssoFailed(message: String)
     }
     
     public enum API: Error {
