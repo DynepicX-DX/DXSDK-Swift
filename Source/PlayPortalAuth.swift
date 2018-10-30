@@ -47,7 +47,7 @@ public final class PlayPortalAuth {
     private var requestHandler: RequestHandler = globalRequestHandler
     
     //  Maintain refrence to safari view controller so that it can be dismissed when SSO finishes
-    private weak var safariViewController: SFSafariViewController?
+    private var safariViewController: SFSafariViewController?
     
     
     //  MARK: - Initializers

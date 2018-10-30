@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import PPSDK_Swift
 
 class PPSDK_SwiftTests: XCTestCase {
     
