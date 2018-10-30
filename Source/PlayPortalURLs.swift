@@ -59,6 +59,8 @@ internal struct PlayPortalURLs {
         internal static let signIn = "/oauth/signin"
         
         internal static let token = "/oauth/token"
+        
+        internal static let logout = "/oauth/logout"
     }
     
     internal struct User {

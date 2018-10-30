@@ -133,7 +133,7 @@ public final class PlayPortalAuth {
      Check if current user is authenticated. If not, SSO flow will need to be initiated.
      
      - Parameter loginDelegate: Optionally include login delegate.
-     - Parameter completion: The closure called after requesting the user's profile.
+     - Parameter completion: The closure invoked after requesting the user's profile.
      - Parameter error: The error returned from an unsuccessful request.
      - Parameter userProfile: The playPORTAL user profile returned from a successful request.
      
@@ -228,7 +228,7 @@ public final class PlayPortalAuth {
     /**
      Called when a refresh is required.
      
-     - Parameter completion: The closure called when the request finishes.
+     - Parameter completion: The closure invoked when the request finishes.
      - Parameter error: The error returned on an unsuccessful request.
      - Parameter accessToken: The new access token returned on a successful request.
      - Parameter refreshToken: The new refresh token returned on a successful request.
@@ -254,9 +254,11 @@ public final class PlayPortalAuth {
             "client_secret": PlayPortalAuth.shared.clientSecret,
             "grant_type": "refresh_token"
         ]
-        guard let baseURL = URL(string: host + path), let urlWithParams = baseURL.with(queryParams: queryParams) else {
-            completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil, nil)
-            return
+        guard let baseURL = URL(string: host + path)
+            , let urlWithParams = baseURL.with(queryParams: queryParams)
+            else {
+                completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil, nil)
+                return
         }
         
         var urlRequest = URLRequest(url: urlWithParams)
@@ -276,6 +278,47 @@ public final class PlayPortalAuth {
                     return
             }
             completion(nil, accessToken, refreshToken)
+        }
+    }
+    
+    /**
+     Logout current user.
+     
+     - Parameter completion: The closure invoked when the request finishes.
+        It's not necessary to pass this completion if you have a `PlayPortalLoginDelegate` that implements `didLogout(with:)` and `didLogoutSuccessfully`.
+     - Parameter error: The error returned for an unsuccessful request.
+     
+     - Returns: Void
+    */
+    public func logout(_ completion: ((_ error: Error?) -> Void)?) -> Void {
+        
+        //  Create url request
+        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
+        let path = PlayPortalURLs.OAuth.token
+        
+        guard let refreshToken = requestHandler.refreshToken else {
+                completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."))
+                return
+        }
+        let queryParams: [String: String] = [
+            "refresh_token": refreshToken
+        ]
+        guard let baseURL = URL(string: host + path)
+            , let urlWithParams = baseURL.with(queryParams: queryParams)
+            else {
+                completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."))
+                return
+        }
+        
+        var urlRequest = URLRequest(url: urlWithParams)
+        urlRequest.httpMethod = "POST"
+        
+        //  Make request
+        requestHandler.requestJSON(urlRequest) { error, _ in
+            completion?(error)
+            error != nil
+                ? PlayPortalAuth.shared.loginDelegate?.didLogout?(with: error!)
+                : PlayPortalAuth.shared.loginDelegate?.didLogoutSuccessfully?()
         }
     }
 }

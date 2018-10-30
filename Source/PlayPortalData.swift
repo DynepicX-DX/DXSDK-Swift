@@ -33,7 +33,7 @@ public final class PlayPortalData {
      - Parameter bucketName: Name given to the bucket.
      - Parameter includingUsers: Ids of users who will have access to the bucket.
      - Parameter isPublic: Indicates if the bucket is globally available; defaults to false.
-     - Parameter completion: The closure called when the request finishes.
+     - Parameter completion: The closure invoked when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Parameter bucket: The newly created bucket.
      
