@@ -40,16 +40,11 @@ public final class PlayPortalImage {
     public func getImage(forImageId imageId: String, _ completion: @escaping (_ error: Error?, _ data: Data?) -> Void) -> Void {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.Image.staticImage
-        
-        guard let url = URL(string: host + path + "/" + imageId) else {
-            completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil)
-            return
+        guard let urlRequest = URLRequest.from(
+            method: "GET", andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.Image.staticImage + "/" + imageId) else {
+                completion(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
+                return
         }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "GET"
         
         //  Make request
         requestHandler.request(urlRequest) { error, data in

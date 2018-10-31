@@ -64,9 +64,6 @@ public final class PlayPortalAuth {
     private var clientSecret = ""
     private var redirectURI = ""
     
-    //  Flag that is checked before any sdk method is called to ensure that sdk is fully configured
-    private var isConfigured = false
-    
     //  Completion that will be called once user is authenticated through auth flow.
     private var isAuthenticatedCompletion: ((_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void)?
     
@@ -96,8 +93,6 @@ public final class PlayPortalAuth {
      - Parameter andClientSecret: Client secret associated with the app.
      - Parameter andRedirectURI: The redirect uri the playPORTAL SSO will use to return an authenticated user's tokens.
      
-     - Throws: If any configuration arguments are invalid.
-     
      - Returns: Void
      */
     public func configure(
@@ -105,28 +100,13 @@ public final class PlayPortalAuth {
         withClientId clientId: String,
         andClientSecret clientSecret: String,
         andRedirectURI redirectURI: String)
-        throws -> Void
+        -> Void
     {
-        
-        //  Check for correct configuration inputs
-        guard !clientId.isEmpty else {
-            throw PlayPortalError.Configuration.invalidConfiguration(message: "Client id must not be empty.")
-        }
-        guard !clientSecret.isEmpty else {
-            throw PlayPortalError.Configuration.invalidConfiguration(message: "Client secret must not be empty.")
-        }
-        guard !redirectURI.isEmpty else {
-            throw PlayPortalError.Configuration.invalidConfiguration(message: "Redirect URI must not be empty.")
-        }
-        
         //  Set configuration
         PlayPortalAuth.shared.environment = environment
         PlayPortalAuth.shared.clientId = clientId
         PlayPortalAuth.shared.clientSecret = clientSecret
         PlayPortalAuth.shared.redirectURI = redirectURI
-        
-        //  SDK is fully configured
-        PlayPortalAuth.shared.isConfigured = true
     }
     
     /**
@@ -165,12 +145,6 @@ public final class PlayPortalAuth {
      */
     internal func login(from viewController: UIViewController? = UIApplication.topMostViewController()) {
         
-        //  Ensure sdk is configured before starting SSO.
-        guard PlayPortalAuth.shared.isConfigured else {
-            PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.Configuration.notFullyConfigured)
-            return
-        }
-        
         //  Construct sign in url
         let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
         let path = PlayPortalURLs.OAuth.signIn
@@ -181,9 +155,11 @@ public final class PlayPortalAuth {
             "response_type": "implicit",
             "state": "state"
         ]
-        guard let baseURL = URL(string: host + path), let urlWithParams = baseURL.with(queryParams: queryParams) else {
-            PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.Configuration.notFullyConfigured)
-            return
+        guard let baseURL = URL(string: host + path)
+            , let urlWithParams = baseURL.with(queryParams: queryParams)
+            else {
+                PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.SSO.ssoFailed(message: "Could not create SSO login url."))
+                return
         }
         
         //  Open SSO sign in with safari view controller
@@ -236,31 +212,19 @@ public final class PlayPortalAuth {
     internal func refresh(completion: @escaping (_ error: Error?, _ accessToken: String?, _ refreshToken: String?) -> Void) -> Void {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.OAuth.token
-        
-        guard let accessToken = requestHandler.accessToken
-            , let refreshToken = requestHandler.refreshToken
-            else {
-                completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil, nil)
+        guard let urlRequest = URLRequest.from(
+            method: "POST",
+            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.OAuth.token,
+            andQueryParams: [
+                "access_token": requestHandler.accessToken,
+                "refresh_token": requestHandler.refreshToken,
+                "client_id": PlayPortalAuth.shared.clientId,
+                "client_secret": PlayPortalAuth.shared.clientSecret,
+                "grant_type": "refresh_token"
+            ]) else {
+                completion(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil, nil)
                 return
         }
-        let queryParams: [String: String] = [
-            "access_token": accessToken,
-            "refresh_token": refreshToken,
-            "client_id": PlayPortalAuth.shared.clientId,
-            "client_secret": PlayPortalAuth.shared.clientSecret,
-            "grant_type": "refresh_token"
-        ]
-        guard let baseURL = URL(string: host + path)
-            , let urlWithParams = baseURL.with(queryParams: queryParams)
-            else {
-                completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil, nil)
-                return
-        }
-        
-        var urlRequest = URLRequest(url: urlWithParams)
-        urlRequest.httpMethod = "POST"
         
         //  Make request
         requestHandler.request(urlRequest) { error, data in
@@ -295,30 +259,14 @@ public final class PlayPortalAuth {
     public func logout(_ completion: ((_ error: Error?) -> Void)?) -> Void {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.OAuth.logout
-        
-        guard let refreshToken = requestHandler.refreshToken else {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."))
-            return
-        }
-        
-        guard let url = URL(string: host + path) else {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."))
-            return
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "POST"
-        
-        let parameters: [String: String] = [
-            "refresh_token": refreshToken
-        ]
-        do {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [.prettyPrinted])
-        } catch {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to add body to request."))
+        guard let urlRequest = URLRequest.from(
+            method: "POST",
+            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.OAuth.logout,
+            andBody: [
+                "refresh_token": requestHandler.refreshToken
+            ]) else {
+                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."))
+                return
         }
         
         //  Make request

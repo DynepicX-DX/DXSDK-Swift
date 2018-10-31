@@ -48,28 +48,17 @@ public final class PlayPortalLeaderboard {
     {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.Leaderboard.leaderboard
-        
-        var parameters: [String: String] = [
-            "categories": categories.joined(separator: ",")
-        ]
-        
-        if let page = page {
-            parameters["page"] = String(page)
+        guard let urlRequest = URLRequest.from(
+            method: "GET",
+            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.Leaderboard.leaderboard,
+            andQueryParams: [
+                "categories": categories.joined(separator: ","),
+                "page": page == nil ? nil : String(page!),
+                "limit": limit == nil ? nil : String(limit!)
+            ]) else {
+                completion(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
+                return
         }
-        if let limit = limit {
-            parameters["limit"] = String(limit)
-        }
-        
-        guard let url = URL(string: host + path)
-            , let urlWithParams = url.with(queryParams: parameters) else {
-            completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil)
-            return
-        }
-        
-        var urlRequest = URLRequest(url: urlWithParams)
-        urlRequest.httpMethod = "GET"
         
         //  Make request
         requestHandler.request(urlRequest) { error, data in
@@ -104,26 +93,15 @@ public final class PlayPortalLeaderboard {
     {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.Leaderboard.leaderboard
-        
-        guard let url = URL(string: host + path) else {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil)
-            return
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "POST"
-        
-        let parameters: [String: Any] = [
-            "score": score,
-            "categories": categories
-        ]
-        do {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [.prettyPrinted])
-        } catch {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to add body to request."), nil)
+        guard let urlRequest = URLRequest.from(
+            method: "POST",
+            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.Leaderboard.leaderboard,
+            andBody: [
+                "score": score,
+                "categories": categories
+            ]) else {
+                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
+                return
         }
         
         //  Make request

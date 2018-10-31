@@ -39,16 +39,12 @@ public final class PlayPortalUser {
     public func getProfile(completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.User.userProfile
-        
-        guard let url = URL(string: host + path) else {
-            completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil)
-            return
+        guard let urlRequest = URLRequest.from(
+            method: "GET",
+            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.User.userProfile) else {
+                completion(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
+                return
         }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "GET"
         
         //  Make request
         requestHandler.request(urlRequest) { error, data in
@@ -79,16 +75,12 @@ public final class PlayPortalUser {
     public func getFriendProfiles(completion: @escaping (_ error: Error?, _ friendProfiles: [PlayPortalProfile]?) -> Void) -> Void {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.User.friendProfiles
-        
-        guard let url = URL(string: host + path) else {
-            completion(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil)
-            return
+        guard let urlRequest = URLRequest.from(
+            method: "GET",
+            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.User.friendProfiles) else {
+                completion(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
+                return
         }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "GET"
         
         //  Make request
         requestHandler.request(urlRequest) { error, data in

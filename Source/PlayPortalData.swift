@@ -48,28 +48,16 @@ public final class PlayPortalData {
     {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.App.bucket
-        
-        guard let url = URL(string: host + path) else {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil)
-            return
-        }
-
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "PUT"
-        
-        let parameters: [String: Any] = [
-            "id": bucketName,
-            "users": users,
-            "public": isPublic
-        ]
-        do {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [.prettyPrinted])
-        } catch {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to add body to request."), nil)
-            return
+        guard let urlRequest = URLRequest.from(
+            method: "PUT",
+            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.App.bucket,
+            andBody: [
+                "id": bucketName,
+                "users": users,
+                "public": isPublic
+            ]) else {
+                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
+                return
         }
         
         //  Make request
@@ -110,28 +98,16 @@ public final class PlayPortalData {
     {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.App.bucket
-        
-        guard let url = URL(string: host + path) else {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil)
-            return
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "POST"
-        
-        let parameters: [String: Any] = [
-            "id": bucketName,
-            "key": key,
-            "value": value
-        ]
-        do {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [.prettyPrinted])
-        } catch {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to add body to request."), nil)
-            return
+        guard let urlRequest = URLRequest.from(
+            method: "POST",
+            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.App.bucket,
+            andBody: [
+                "id": bucketName,
+                "key": key,
+                "value": value
+            ]) else {
+                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
+                return
         }
         
         //  Make request
@@ -171,27 +147,17 @@ public final class PlayPortalData {
     {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.App.bucket
-        
-        var parameters: [String: String] = [
-            "id": bucketName
-        ]
-        if let key = key {
-            parameters["key"] = key
-        }
-        
-        guard let url = URL(string: host + path)
-            , let urlWithParams = url.with(queryParams: parameters)
-            else {
-                completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil)
+        guard let urlRequest = URLRequest.from(
+            method: "GET", andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.App.bucket,
+            andQueryParams: [
+                "id": bucketName
+            ],
+            andHeaders: [
+                "Accept": "application/json"
+            ]) else {
+                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
                 return
         }
-        
-        var urlRequest = URLRequest(url: urlWithParams)
-        urlRequest.httpMethod = "GET"
-        
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         
         //  Make request
         requestHandler.request(urlRequest) { error, data in
@@ -227,28 +193,16 @@ public final class PlayPortalData {
     {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.App.bucket
-        
-        guard let url = URL(string: host + path) else {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."), nil)
-            return
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "POST"
-        
-        let parameters: [String: Any?] = [
-            "id": bucketName,
-            "key": key,
-            "value": nil
-        ]
-        do {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [.prettyPrinted])
-        } catch {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to add body to request."), nil)
-            return
+        guard let urlRequest = URLRequest.from(
+            method: "POST",
+            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.App.bucket,
+            andBody: [
+                "id": bucketName,
+                "key": key,
+                "value": nil
+            ]) else {
+                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
+                return
         }
         
         //  Make request
@@ -278,25 +232,13 @@ public final class PlayPortalData {
     public func delete(bucketNamed bucketName: String, _ completion: ((_ error: Error?) -> Void)?) -> Void {
         
         //  Create url request
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.App.bucket
-        
-        guard let url = URL(string: host + path) else {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."))
-            return
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "DELETE"
-        
-        let parameters: [String: Any] = [
-            "id": bucketName
-        ]
-        do {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [.prettyPrinted])
-        } catch {
-            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to add body to request."))
+        guard let urlRequest = URLRequest.from(
+            method: "DELETE", andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.App.bucket,
+            andBody: [
+                "id": bucketName
+            ]) else {
+                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."))
+                return
         }
         
         //  Make request

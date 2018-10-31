@@ -9,11 +9,6 @@ import Foundation
 
 public enum PlayPortalError {
     
-    public enum Configuration: Error {
-        case notFullyConfigured
-        case invalidConfiguration(message: String)
-    }
-    
     public enum SSO: Error {
         case ssoFailed(message: String)
     }
