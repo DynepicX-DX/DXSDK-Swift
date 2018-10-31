@@ -10,12 +10,18 @@ import UIKit
 import StoreKit
 
 //  Publicly available utility functions
-public final class PlayPortalUtils {
+public final class PlayPortalUtils: NSObject {
+    
+    //  MARK: - Properties
+    
+    //  Work around for adding a delegate to `SKStoreProductViewController`
+    private static let shared = PlayPortalUtils()
+    
     
     //  MARK: - Initializers
     
     //  Should not be initialized; all methods are static
-    private init() {}
+    private override init() {}
     
     
     //  MARK: - Methods
@@ -24,12 +30,10 @@ public final class PlayPortalUtils {
      Opens playPORTAl on user's phone if downloaded or opens app store for user to download it.
      
      - Parameter from: The view controller to open `SKStoreProductViewController` from; defaults to top most view controller.
-     - Parameter completion: The closure invoked after loading playPORTAL with StoreKit.
-     - Parameter error: The error returned if playPORTAL is unable to be loaded.
      
      - Returns: Void
     */
-    public static func openOrDownloadPlayPORTAL(from: UIViewController? = nil, _ completion: ((_ error: Error?) -> Void)? = nil) -> Void {
+    public static func openOrDownloadPlayPORTAL(from: UIViewController? = nil) -> Void {
         
         //  Attempt to open playPORTAL
         if let playPortalURL = URL(string: "playportal://") , UIApplication.shared.canOpenURL(playPortalURL) {
@@ -37,15 +41,28 @@ public final class PlayPortalUtils {
         } else {
             //  Otherwise, open playPORTAL through StoreKit
             let storeProductVC = SKStoreProductViewController()
+            storeProductVC.delegate = PlayPortalUtils.shared
+            
             let params = [
-                SKStoreProductParameterITunesItemIdentifier: "com.dynepic.iOKids"
+                SKStoreProductParameterITunesItemIdentifier: "1112657594"
             ]
             storeProductVC.loadProduct(withParameters: params) { _, error in
-                storeProductVC.dismiss(animated: true, completion: nil)
-                completion?(error)
+                if error != nil {
+                    storeProductVC.dismiss(animated: true, completion: nil)
+                }
             }
+            
             let openFrom = from ?? UIApplication.topMostViewController()
             openFrom?.present(storeProductVC, animated: true, completion: nil)
         }
+    }
+}
+
+
+//  Add conformance to dismiss `SKStoreProductViewController`
+extension PlayPortalUtils: SKStoreProductViewControllerDelegate {
+    
+    @objc public func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        viewController.dismiss(animated: true, completion: nil)
     }
 }

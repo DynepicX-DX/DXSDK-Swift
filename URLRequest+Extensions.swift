@@ -30,6 +30,8 @@ internal extension URLRequest {
         -> URLRequest?
     {
         var url = URL(string: urlString)
+        
+        //  Add query parameters
         if let queryParams = queryParams {
             var params = [String: String]()
             for (key, value) in queryParams where value != nil {
@@ -38,10 +40,12 @@ internal extension URLRequest {
             url = url?.with(queryParams: params)
         }
         
+        //  Create url request with url
         guard url != nil else { return nil }
         var urlRequest = URLRequest(url: url!)
         urlRequest.httpMethod = method
         
+        //  Add body
         if var body = body {
             for (key, value) in body where value != nil {
                 body[key] = value!
@@ -54,12 +58,13 @@ internal extension URLRequest {
             }
         }
         
+        //  Add headers
         if let headers = headers {
             for (key, value) in headers {
                 urlRequest.addValue(value, forHTTPHeaderField: key)
             }
         }
         
-        return nil
+        return urlRequest
     }
 }

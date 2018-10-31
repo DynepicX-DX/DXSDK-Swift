@@ -13,11 +13,6 @@ internal class AlamofireRequestHandler {
     
     //  MARK: - Properties
     
-    //  Internal properties for tokens
-    private var _accessToken: String?
-    
-    private var _refreshToken: String?
-    
     //  Singleton instance
     internal static let shared = AlamofireRequestHandler()
     
@@ -65,7 +60,7 @@ extension AlamofireRequestHandler: RequestHandler {
     
     //  User is authenticated if both `accessToken` and `refreshToken` aren't nil
     var isAuthenticated: Bool {
-        return globalStorageManager.get("accessToken") != nil && globalStorageManager.get("refreshToken") != nil
+        return accessToken != nil && refreshToken != nil
     }
     
     
