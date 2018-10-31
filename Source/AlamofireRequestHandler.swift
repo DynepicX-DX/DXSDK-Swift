@@ -91,15 +91,13 @@ extension AlamofireRequestHandler: RequestHandler {
             .request(request)
             .validate(statusCode: 200..<300)
             .response { response in
-                if let error = response.error {
-                    completion?(error, nil)
-                } else if response.data == nil, let response = response.response {
-                    let error = PlayPortalError.API.createError(from: response)
-                    completion?(error, nil)
-                } else if let data = response.data {
+                if let data = response.data {
                     completion?(nil, data)
                 } else {
-                    completion?(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize data from result."), nil)
+                    let error = response.response != nil
+                        ? PlayPortalError.API.createError(from: response.response!)
+                        : response.error ?? PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize data from result.")
+                    completion?(error, nil)
                 }
         }
     }
