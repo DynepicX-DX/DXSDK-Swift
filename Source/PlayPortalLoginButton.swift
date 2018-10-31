@@ -52,7 +52,7 @@ public class PlayPortalLoginButton: UIButton {
         ssoButtonImage.frame = bounds
         ssoButtonImage.contentMode = .scaleAspectFit
         addSubview(ssoButtonImage)
-        sendSubview(toBack: ssoButtonImage)
+        sendSubviewToBack(ssoButtonImage)
     }
     
     public required init?(coder aDecoder: NSCoder) {
