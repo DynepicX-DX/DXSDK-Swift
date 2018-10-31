@@ -41,7 +41,7 @@ extension AlamofireRequestHandler: RequestHandler {
     //  MARK: - Properties
     
     //  playPORTAL SSO tokens
-    var accessToken: String? {
+    fileprivate (set) var accessToken: String? {
         get {
             return globalStorageManager.get("accessToken")
         }
@@ -52,7 +52,7 @@ extension AlamofireRequestHandler: RequestHandler {
         }
     }
     
-    var refreshToken: String? {
+    fileprivate (set) var refreshToken: String? {
         get {
             return globalStorageManager.get("refreshToken")
         }
@@ -65,11 +65,28 @@ extension AlamofireRequestHandler: RequestHandler {
     
     //  User is authenticated if both `accessToken` and `refreshToken` aren't nil
     var isAuthenticated: Bool {
-        return AlamofireRequestHandler.shared.accessToken != nil && AlamofireRequestHandler.shared.refreshToken != nil
+        return globalStorageManager.get("accessToken") != nil && globalStorageManager.get("refreshToken") != nil
     }
     
     
     //  MARK: - Methods
+    
+    /**
+     Set SSO tokens.
+    */
+    @discardableResult
+    func set(accessToken: String, andRefreshToken refreshToken: String) -> Bool {
+        return globalStorageManager.set(accessToken, atKey: "accessToken")
+            && globalStorageManager.set(refreshToken, atKey: "refreshToken")
+    }
+    
+    /**
+     Clear SSO tokens.
+    */
+    @discardableResult
+    func clearTokens() -> Bool {
+        return globalStorageManager.delete("accessToken") && globalStorageManager.delete("refreshToken")
+    }
     
     /**
      Make request for JSON using internal `sessionManager` instance
@@ -187,38 +204,29 @@ extension TokenRetrier: RequestRetrier {
         //  Lock so refresh only occurs once
         lock.lock(); defer { lock.unlock() }
         
-        if let response = request.task?.response as? HTTPURLResponse {
-            let error = PlayPortalError.API.createError(from: response)
-            switch error {
-            case let .requestFailed(error, _):
-                switch error {
-                //  Refresh should only occur on 4010 error
-                case .tokenRefreshRequired:
-                    if !isRefreshing {
-                        isRefreshing = true
-                        PlayPortalAuth.shared.refresh { [weak self] error, accessToken, refreshToken in
-                            guard let strongSelf = self
-                                , error == nil
-                                , let accessToken = accessToken
-                                , let refreshToken = refreshToken
-                                else {
-                                    //  TODO: Handle logout
-                                    return
-                            }
-                            strongSelf.lock.lock(); defer { strongSelf.lock.unlock() }
-                            AlamofireRequestHandler.shared.accessToken = accessToken
-                            AlamofireRequestHandler.shared.refreshToken = refreshToken
-                            strongSelf.requestsToRetry.forEach { $0(true, 0.0) }
-                            strongSelf.requestsToRetry.removeAll()
-                            strongSelf.isRefreshing = false
-                        }
+        requestsToRetry.append(completion)
+        
+        //  Refresh should only occur on refresh required error
+        if let response = request.task?.response as? HTTPURLResponse
+            , PlayPortalError.API.ErrorCode.errorCode(for: response) == .tokenRefreshRequired {
+            if !isRefreshing {
+                isRefreshing = true
+                PlayPortalAuth.shared.refresh { [weak self] error, accessToken, refreshToken in
+                    guard let strongSelf = self
+                        , error == nil
+                        , let accessToken = accessToken
+                        , let refreshToken = refreshToken
+                        else {
+                            completion(false, 0.0)
+                            return
                     }
-                default:
-                    completion(false, 0.0)
+                    strongSelf.lock.lock(); defer { strongSelf.lock.unlock() }
+                    AlamofireRequestHandler.shared.accessToken = accessToken
+                    AlamofireRequestHandler.shared.refreshToken = refreshToken
+                    strongSelf.requestsToRetry.forEach { $0(true, 0.0) }
+                    strongSelf.requestsToRetry.removeAll()
+                    strongSelf.isRefreshing = false
                 }
-            default:
-                //  TODO: should logout
-                break
             }
         } else {
             completion(false, 0.0)

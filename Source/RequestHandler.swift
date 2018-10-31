@@ -12,14 +12,33 @@ internal protocol RequestHandler {
     
     //  MARK: - Properties
     
-    var accessToken: String? { get set }
+    var accessToken: String? { get }
     
-    var refreshToken: String? { get set }
+    var refreshToken: String? { get }
     
     var isAuthenticated: Bool { get }
     
     
     //  MARK: - Methods
+    
+    /**
+     Set tokens received through SSO.
+     
+     - Parameter accessToken: Access token received through SSO.
+     - Parameter refreshToken: Refresh token received through SSO.
+     
+     - Returns: True if the tokens were set successfully
+    */
+    @discardableResult
+    mutating func set(accessToken: String, andRefreshToken refreshToken: String) -> Bool
+    
+    /**
+     Clear SSO tokens.
+     
+     - Returns: True if tokens were cleared successfully.
+    */
+    @discardableResult
+    mutating func clearTokens() -> Bool
     
     /**
      Make request to playPORTAL api where the expected result is JSON.

@@ -84,6 +84,25 @@ public enum PlayPortalError {
             
             // 505 - HTTP Version Not Supported
             case appVersionNotSupported = 5051
+            
+            
+            //  MARK: - Methods
+            
+            /**
+             Get a specific error code for a response.
+             
+             - Parameter for: The response containing the error code.
+             
+             - Returns: `ErrorCode` instance if the response contains a known error code, nil otherwise.
+            */
+            static internal func errorCode(for response: HTTPURLResponse) -> ErrorCode? {
+                guard let errorCode = response.allHeaderFields["errorcode"] as? String
+                    , let code = Int(errorCode)
+                    else {
+                        return nil
+                }
+                return ErrorCode(rawValue: code)
+            }
         }
         
         /**
@@ -93,7 +112,7 @@ public enum PlayPortalError {
          
          - Returns: `PlayPortalError.API`
          */
-        internal static func createError(from response: HTTPURLResponse) -> PlayPortalError.API {
+        internal static func createError(from response: HTTPURLResponse) -> API {
             guard let errorCode = response.allHeaderFields["errorcode"] as? String
                 , let code = Int(errorCode)
                 , let description = response.allHeaderFields["errordescription"] as? String

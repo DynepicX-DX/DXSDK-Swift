@@ -36,6 +36,16 @@ internal protocol StorageManager {
     func get(_ key: String) -> String?
     
     /**
+     Delete a key.
+     
+     - Paramter key: The key to be deleted.
+     
+     - Returns: True if key was successfully deleted.
+    */
+    @discardableResult
+    func delete(_ key: String) -> Bool
+    
+    /**
      Clear all keys.
      
      - Returns: True if all keys were successfully cleared.

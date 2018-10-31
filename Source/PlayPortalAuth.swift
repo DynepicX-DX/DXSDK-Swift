@@ -215,9 +215,7 @@ public final class PlayPortalAuth {
             PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.SSO.ssoFailed(message: "Could not extract refresh token from redirect uri."))
             return
         }
-        
-        requestHandler.accessToken = accessToken
-        requestHandler.refreshToken = refreshToken
+        requestHandler.set(accessToken: accessToken, andRefreshToken: refreshToken)
         
         //  Request current user's profile
         PlayPortalUser.shared.getProfile { error, userProfile in
@@ -267,7 +265,10 @@ public final class PlayPortalAuth {
         //  Make request
         requestHandler.requestJSON(urlRequest) { error, json in
             guard error == nil else {
+                //  Logout on unsuccessful refresh
                 completion(error, nil, nil)
+                PlayPortalAuth.shared.requestHandler.clearTokens()
+                PlayPortalAuth.shared.loginDelegate?.didLogout?(with: error!)
                 return
             }
             guard let json = json
@@ -294,27 +295,34 @@ public final class PlayPortalAuth {
         
         //  Create url request
         let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.OAuth.token
+        let path = PlayPortalURLs.OAuth.logout
         
         guard let refreshToken = requestHandler.refreshToken else {
-                completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."))
-                return
-        }
-        let queryParams: [String: String] = [
-            "refresh_token": refreshToken
-        ]
-        guard let baseURL = URL(string: host + path)
-            , let urlWithParams = baseURL.with(queryParams: queryParams)
-            else {
-                completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."))
-                return
+            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."))
+            return
         }
         
-        var urlRequest = URLRequest(url: urlWithParams)
+        guard let url = URL(string: host + path) else {
+            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to construct url for request."))
+            return
+        }
+        
+        var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
+        
+        let parameters: [String: String] = [
+            "refresh_token": refreshToken
+        ]
+        do {
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [.prettyPrinted])
+        } catch {
+            completion?(PlayPortalError.API.failedToMakeRequest(message: "Unable to add body to request."))
+        }
         
         //  Make request
         requestHandler.requestJSON(urlRequest) { error, _ in
+            PlayPortalAuth.shared.requestHandler.clearTokens()
             completion?(error)
             error != nil
                 ? PlayPortalAuth.shared.loginDelegate?.didLogout?(with: error!)

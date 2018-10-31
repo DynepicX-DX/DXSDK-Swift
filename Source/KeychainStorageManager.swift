@@ -12,6 +12,7 @@ import KeychainSwift
 extension KeychainSwift: StorageManager {
     
     func set(_ value: String, atKey key: String) -> Bool {
+        
         return set(value, forKey: key)
     }
 }
