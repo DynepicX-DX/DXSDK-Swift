@@ -1,14 +1,13 @@
 //
 //  RequestHandler.swift
-//  PPSDK-Swift
 //
 //  Created by Lincoln Fraley on 10/23/18.
 //
 
-internal let globalRequestHandler: RequestHandler = AlamofireRequestHandler.shared
+let globalRequestHandler: RequestHandler = AlamofireRequestHandler.shared
 
 //  Protocol to be adopted by class responsible for making requests to playPORTAL apis
-internal protocol RequestHandler {
+protocol RequestHandler {
     
     //  MARK: - Properties
     
@@ -30,7 +29,7 @@ internal protocol RequestHandler {
      - Returns: True if the tokens were set successfully
     */
     @discardableResult
-    mutating func set(accessToken: String, andRefreshToken refreshToken: String) -> Bool
+    func set(accessToken: String, andRefreshToken refreshToken: String) -> Bool
     
     /**
      Clear SSO tokens.
@@ -38,7 +37,7 @@ internal protocol RequestHandler {
      - Returns: True if tokens were cleared successfully.
     */
     @discardableResult
-    mutating func clearTokens() -> Bool
+    func clearTokens() -> Bool
     
     /**
      Make request.

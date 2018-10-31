@@ -1,6 +1,5 @@
 //
 //  Utils.swift
-//  Alamofire
 //
 //  Created by Lincoln Fraley on 10/25/18.
 //
@@ -9,7 +8,7 @@ import Foundation
 import UIKit
 
 //  Internal utilities class
-internal class Utils {
+class Utils {
     
     /**
      Get image asset from bundle by name.

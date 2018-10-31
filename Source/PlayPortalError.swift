@@ -1,6 +1,5 @@
 //
 //  PlayPortalError.swift
-//  Nimble
 //
 //  Created by Lincoln Fraley on 10/22/18.
 //

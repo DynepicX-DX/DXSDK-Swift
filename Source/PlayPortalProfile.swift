@@ -1,6 +1,5 @@
 //
 //  PlayPortalProfile.swift
-//  Alamofire
 //
 //  Created by Lincoln Fraley on 10/24/18.
 //
@@ -67,10 +66,12 @@ public struct PlayPortalProfile {
         guard let userId = json["userId"] as? String else {
             throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'userId' from JSON.")
         }
-        guard let userType = PlayPortalProfile.userType(from: json) else {
+        guard let userTypeRawValue = json["userType"] as? String
+            , let userType = PlayPortalProfile.UserType.init(rawValue: userTypeRawValue) else {
             throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'userType' from JSON.")
         }
-        guard let accountType = PlayPortalProfile.accountType(from: json) else {
+        guard let accountTypeRawValue = json["accountType"] as? String
+            , let accountType = PlayPortalProfile.AccountType.init(rawValue: accountTypeRawValue) else {
             throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'accountType' from JSON.")
         }
         guard let handle = json["handle"] as? String else {
@@ -103,33 +104,5 @@ public struct PlayPortalProfile {
         if let coverPhoto = json["coverPhoto"] as? String? {
             self.coverPhoto = coverPhoto
         }
-    }
-    
-    /**
-     Helper function to get account type from JSON.
-     
-     - Parameter from: JSON to extract account type from.
-     
-     - Returns: `PlayPortalProfile.AccountType` if able to extract account type, nil otherwise.
-     */
-    private static func accountType(from json: [String: Any]) -> PlayPortalProfile.AccountType? {
-        guard let accountTypeRawValue = json["accountType"] as? String else {
-            return nil
-        }
-        return PlayPortalProfile.AccountType.init(rawValue: accountTypeRawValue)
-    }
-    
-    /**
-     Helper function to get account user from JSON.
-     
-     - Parameter from: JSON to extract user type from.
-     
-     - Returns: `PlayPortalProfile.UserType` if able to extract user type, nil otherwise.
-     */
-    private static func userType(from json: [String: Any]) -> PlayPortalProfile.UserType? {
-        guard let userTypeRawValue = json["userType"] as? String else {
-            return nil
-        }
-        return PlayPortalProfile.UserType.init(rawValue: userTypeRawValue)
     }
 }

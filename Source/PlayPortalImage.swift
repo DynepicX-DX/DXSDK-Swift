@@ -1,6 +1,5 @@
 //
 //  PlayPortalImage.swift
-//  Alamofire
 //
 //  Created by Lincoln Fraley on 10/25/18.
 //

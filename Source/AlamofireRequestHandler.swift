@@ -1,6 +1,5 @@
 //
 //  AlamofireRequestHandler.swift
-//  Alamofire
 //
 //  Created by Lincoln Fraley on 10/25/18.
 //
@@ -9,12 +8,12 @@ import Foundation
 import Alamofire
 
 //  Class implementing `RequestHandler` and using Alamofire internally
-internal class AlamofireRequestHandler {
+class AlamofireRequestHandler {
     
     //  MARK: - Properties
     
     //  Singleton instance
-    internal static let shared = AlamofireRequestHandler()
+    static let shared = AlamofireRequestHandler()
     
     //  `SessionManager` instance
     fileprivate static let sessionManager: SessionManager = {
@@ -128,13 +127,13 @@ fileprivate class TokenRetrier {
     //  MARK: - Properties
     
     //  Lock when refreshing
-    fileprivate let lock = NSLock()
+    let lock = NSLock()
     
     //  Flag to indicate if a refresh is currently underway
-    fileprivate var isRefreshing = false
+    var isRefreshing = false
     
     //  Requests to retry once refresh has finished
-    fileprivate var requestsToRetry = [RequestRetryCompletion]()
+    var requestsToRetry = [RequestRetryCompletion]()
 }
 
 extension TokenRetrier: RequestRetrier {

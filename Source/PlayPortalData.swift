@@ -1,6 +1,5 @@
 //
 //  PlayPortalData.swift
-//  Nimble
 //
 //  Created by Lincoln Fraley on 10/22/18.
 //
@@ -184,6 +183,8 @@ public final class PlayPortalData {
      - Parameter completion: The closure called when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Parameter bucket: The updated bucket returned for a successful request.
+     
+     - Returns: Void
     */
     public func delete(
         fromBucket bucketName: String,
@@ -228,6 +229,8 @@ public final class PlayPortalData {
      - Parameter bucketNamed: The name of the bucket being deleted.
      - Parameter completion: The closure called when the request completes.
      - Parameter error: The error returned for an unsuccessful request.
+     
+     - Returns: Void
     */
     public func delete(bucketNamed bucketName: String, _ completion: ((_ error: Error?) -> Void)?) -> Void {
         

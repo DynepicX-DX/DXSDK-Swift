@@ -1,6 +1,5 @@
 //
-//  PPLoginButton.swift
-//  PlayPortal
+//  PlayPortalLoginButton.swift
 //
 //  Created by Gary J. Baldwin on 9/12/18.
 //  Copyright © 2018 Dynepic. All rights reserved.
@@ -13,7 +12,7 @@ import UIKit
 /**
  Responsible for initializing SSO flow when tapped.
  */
-public class PlayPortalLoginButton: UIButton {
+public final class PlayPortalLoginButton: UIButton {
     
     //  MARK: - Properties
     
@@ -55,7 +54,7 @@ public class PlayPortalLoginButton: UIButton {
         sendSubviewToBack(ssoButtonImage)
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    internal required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

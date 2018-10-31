@@ -1,6 +1,5 @@
 //
 //  UIApplication+topMostViewController.swift
-//  Alamofire
 //
 //  Created by Lincoln Fraley on 10/24/18.
 //
@@ -8,9 +7,9 @@
 import Foundation
 
 //  UIApplication extension used to get topmost view controller (this is used if a view controller isn't provided to present SSO web view)
-internal extension UIApplication {
+extension UIApplication {
     
-    internal class func topMostViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+    class func topMostViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {
             return topMostViewController(controller: navigationController.visibleViewController)
         }

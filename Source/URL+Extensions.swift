@@ -1,6 +1,5 @@
 //
 //  URL+withQueryParams.swift
-//  Alamofire
 //
 //  Created by Lincoln Fraley on 10/24/18.
 //
@@ -8,7 +7,7 @@
 import Foundation
 
 //  Simplify adding query params to a url
-internal extension URL {
+extension URL {
     
     /**
      Create a URL with a dictionary of query parameters.
@@ -17,7 +16,7 @@ internal extension URL {
      
      - Returns: URL with query parameters if successful, nil otherwise.
      */
-    internal func with(queryParams params: [String: String]) -> URL? {
+    func with(queryParams params: [String: String]) -> URL? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
             return nil
         }
@@ -36,7 +35,7 @@ internal extension URL {
      
      - Returns: Parameter if successful, nil otherwise.
      */
-    internal func getParameter(for name: String) -> String? {
+    func getParameter(for name: String) -> String? {
         guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
             return nil
         }

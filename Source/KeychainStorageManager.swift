@@ -1,6 +1,5 @@
 //
 //  KeychainStorageManager.swift
-//  Alamofire
 //
 //  Created by Lincoln Fraley on 10/26/18.
 //
@@ -12,7 +11,6 @@ import KeychainSwift
 extension KeychainSwift: StorageManager {
     
     func set(_ value: String, atKey key: String) -> Bool {
-        
         return set(value, forKey: key)
     }
 }

@@ -1,6 +1,5 @@
 //
 //  StorageManager.swift
-//  Alamofire
 //
 //  Created by Lincoln Fraley on 10/26/18.
 //
@@ -8,10 +7,10 @@
 import Foundation
 import KeychainSwift
 
-internal let globalStorageManager: StorageManager = KeychainSwift()
+let globalStorageManager: StorageManager = KeychainSwift()
 
 //  Protocol to be implemented by class responsible for secure storage
-internal protocol StorageManager {
+protocol StorageManager {
     
     //  MARK: - Methods
     

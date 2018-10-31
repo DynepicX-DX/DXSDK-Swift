@@ -1,6 +1,5 @@
 //
 //  URLRequest+Extensions.swift
-//  Alamofire
 //
 //  Created by Lincoln Fraley on 10/31/18.
 //
@@ -8,7 +7,7 @@
 import Foundation
 
 //  Simplify creating a url request
-internal extension URLRequest {
+extension URLRequest {
     
     /**
      Factory method for creating `URLRequest`.
@@ -21,7 +20,7 @@ internal extension URLRequest {
      
      - Returns: `URLRequest` if it's able to be created successfully.
     */
-    internal static func from(
+    static func from(
         method: String,
         andURL urlString: String,
         andBody body: [String: Any?]? = nil,

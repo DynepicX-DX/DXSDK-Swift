@@ -1,6 +1,5 @@
 //
 //  PlayPortalAuth.swift
-//  Nimble
 //
 //  Created by Lincoln Fraley on 10/22/18.
 //
@@ -59,7 +58,7 @@ public final class PlayPortalAuth {
     public static let shared = PlayPortalAuth()
     
     //  App configuration
-    internal var environment = PlayPortalEnvironment.sandbox
+    var environment = PlayPortalEnvironment.sandbox
     private var clientId = ""
     private var clientSecret = ""
     private var redirectURI = ""
@@ -250,13 +249,9 @@ public final class PlayPortalAuth {
     /**
      Logout current user.
      
-     - Parameter completion: The closure invoked when the request finishes.
-        It's not necessary to pass this completion if you have a `PlayPortalLoginDelegate` that implements `didLogout(with:)` and `didLogoutSuccessfully`.
-     - Parameter error: The error returned for an unsuccessful request.
-     
      - Returns: Void
     */
-    public func logout(_ completion: ((_ error: Error?) -> Void)?) -> Void {
+    public func logout() -> Void {
         
         //  Create url request
         guard let urlRequest = URLRequest.from(
@@ -265,14 +260,12 @@ public final class PlayPortalAuth {
             andBody: [
                 "refresh_token": requestHandler.refreshToken
             ]) else {
-                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."))
                 return
         }
         
         //  Make request
         requestHandler.request(urlRequest) { error, _ in
             PlayPortalAuth.shared.requestHandler.clearTokens()
-            completion?(error)
             error != nil
                 ? PlayPortalAuth.shared.loginDelegate?.didLogout?(with: error!)
                 : PlayPortalAuth.shared.loginDelegate?.didLogoutSuccessfully?()

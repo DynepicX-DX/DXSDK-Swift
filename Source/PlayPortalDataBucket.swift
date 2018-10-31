@@ -1,6 +1,5 @@
 //
 //  PlayPortalDataBucket.swift
-//  Alamofire
 //
 //  Created by Lincoln Fraley on 10/29/18.
 //
@@ -8,7 +7,7 @@
 import Foundation
 
 //  Class representing a playPORTAL data bucket
-public final class PlayPortalDataBucket {
+public struct PlayPortalDataBucket {
     
     //  MARK: - Properties
     
@@ -38,7 +37,7 @@ public final class PlayPortalDataBucket {
      
      - Returns: `PlayPortalDataBucket` instance
     */
-    public init(from json: [String: Any]) throws {
+    internal init(from json: [String: Any]) throws {
         
         //  Deserialize all properties
         guard let id = json["id"] as? String else {
