@@ -51,9 +51,9 @@ public final class PlayPortalUser {
         urlRequest.httpMethod = "GET"
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, json in
+        requestHandler.request(urlRequest) { error, data in
             guard error == nil
-                , let json = json
+                , let json = data?.toJSON
                 else {
                     completion(error, nil)
                     return
@@ -91,15 +91,15 @@ public final class PlayPortalUser {
         urlRequest.httpMethod = "GET"
         
         //  Make request
-        requestHandler.requestJSONArray(urlRequest) { error, jsonArray in
+        requestHandler.request(urlRequest) { error, data in
             guard error == nil
-                , let jsonArray = jsonArray
+                , let jsonArray = data?.toJSONArray
                 else {
                     completion(error, nil)
                     return
             }
-            let userProfiles = jsonArray.compactMap { try? PlayPortalProfile(from: $0) }
-            completion(nil, userProfiles)
+            let friendProfiles = jsonArray.compactMap { try? PlayPortalProfile(from: $0) }
+            completion(nil, friendProfiles)
         }
     }
 }

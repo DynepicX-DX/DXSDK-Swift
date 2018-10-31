@@ -263,16 +263,17 @@ public final class PlayPortalAuth {
         urlRequest.httpMethod = "POST"
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, json in
-            guard error == nil else {
-                //  Logout on unsuccessful refresh
-                completion(error, nil, nil)
-                PlayPortalAuth.shared.requestHandler.clearTokens()
-                PlayPortalAuth.shared.loginDelegate?.didLogout?(with: error!)
-                return
+        requestHandler.request(urlRequest) { error, data in
+            guard error == nil
+                , let json = data?.toJSON
+                else {
+                    //  Logout on unsuccessful refresh
+                    completion(error, nil, nil)
+                    PlayPortalAuth.shared.requestHandler.clearTokens()
+                    PlayPortalAuth.shared.loginDelegate?.didLogout?(with: error!)
+                    return
             }
-            guard let json = json
-                , let accessToken = json["access_token"] as? String
+            guard let accessToken = json["access_token"] as? String
                 , let refreshToken = json["refresh_token"] as? String
                 else {
                     completion(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize JSON from result."), nil, nil)
@@ -321,7 +322,7 @@ public final class PlayPortalAuth {
         }
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, _ in
+        requestHandler.request(urlRequest) { error, _ in
             PlayPortalAuth.shared.requestHandler.clearTokens()
             completion?(error)
             error != nil

@@ -72,9 +72,9 @@ public final class PlayPortalLeaderboard {
         urlRequest.httpMethod = "GET"
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, json in
+        requestHandler.request(urlRequest) { error, data in
             guard error == nil
-                , let json = json
+                , let json = data?.toJSON
                 , let docs = json["docs"] as? [[String: Any]]
                 else {
                     completion(error, nil)
@@ -127,9 +127,9 @@ public final class PlayPortalLeaderboard {
         }
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, json in
+        requestHandler.request(urlRequest) { error, data in
             guard error == nil
-                , let json = json
+                , let json = data?.toJSON
                 else {
                     completion?(error, nil)
                     return

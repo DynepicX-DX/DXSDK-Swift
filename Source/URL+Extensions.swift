@@ -17,7 +17,7 @@ internal extension URL {
      
      - Returns: URL with query parameters if successful, nil otherwise.
      */
-    func with(queryParams params: [String: String]) -> URL? {
+    internal func with(queryParams params: [String: String]) -> URL? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
             return nil
         }
@@ -36,7 +36,7 @@ internal extension URL {
      
      - Returns: Parameter if successful, nil otherwise.
      */
-    func getParameter(for name: String) -> String? {
+    internal func getParameter(for name: String) -> String? {
         guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
             return nil
         }

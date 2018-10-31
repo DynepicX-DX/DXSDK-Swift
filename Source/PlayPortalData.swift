@@ -73,9 +73,9 @@ public final class PlayPortalData {
         }
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, json in
+        requestHandler.request(urlRequest) { error, data in
             guard error == nil
-                , let json = json
+                , let json = data?.toJSON
                 else {
                     completion?(error, nil)
                     return
@@ -135,9 +135,9 @@ public final class PlayPortalData {
         }
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, json in
+        requestHandler.request(urlRequest) { error, data in
             guard error == nil
-                , let json = json
+                , let json = data?.toJSON
                 else {
                     completion?(error, nil)
                     return
@@ -194,9 +194,9 @@ public final class PlayPortalData {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, json in
+        requestHandler.request(urlRequest) { error, data in
             guard error == nil
-                , let json = json
+                , let json = data?.toJSON
                 else {
                     completion?(error, nil)
                     return
@@ -252,9 +252,9 @@ public final class PlayPortalData {
         }
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, json in
+        requestHandler.request(urlRequest) { error, data in
             guard error == nil
-                , let json = json
+                , let json = data?.toJSON
                 else {
                     completion?(error, nil)
                     return
@@ -300,6 +300,6 @@ public final class PlayPortalData {
         }
         
         //  Make request
-        requestHandler.requestJSON(urlRequest) { error, _ in completion?(error) }
+        requestHandler.request(urlRequest) { error, _ in completion?(error) }
     }
 }

@@ -89,75 +89,22 @@ extension AlamofireRequestHandler: RequestHandler {
     }
     
     /**
-     Make request for JSON using internal `sessionManager` instance
-     */
-    func requestJSON(_ request: URLRequest, _ completion: ((Error?, [String: Any]?) -> Void)?) {
+     Request data.
+    */
+    func request(_ request: URLRequest, _ completion: ((Error?, Data?) -> Void)?) {
         AlamofireRequestHandler.sessionManager
             .request(request)
             .validate(statusCode: 200..<300)
-            .responseJSON { response in
-                switch response.result {
-                case let .failure(error):
-                    guard let urlResponse = response.response else {
-                        completion?(error, nil)
-                        return
-                    }
-                    let error = PlayPortalError.API.createError(from: urlResponse)
+            .response { response in
+                if let error = response.error {
                     completion?(error, nil)
-                case let .success(value):
-                    guard let value = value as? [String: Any] else {
-                        completion?(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize JSON from result."), nil)
-                        return
-                    }
-                    completion?(nil, value)
-                }
-        }
-    }
-    
-    /**
-     Make request for a JSON array using internal `sessionManager` instance
-     */
-    func requestJSONArray(_ request: URLRequest, _ completion: ((Error?, [[String: Any]]?) -> Void)?) {
-        AlamofireRequestHandler.sessionManager
-            .request(request)
-            .validate(statusCode: 200..<300)
-            .responseJSON { response in
-                switch response.result {
-                case let .failure(error):
-                    guard let urlResponse = response.response else {
-                        completion?(error, nil)
-                        return
-                    }
-                    let error = PlayPortalError.API.createError(from: urlResponse)
+                } else if response.data == nil, let response = response.response {
+                    let error = PlayPortalError.API.createError(from: response)
                     completion?(error, nil)
-                case let .success(value):
-                    guard let value = value as? [[String: Any]] else {
-                        completion?(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize JSON from result."), nil)
-                        return
-                    }
-                    completion?(nil, value)
-                }
-        }
-    }
-    
-    /**
-     Make request for data using internal `sessionManager` instance
-     */
-    func requestData(_ request: URLRequest, _ completion: ((Error?, Data?) -> Void)?) {
-        AlamofireRequestHandler.sessionManager
-            .request(request)
-            .validate(statusCode: 200..<300)
-            .responseData { response in
-                switch response.result {
-                case let .failure(error):
-                    guard let urlResponse = response.response else {
-                        completion?(error, nil)
-                        return
-                    }
-                    let error = PlayPortalError.API.createError(from: urlResponse)
-                    completion?(error, nil)
-                case let .success(value):
-                    completion?(nil, value)
+                } else if let data = response.data {
+                    completion?(nil, data)
+                } else {
+                    completion?(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize data from result."), nil)
                 }
         }
     }

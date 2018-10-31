@@ -10,7 +10,7 @@ import Foundation
 //  UIApplication extension used to get topmost view controller (this is used if a view controller isn't provided to present SSO web view)
 internal extension UIApplication {
     
-    class func topMostViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+    internal class func topMostViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {
             return topMostViewController(controller: navigationController.visibleViewController)
         }

@@ -52,7 +52,7 @@ public final class PlayPortalImage {
         urlRequest.httpMethod = "GET"
         
         //  Make request
-        requestHandler.requestData(urlRequest) { error, data in
+        requestHandler.request(urlRequest) { error, data in
             guard error == nil
                 , let data = data
                 else {
