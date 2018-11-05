@@ -52,7 +52,7 @@ public extension UIImageView {
      */
     func playPortalProfilePic(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
         guard let imageId = imageId else {
-            image = Utils.getImageAsset(byName: "AnonUser")
+            image = Utils.getImageAsset(byName: "anonUser")
             return
         }
         PlayPortalImage.shared.getImage(forImageId: imageId) { [weak self] error, data in
@@ -64,7 +64,7 @@ public extension UIImageView {
                 , let data = data
                 , let image = UIImage(data: data)
                 else {
-                    self?.image = Utils.getImageAsset(byName: "AnonUser")
+                    self?.image = Utils.getImageAsset(byName: "anonUser")
                     completion?(PlayPortalError.API.requestFailedForUnknownReason(message: "Unable to deserialize image data."))
                     return
             }
@@ -85,7 +85,7 @@ public extension UIImageView {
      */
     func playPortalCoverPhoto(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
         guard let imageId = imageId else {
-            image = Utils.getImageAsset(byName: "AnonUserCover")
+            image = Utils.getImageAsset(byName: "anonUserCover")
             return
         }
         PlayPortalImage.shared.getImage(forImageId: imageId) { [weak self] error, data in
@@ -97,7 +97,7 @@ public extension UIImageView {
                 , let data = data
                 , let image = UIImage(data: data)
                 else {
-                    self?.image = Utils.getImageAsset(byName: "AnonUserCover")
+                    self?.image = Utils.getImageAsset(byName: "anonUserCover")
                     completion?(PlayPortalError.API.requestFailedForUnknownReason(message: "Unable to deserialize image data."))
                     return
             }

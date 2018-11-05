@@ -101,11 +101,18 @@ public final class PlayPortalAuth {
         andRedirectURI redirectURI: String)
         -> Void
     {
+        //  Because keychain items aren't cleared on app uninstall, but user defaults is,
+        //  check flag in user defaults so that old keychain items can be cleared
+        if !UserDefaults.standard.bool(forKey: "firstRun") {
+            requestHandler.clearTokens()
+            UserDefaults.standard.set(true, forKey: "firstRun")
+        }
+        
         //  Set configuration
-        PlayPortalAuth.shared.environment = environment
-        PlayPortalAuth.shared.clientId = clientId
-        PlayPortalAuth.shared.clientSecret = clientSecret
-        PlayPortalAuth.shared.redirectURI = redirectURI
+        self.environment = environment
+        self.clientId = clientId
+        self.clientSecret = clientSecret
+        self.redirectURI = redirectURI
     }
     
     /**
