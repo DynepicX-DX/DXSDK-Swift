@@ -12,8 +12,8 @@ public struct PlayPortalProfile {
     //  MARK: - Properties
     
     public let userId: String
-    public let userType: PlayPortalProfile.UserType
-    public let accountType: PlayPortalProfile.AccountType
+    public let userType: UserType
+    public let accountType: AccountType
     public let handle: String
     public var firstName: String?
     public var lastName: String?
@@ -67,11 +67,11 @@ public struct PlayPortalProfile {
             throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'userId' from JSON.")
         }
         guard let userTypeRawValue = json["userType"] as? String
-            , let userType = PlayPortalProfile.UserType.init(rawValue: userTypeRawValue) else {
+            , let userType = UserType.init(rawValue: userTypeRawValue) else {
             throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'userType' from JSON.")
         }
         guard let accountTypeRawValue = json["accountType"] as? String
-            , let accountType = PlayPortalProfile.AccountType.init(rawValue: accountTypeRawValue) else {
+            , let accountType = AccountType.init(rawValue: accountTypeRawValue) else {
             throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'accountType' from JSON.")
         }
         guard let handle = json["handle"] as? String else {
