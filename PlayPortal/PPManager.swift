@@ -34,9 +34,9 @@ class PPManager {
     
     var userListener:(_ user: PPUserObject?, _ isAuthd: Bool) -> Void
     
-    var PPusersvc: PPUserService!
+    var PPusersvc: PPUserService
     var PPwebapi: PPWebApi!
-    var PPdatasvc: PPDataService!
+    var PPdatasvc: PPDataService
     
     //    var keychain: KeychainWrapper = KeychainWrapper()
     let keychain = KeychainSwift()
@@ -146,16 +146,20 @@ class PPManager {
             PPManager.sharedInstance.redir = andRedirectURI;
             
             PPManager.sharedInstance.isAuthenticated() { isAuthd in
-                PPManager.sharedInstance.getProfileAndBucket { error in
-                    if(!error.isEmpty) { print("ERROR: configure \(error)") }
-                    PPManager.sharedInstance.PPusersvc.getProfile {  succeeded, response, user in
-                        if(!succeeded) {
-                            print("Error:", response.debugDescription)
-                            PPManager.sharedInstance.userListener(nil, isAuthd)
-                        } else {
-                            PPManager.sharedInstance.userListener(user, isAuthd)
+                if isAuthd {
+                    PPManager.sharedInstance.getProfileAndBucket { error in
+                        if(!error.isEmpty) { print("ERROR: configure \(error)") }
+                        PPManager.sharedInstance.PPusersvc.getProfile {  succeeded, response, user in
+                            if(!succeeded) {
+                                print("Error:", response.debugDescription)
+                                PPManager.sharedInstance.userListener(nil, isAuthd)
+                            } else {
+                                PPManager.sharedInstance.userListener(user, isAuthd)
+                            }
                         }
                     }
+                } else {
+                    PPManager.sharedInstance.userListener(nil, false)
                 }
             }
         }
@@ -168,7 +172,7 @@ class PPManager {
                 handler(response.debugDescription);
             } else {
                 // attempt to create / open this user's private data storage
-                if let id = PPManager.sharedInstance.PPusersvc.user.u["userId"] {
+                if let id = PPManager.sharedInstance.PPusersvc.user.uo.userId {
                     PPManager.sharedInstance.PPdatasvc.openBucket(bucketName:PPManager.sharedInstance.PPusersvc.getMyDataStorageName(), users:[id], isPublic:false) { succeeded, response, img in
                             print("getProfileAndBucket openBucket (my appData) succeeded: \( succeeded)" )
                         }
@@ -266,6 +270,8 @@ class PPManager {
     
     func isAuthenticated(handler: @escaping (_ isAuthd:Bool) -> Void) {
         if(allTokensExist()) { // force a refresh
+            let oh = PPManager.sharedInstance.PPwebapi.oauthHandler
+            print()
             PPManager.sharedInstance.PPwebapi.oauthHandler.refreshAccessTokens { succeeded, accessToken, refreshToken in
                 if let accessToken = accessToken, let refreshToken = refreshToken {
                     PPManager.sharedInstance.keychain.set(accessToken, forKey: "access_token")
