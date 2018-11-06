@@ -7,9 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C32F786218A000B00B9F773 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C32F783218A000A00B9F773 /* Data+Extensions.swift */; };
+		1C32F787218A000B00B9F773 /* PlayPortalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C32F784218A000A00B9F773 /* PlayPortalUtils.swift */; };
+		1C32F788218A000B00B9F773 /* URLRequest+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C32F785218A000A00B9F773 /* URLRequest+Extensions.swift */; };
+		1C477F8E217F977600B42160 /* PlayPortalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F87217F977500B42160 /* PlayPortalError.swift */; };
+		1C477F8F217F977600B42160 /* PlayPortalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F88217F977500B42160 /* PlayPortalData.swift */; };
+		1C477F90217F977600B42160 /* PlayPortalAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F89217F977500B42160 /* PlayPortalAuth.swift */; };
+		1C477F91217F977600B42160 /* PlayPortalUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8A217F977600B42160 /* PlayPortalUser.swift */; };
+		1C477F92217F977600B42160 /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8B217F977600B42160 /* RequestHandler.swift */; };
+		1C477F93217F977600B42160 /* PlayPortalLeaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8C217F977600B42160 /* PlayPortalLeaderboard.swift */; };
+		1C477F94217F977600B42160 /* PlayPortalLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */; };
+		1C70554C218892CA007EB006 /* PlayPortalDataBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70554A218892CA007EB006 /* PlayPortalDataBucket.swift */; };
+		1C70554D218892CA007EB006 /* PlayPortalLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */; };
+		1C89E5542184BD2B00CA3528 /* PlayPortalProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */; };
+		1C89E5552184BD2B00CA3528 /* AlamofireRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54B2184BD2A00CA3528 /* AlamofireRequestHandler.swift */; };
+		1C89E5562184BD2B00CA3528 /* KeychainStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54C2184BD2A00CA3528 /* KeychainStorageManager.swift */; };
+		1C89E5572184BD2B00CA3528 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54D2184BD2A00CA3528 /* URL+Extensions.swift */; };
+		1C89E5582184BD2B00CA3528 /* PlayPortalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54E2184BD2A00CA3528 /* PlayPortalImage.swift */; };
+		1C89E5592184BD2B00CA3528 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54F2184BD2A00CA3528 /* StorageManager.swift */; };
+		1C89E55A2184BD2B00CA3528 /* PlayPortalURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E5502184BD2B00CA3528 /* PlayPortalURLs.swift */; };
+		1C89E55B2184BD2B00CA3528 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E5512184BD2B00CA3528 /* UIApplication+Extensions.swift */; };
+		1C89E55C2184BD2B00CA3528 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E5522184BD2B00CA3528 /* Utils.swift */; };
+		1C89E55D2184BD2B00CA3528 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E5532184BD2B00CA3528 /* UIImageView+Extensions.swift */; };
+		1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55E2184BD3200CA3528 /* AnonUser.png */; };
+		1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55F2184BD3200CA3528 /* AnonUserCover.png */; };
+		1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5602184BD3200CA3528 /* QuestionMark.jpg */; };
+		1C89E5652184BD3200CA3528 /* SSOButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5612184BD3200CA3528 /* SSOButton.png */; };
 		1CD1E3D4217F441900C2B083 /* PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */; };
 		1CD1E3D9217F441900C2B083 /* PPSDK_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */; };
 		1CD1E3DB217F441900C2B083 /* PPSDK_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D2D1533C5976112A7EA5B9E /* Pods_PPSDK_SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27FD91D66EBC9027E6241D8 /* Pods_PPSDK_SwiftTests.framework */; };
+		5BFBC701ED68D0C51E0DB054 /* Pods_PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93DED3B5A44F93D6DE8322E /* Pods_PPSDK_Swift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,12 +51,44 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C32F783218A000A00B9F773 /* Data+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		1C32F784218A000A00B9F773 /* PlayPortalUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalUtils.swift; sourceTree = "<group>"; };
+		1C32F785218A000A00B9F773 /* URLRequest+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extensions.swift"; sourceTree = "<group>"; };
+		1C477F87217F977500B42160 /* PlayPortalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalError.swift; sourceTree = "<group>"; };
+		1C477F88217F977500B42160 /* PlayPortalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalData.swift; sourceTree = "<group>"; };
+		1C477F89217F977500B42160 /* PlayPortalAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalAuth.swift; sourceTree = "<group>"; };
+		1C477F8A217F977600B42160 /* PlayPortalUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalUser.swift; sourceTree = "<group>"; };
+		1C477F8B217F977600B42160 /* RequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
+		1C477F8C217F977600B42160 /* PlayPortalLeaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboard.swift; sourceTree = "<group>"; };
+		1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLoginButton.swift; sourceTree = "<group>"; };
+		1C70554A218892CA007EB006 /* PlayPortalDataBucket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalDataBucket.swift; sourceTree = "<group>"; };
+		1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboardEntry.swift; sourceTree = "<group>"; };
+		1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalProfile.swift; sourceTree = "<group>"; };
+		1C89E54B2184BD2A00CA3528 /* AlamofireRequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireRequestHandler.swift; sourceTree = "<group>"; };
+		1C89E54C2184BD2A00CA3528 /* KeychainStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorageManager.swift; sourceTree = "<group>"; };
+		1C89E54D2184BD2A00CA3528 /* URL+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
+		1C89E54E2184BD2A00CA3528 /* PlayPortalImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalImage.swift; sourceTree = "<group>"; };
+		1C89E54F2184BD2A00CA3528 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		1C89E5502184BD2B00CA3528 /* PlayPortalURLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalURLs.swift; sourceTree = "<group>"; };
+		1C89E5512184BD2B00CA3528 /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
+		1C89E5522184BD2B00CA3528 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		1C89E5532184BD2B00CA3528 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
+		1C89E55E2184BD3200CA3528 /* AnonUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUser.png; sourceTree = "<group>"; };
+		1C89E55F2184BD3200CA3528 /* AnonUserCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUserCover.png; sourceTree = "<group>"; };
+		1C89E5602184BD3200CA3528 /* QuestionMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = QuestionMark.jpg; sourceTree = "<group>"; };
+		1C89E5612184BD3200CA3528 /* SSOButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButton.png; sourceTree = "<group>"; };
 		1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PPSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPSDK_Swift.h; sourceTree = "<group>"; };
 		1CD1E3CE217F441900C2B083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CD1E3D3217F441900C2B083 /* PPSDK-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PPSDK-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPSDK_SwiftTests.swift; sourceTree = "<group>"; };
 		1CD1E3DA217F441900C2B083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49D0A53B87D85EE8CCCCAAE5 /* Pods-PPSDK-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift.debug.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift/Pods-PPSDK-Swift.debug.xcconfig"; sourceTree = "<group>"; };
+		69479C60CBE99044F3C31BB7 /* Pods-PPSDK-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-SwiftTests/Pods-PPSDK-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
+		9E3C56CF9D74175435F4ACDD /* Pods-PPSDK-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift/Pods-PPSDK-Swift.release.xcconfig"; sourceTree = "<group>"; };
+		B66826F818F79C3C264678B4 /* Pods-PPSDK-SwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-SwiftTests.debug.xcconfig"; path = "Target Support Files/Pods-PPSDK-SwiftTests/Pods-PPSDK-SwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E27FD91D66EBC9027E6241D8 /* Pods_PPSDK_SwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PPSDK_SwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E93DED3B5A44F93D6DE8322E /* Pods_PPSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PPSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BFBC701ED68D0C51E0DB054 /* Pods_PPSDK_Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,18 +105,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CD1E3D4217F441900C2B083 /* PPSDK_Swift.framework in Frameworks */,
+				4D2D1533C5976112A7EA5B9E /* Pods_PPSDK_SwiftTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1CC6076A2180B5D600B47385 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1C89E55E2184BD3200CA3528 /* AnonUser.png */,
+				1C89E55F2184BD3200CA3528 /* AnonUserCover.png */,
+				1C89E5602184BD3200CA3528 /* QuestionMark.jpg */,
+				1C89E5612184BD3200CA3528 /* SSOButton.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		1CD1E3C0217F441900C2B083 = {
 			isa = PBXGroup;
 			children = (
+				1CC6076A2180B5D600B47385 /* Resources */,
+				1CD1E3E6217F45D700C2B083 /* Source */,
 				1CD1E3CC217F441900C2B083 /* PPSDK-Swift */,
 				1CD1E3D7217F441900C2B083 /* PPSDK-SwiftTests */,
 				1CD1E3CB217F441900C2B083 /* Products */,
+				B1802BE956984108B6293873 /* Pods */,
+				27E10C00A72106979C509533 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,7 +148,6 @@
 		1CD1E3CC217F441900C2B083 /* PPSDK-Swift */ = {
 			isa = PBXGroup;
 			children = (
-				1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */,
 				1CD1E3CE217F441900C2B083 /* Info.plist */,
 			);
 			path = "PPSDK-Swift";
@@ -84,6 +160,56 @@
 				1CD1E3DA217F441900C2B083 /* Info.plist */,
 			);
 			path = "PPSDK-SwiftTests";
+			sourceTree = "<group>";
+		};
+		1CD1E3E6217F45D700C2B083 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1C32F783218A000A00B9F773 /* Data+Extensions.swift */,
+				1C32F784218A000A00B9F773 /* PlayPortalUtils.swift */,
+				1C32F785218A000A00B9F773 /* URLRequest+Extensions.swift */,
+				1C70554A218892CA007EB006 /* PlayPortalDataBucket.swift */,
+				1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */,
+				1C89E54B2184BD2A00CA3528 /* AlamofireRequestHandler.swift */,
+				1C89E54C2184BD2A00CA3528 /* KeychainStorageManager.swift */,
+				1C89E54E2184BD2A00CA3528 /* PlayPortalImage.swift */,
+				1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */,
+				1C89E5502184BD2B00CA3528 /* PlayPortalURLs.swift */,
+				1C89E54F2184BD2A00CA3528 /* StorageManager.swift */,
+				1C89E5512184BD2B00CA3528 /* UIApplication+Extensions.swift */,
+				1C89E5532184BD2B00CA3528 /* UIImageView+Extensions.swift */,
+				1C89E54D2184BD2A00CA3528 /* URL+Extensions.swift */,
+				1C89E5522184BD2B00CA3528 /* Utils.swift */,
+				1C477F89217F977500B42160 /* PlayPortalAuth.swift */,
+				1C477F88217F977500B42160 /* PlayPortalData.swift */,
+				1C477F87217F977500B42160 /* PlayPortalError.swift */,
+				1C477F8C217F977600B42160 /* PlayPortalLeaderboard.swift */,
+				1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */,
+				1C477F8A217F977600B42160 /* PlayPortalUser.swift */,
+				1C477F8B217F977600B42160 /* RequestHandler.swift */,
+				1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		27E10C00A72106979C509533 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E93DED3B5A44F93D6DE8322E /* Pods_PPSDK_Swift.framework */,
+				E27FD91D66EBC9027E6241D8 /* Pods_PPSDK_SwiftTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B1802BE956984108B6293873 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				49D0A53B87D85EE8CCCCAAE5 /* Pods-PPSDK-Swift.debug.xcconfig */,
+				9E3C56CF9D74175435F4ACDD /* Pods-PPSDK-Swift.release.xcconfig */,
+				B66826F818F79C3C264678B4 /* Pods-PPSDK-SwiftTests.debug.xcconfig */,
+				69479C60CBE99044F3C31BB7 /* Pods-PPSDK-SwiftTests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -104,6 +230,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1CD1E3DE217F441900C2B083 /* Build configuration list for PBXNativeTarget "PPSDK-Swift" */;
 			buildPhases = (
+				36FCDCE6C905C7DF123E4D8D /* [CP] Check Pods Manifest.lock */,
 				1CD1E3C5217F441900C2B083 /* Sources */,
 				1CD1E3C6217F441900C2B083 /* Frameworks */,
 				1CD1E3C7217F441900C2B083 /* Headers */,
@@ -122,6 +249,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1CD1E3E1217F441900C2B083 /* Build configuration list for PBXNativeTarget "PPSDK-SwiftTests" */;
 			buildPhases = (
+				8CD00BB30818870A67546524 /* [CP] Check Pods Manifest.lock */,
 				1CD1E3CF217F441900C2B083 /* Sources */,
 				1CD1E3D0217F441900C2B083 /* Frameworks */,
 				1CD1E3D1217F441900C2B083 /* Resources */,
@@ -148,9 +276,11 @@
 				TargetAttributes = {
 					1CD1E3C9217F441900C2B083 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 					1CD1E3D2217F441900C2B083 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -177,6 +307,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */,
+				1C89E5652184BD3200CA3528 /* SSOButton.png in Resources */,
+				1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */,
+				1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,11 +323,72 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		36FCDCE6C905C7DF123E4D8D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PPSDK-Swift-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8CD00BB30818870A67546524 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PPSDK-SwiftTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1CD1E3C5217F441900C2B083 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C89E5572184BD2B00CA3528 /* URL+Extensions.swift in Sources */,
+				1C477F94217F977600B42160 /* PlayPortalLoginButton.swift in Sources */,
+				1C89E5562184BD2B00CA3528 /* KeychainStorageManager.swift in Sources */,
+				1C477F8E217F977600B42160 /* PlayPortalError.swift in Sources */,
+				1C89E55D2184BD2B00CA3528 /* UIImageView+Extensions.swift in Sources */,
+				1C477F91217F977600B42160 /* PlayPortalUser.swift in Sources */,
+				1C89E55B2184BD2B00CA3528 /* UIApplication+Extensions.swift in Sources */,
+				1C70554C218892CA007EB006 /* PlayPortalDataBucket.swift in Sources */,
+				1C89E5542184BD2B00CA3528 /* PlayPortalProfile.swift in Sources */,
+				1C32F787218A000B00B9F773 /* PlayPortalUtils.swift in Sources */,
+				1C32F786218A000B00B9F773 /* Data+Extensions.swift in Sources */,
+				1C70554D218892CA007EB006 /* PlayPortalLeaderboardEntry.swift in Sources */,
+				1C89E55C2184BD2B00CA3528 /* Utils.swift in Sources */,
+				1C477F92217F977600B42160 /* RequestHandler.swift in Sources */,
+				1C89E5552184BD2B00CA3528 /* AlamofireRequestHandler.swift in Sources */,
+				1C477F90217F977600B42160 /* PlayPortalAuth.swift in Sources */,
+				1C89E55A2184BD2B00CA3528 /* PlayPortalURLs.swift in Sources */,
+				1C477F8F217F977600B42160 /* PlayPortalData.swift in Sources */,
+				1C477F93217F977600B42160 /* PlayPortalLeaderboard.swift in Sources */,
+				1C89E5582184BD2B00CA3528 /* PlayPortalImage.swift in Sources */,
+				1C89E5592184BD2B00CA3528 /* StorageManager.swift in Sources */,
+				1C32F788218A000B00B9F773 /* URLRequest+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +463,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -276,6 +472,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 4.3;
 			};
 			name = Debug;
 		};
@@ -325,7 +522,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -333,11 +531,13 @@
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 4.3;
 			};
 			name = Release;
 		};
 		1CD1E3DF217F441900C2B083 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49D0A53B87D85EE8CCCCAAE5 /* Pods-PPSDK-Swift.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -348,6 +548,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "PPSDK-Swift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -356,13 +557,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "lincoln.fraley93.PPSDK-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				WATCHOS_DEPLOYMENT_TARGET = 4.3;
 			};
 			name = Debug;
 		};
 		1CD1E3E0217F441900C2B083 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E3C56CF9D74175435F4ACDD /* Pods-PPSDK-Swift.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -373,6 +576,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "PPSDK-Swift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -381,14 +585,17 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "lincoln.fraley93.PPSDK-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				WATCHOS_DEPLOYMENT_TARGET = 4.3;
 			};
 			name = Release;
 		};
 		1CD1E3E2217F441900C2B083 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B66826F818F79C3C264678B4 /* Pods-PPSDK-SwiftTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SA5YU43KDL;
 				INFOPLIST_FILE = "PPSDK-SwiftTests/Info.plist";
@@ -399,14 +606,16 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "lincoln.fraley93.PPSDK-SwiftTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		1CD1E3E3217F441900C2B083 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 69479C60CBE99044F3C31BB7 /* Pods-PPSDK-SwiftTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SA5YU43KDL;
 				INFOPLIST_FILE = "PPSDK-SwiftTests/Info.plist";
@@ -417,7 +626,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "lincoln.fraley93.PPSDK-SwiftTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
