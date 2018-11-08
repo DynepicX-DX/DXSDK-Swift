@@ -6,6 +6,23 @@
 
 import Foundation
 
+
+//  Available routes for playPORTAL user api
+fileprivate enum UserRouter: URLRequestConvertible {
+    
+    case getUserProfile
+    case getFriendProfiles
+    
+    func asURLRequest() -> URLRequest? {
+        switch self {
+        case .getUserProfile:
+            return Router.get(url: PlayPortalURLs.User.userProfile, params: nil).asURLRequest()
+        case .getFriendProfiles:
+            return Router.get(url: PlayPortalURLs.User.friendProfiles, params: nil).asURLRequest()
+        }
+    }
+}
+
 //  Responsible for making requests to playPORTAL user api
 public final class PlayPortalUser {
     
@@ -36,28 +53,15 @@ public final class PlayPortalUser {
      - Returns: Void
      */
     public func getProfile(completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "GET",
-            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.User.userProfile) else {
-                completion(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, data in
-            guard error == nil
-                , let json = data?.toJSON
-                else {
-                    completion(error, nil)
-                    return
-            }
-            do {
-                let userProfile = try PlayPortalProfile(from: json)
-                completion(nil, userProfile)
-            } catch {
+        requestHandler.request(UserRouter.getUserProfile) { error, data in
+            guard error == nil else {
                 completion(error, nil)
+                return
+            }
+            if let profile = data?.asDecodable(type: PlayPortalProfile.self) {
+                completion(nil, profile)
+            } else {
+                completion(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize data to 'PlayPortalProfile'."), nil)
             }
         }
     }
@@ -72,25 +76,17 @@ public final class PlayPortalUser {
      - Returns: Void
     */
     public func getFriendProfiles(completion: @escaping (_ error: Error?, _ friendProfiles: [PlayPortalProfile]?) -> Void) -> Void {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "GET",
-            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.User.friendProfiles) else {
-                completion(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
+        requestHandler.request(UserRouter.getFriendProfiles) { error, data in
+            guard error == nil else {
+                completion(error, nil)
                 return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, data in
-            guard error == nil
-                , let jsonArray = data?.toJSONArray
-                else {
-                    completion(error, nil)
-                    return
             }
-            let friendProfiles = jsonArray.compactMap { try? PlayPortalProfile(from: $0) }
-            completion(nil, friendProfiles)
+//            let d = data!.toJSONArray
+            
+//            let friendProfiles = Array(data!).compactMap { $0.asDecodable(type(of: PlayPortalProfile.self ))}
+//            completion(friendProfiles, nil)
+//            let friendProfiles = jsonArray.compactMap { try? PlayPortalProfile(from: $0) }
+//            completion(nil, friendProfiles)
         }
     }
 }

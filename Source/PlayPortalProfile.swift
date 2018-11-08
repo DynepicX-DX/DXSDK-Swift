@@ -7,7 +7,7 @@
 import Foundation
 
 //  Class representing a playPORTAL user's profile.
-public struct PlayPortalProfile {
+public struct PlayPortalProfile: Codable {
     
     //  MARK: - Properties
     
@@ -22,44 +22,24 @@ public struct PlayPortalProfile {
     public let country: String
     
     
-    //  MARK: - Enums
+    //  MARK: - Internal types
     
-    //  Enum representing possible playPORTAL user types
-    public enum UserType: String {
-        
+    //  Represents possible playPORTAL user types
+    public enum UserType: String, Codable {
         case adult = "adult"
-        
         case child = "child"
-        
         case teenMinor = "teen-minor"
     }
     
-    //  Enum representing possible playPORTAL account types
-    public enum AccountType: String {
-        
+    //  Represents possible playPORTAL account types
+    public enum AccountType: String, Codable {
         case parent = "Parent"
-        
         case kid = "Kid"
-        
         case adult = "Adult"
-        
         case character = "Character"
-        
         case community = "Community"
     }
     
-    
-    //  MARK: - Initializers
-    
-    /**
-     Create profile from json.
-     
-     - Parameter from: The JSON object representing the user's profile.
-     
-     - Throws: If any of the properties are unable to be deserialized from the JSON.
-     
-     - Returns: `PlayPortalProfile` instance.
-     */
     internal init(from json: [String: Any]) throws {
         
         //  Deserialize properties
@@ -68,11 +48,11 @@ public struct PlayPortalProfile {
         }
         guard let userTypeRawValue = json["userType"] as? String
             , let userType = UserType.init(rawValue: userTypeRawValue) else {
-            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'userType' from JSON.")
+                throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'userType' from JSON.")
         }
         guard let accountTypeRawValue = json["accountType"] as? String
             , let accountType = AccountType.init(rawValue: accountTypeRawValue) else {
-            throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'accountType' from JSON.")
+                throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'accountType' from JSON.")
         }
         guard let handle = json["handle"] as? String else {
             throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize 'handle' from JSON.")

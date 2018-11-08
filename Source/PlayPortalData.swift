@@ -6,6 +6,45 @@
 
 import Foundation
 
+//  Available routes for playPORTAL data api
+fileprivate enum DataRouter: URLRequestConvertible {
+    
+    case create(bucketName: String, users: [String], isPublic: Bool)
+    case write(bucketName: String, key: String, value: Any?)
+    case read(bucketName: String, key: String?)
+    case delete(bucketName: String)
+    
+    func asURLRequest() -> URLRequest? {
+        switch self {
+        case let .create(bucketName, users, isPublic):
+            let body: [String: Any] = [
+                "id": bucketName,
+                "users": users,
+                "public": isPublic
+            ]
+            return Router.put(url: PlayPortalURLs.App.bucket, body: body, params: nil).asURLRequest()
+        case let .write(bucketName, key, value):
+            let body: [String: Any?] = [
+                "id": bucketName,
+                "key": key,
+                "value": value
+            ]
+            return Router.post(url: PlayPortalURLs.App.bucket, body: body, params: nil).asURLRequest()
+        case let .read(bucketName, key):
+            let params = [
+                "id": bucketName,
+                "key": key
+            ]
+            return Router.get(url: PlayPortalURLs.App.bucket, params: params).asURLRequest()
+        case let .delete(bucketName):
+            let body = [
+                "id": bucketName
+            ]
+            return Router.delete(url: PlayPortalURLs.App.bucket, body: body, params: nil).asURLRequest()
+        }
+    }
+}
+
 //  Responsible for making requests to playPORTAL app api
 public final class PlayPortalData {
     
@@ -45,22 +84,7 @@ public final class PlayPortalData {
         _ completion: ((_ error: Error?, _ bucket: PlayPortalDataBucket?) -> Void)?)
         -> Void
     {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "PUT",
-            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.App.bucket,
-            andBody: [
-                "id": bucketName,
-                "users": users,
-                "public": isPublic
-            ]) else {
-                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, data in
+        requestHandler.request(DataRouter.create(bucketName: bucketName, users: users, isPublic: isPublic)) { error, data in
             guard error == nil
                 , let json = data?.toJSON
                 else {
@@ -95,22 +119,7 @@ public final class PlayPortalData {
         _  completion: ((_ error: Error?, _ bucket: PlayPortalDataBucket?) -> Void)?)
         -> Void
     {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "POST",
-            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.App.bucket,
-            andBody: [
-                "id": bucketName,
-                "key": key,
-                "value": value
-            ]) else {
-                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, data in
+        requestHandler.request(DataRouter.write(bucketName: bucketName, key: key, value: value)) { error, data in
             guard error == nil
                 , let json = data?.toJSON
                 else {
@@ -144,22 +153,7 @@ public final class PlayPortalData {
         _ completion: ((_ error: Error?, _ value: PlayPortalDataBucket?) -> Void)?)
         -> Void
     {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "GET", andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.App.bucket,
-            andQueryParams: [
-                "id": bucketName
-            ],
-            andHeaders: [
-                "Accept": "application/json"
-            ]) else {
-                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, data in
+        requestHandler.request(DataRouter.read(bucketName: bucketName, key: key)) { error, data in
             guard error == nil
                 , let json = data?.toJSON
                 else {
@@ -192,22 +186,7 @@ public final class PlayPortalData {
         _ completion: ((_ error: Error?, _ bucket: PlayPortalDataBucket?) -> Void)?)
         -> Void
     {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "POST",
-            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.App.bucket,
-            andBody: [
-                "id": bucketName,
-                "key": key,
-                "value": nil
-            ]) else {
-                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, data in
+        requestHandler.request(DataRouter.write(bucketName: bucketName, key: key, value: nil)) { error, data in
             guard error == nil
                 , let json = data?.toJSON
                 else {
@@ -233,18 +212,6 @@ public final class PlayPortalData {
      - Returns: Void
     */
     public func delete(bucketNamed bucketName: String, _ completion: ((_ error: Error?) -> Void)?) -> Void {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "DELETE", andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.App.bucket,
-            andBody: [
-                "id": bucketName
-            ]) else {
-                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."))
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, _ in completion?(error) }
+        requestHandler.request(DataRouter.delete(bucketName: bucketName)) { error, _ in completion?(error) }
     }
 }

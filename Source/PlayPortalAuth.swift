@@ -49,6 +49,40 @@ public enum PlayPortalEnvironment: String {
 }
 
 
+//  Available routes for playPORTAL oauth api
+fileprivate enum AuthRouter: URLRequestConvertible {
+    
+    case login(clientId: String, clientSecret: String, redirectURI: String, responseType: String, state: String)
+    case refresh(accessToken: String?, refreshToken: String?, clientId: String, clientSecret: String, grantType: String)
+    case logout(refreshToken: String?)
+    
+    func asURLRequest() -> URLRequest? {
+        switch self {
+        case let .login(clientId, clientSecret, redirectURI, responseType, state):
+            let params = [
+                "client_id": clientId,
+                "client_secret": clientSecret,
+                "redirect_uri": redirectURI,
+                "response_type": responseType,
+                "state": state
+            ]
+            return Router.get(url: PlayPortalURLs.OAuth.signIn, params: params).asURLRequest()
+        case let .refresh(accessToken, refreshToken, clientId, clientSecret, grantType):
+            let params = [
+                "access_token": accessToken,
+                "refresh_token": refreshToken,
+                "client_id": clientId,
+                "client_secret": clientSecret,
+                "grant_type": grantType
+            ]
+            return Router.post(url: PlayPortalURLs.OAuth.token, body: nil, params: params).asURLRequest()
+        case let .logout(refreshToken):
+            return Router.post(url: PlayPortalURLs.OAuth.logout, body: ["refresh_token": refreshToken], params: nil).asURLRequest()
+        }
+    }
+}
+
+
 //  Responsible for user authentication and token management
 public final class PlayPortalAuth {
     
@@ -127,7 +161,7 @@ public final class PlayPortalAuth {
      */
     public func isAuthenticated(loginDelegate: PlayPortalLoginDelegate? = nil, _ completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
         
-        PlayPortalAuth.shared.loginDelegate = loginDelegate
+        self.loginDelegate = loginDelegate
         
         if requestHandler.isAuthenticated {
             //  If authenticated, request current user's profile
@@ -136,7 +170,7 @@ public final class PlayPortalAuth {
             }
         } else {
             //  If not authenticated, set `isAuthenticatedCompletion` to be used after SSO flow finishes
-            PlayPortalAuth.shared.isAuthenticatedCompletion = completion
+            isAuthenticatedCompletion = completion
             completion(nil, nil)
         }
     }
@@ -150,26 +184,11 @@ public final class PlayPortalAuth {
      - Returns: Void
      */
     internal func login(from viewController: UIViewController? = UIApplication.topMostViewController()) {
-        
-        //  Construct sign in url
-        let host = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment)
-        let path = PlayPortalURLs.OAuth.signIn
-        let queryParams = [
-            "client_id": PlayPortalAuth.shared.clientId,
-            "client_secret": PlayPortalAuth.shared.clientSecret,
-            "redirect_uri": PlayPortalAuth.shared.redirectURI,
-            "response_type": "implicit",
-            "state": "state"
-        ]
-        guard let baseURL = URL(string: host + path)
-            , let urlWithParams = baseURL.with(queryParams: queryParams)
-            else {
-                PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.SSO.ssoFailed(message: "Could not create SSO login url."))
-                return
-        }
+
+        let url = AuthRouter.login(clientId: clientId, clientSecret: clientSecret, redirectURI: redirectURI, responseType: "implicit", state: "state").asURLRequest()?.url
         
         //  Open SSO sign in with safari view controller
-        safariViewController = SFSafariViewController(url: urlWithParams)
+        safariViewController = SFSafariViewController(url: url!)
         safariViewController!.modalTransitionStyle = .coverVertical
         viewController?.present(safariViewController!, animated: true, completion: nil)
     }
@@ -190,18 +209,18 @@ public final class PlayPortalAuth {
         
         //  Extract tokens
         guard let accessToken = url.getParameter(for: "access_token") else {
-            PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.SSO.ssoFailed(message: "Could not extract access token from redirect uri."))
+            loginDelegate?.didFailToLogin?(with: PlayPortalError.SSO.ssoFailed(message: "Could not extract access token from redirect uri."))
             return
         }
         guard let refreshToken = url.getParameter(for: "refresh_token") else {
-            PlayPortalAuth.shared.loginDelegate?.didFailToLogin?(with: PlayPortalError.SSO.ssoFailed(message: "Could not extract refresh token from redirect uri."))
+            loginDelegate?.didFailToLogin?(with: PlayPortalError.SSO.ssoFailed(message: "Could not extract refresh token from redirect uri."))
             return
         }
         requestHandler.set(accessToken: accessToken, andRefreshToken: refreshToken)
         
         //  Request current user's profile
         PlayPortalUser.shared.getProfile { error, userProfile in
-            PlayPortalAuth.shared.isAuthenticatedCompletion?(error, userProfile)
+            self.isAuthenticatedCompletion?(error, userProfile)
         }
     }
     
@@ -216,31 +235,14 @@ public final class PlayPortalAuth {
      - Returns: Void
      */
     internal func refresh(completion: @escaping (_ error: Error?, _ accessToken: String?, _ refreshToken: String?) -> Void) -> Void {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "POST",
-            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.OAuth.token,
-            andQueryParams: [
-                "access_token": requestHandler.accessToken,
-                "refresh_token": requestHandler.refreshToken,
-                "client_id": PlayPortalAuth.shared.clientId,
-                "client_secret": PlayPortalAuth.shared.clientSecret,
-                "grant_type": "refresh_token"
-            ]) else {
-                completion(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil, nil)
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, data in
+        requestHandler.request(AuthRouter.refresh(accessToken: requestHandler.accessToken, refreshToken: requestHandler.refreshToken, clientId: clientId, clientSecret: clientSecret, grantType: "refresh_token")) { error, data in
             guard error == nil
                 , let json = data?.toJSON
                 else {
                     //  Logout on unsuccessful refresh
                     completion(error, nil, nil)
-                    PlayPortalAuth.shared.requestHandler.clearTokens()
-                    PlayPortalAuth.shared.loginDelegate?.didLogout?(with: error!)
+                    self.requestHandler.clearTokens()
+                    self.loginDelegate?.didLogout?(with: error!)
                     return
             }
             guard let accessToken = json["access_token"] as? String
@@ -257,25 +259,13 @@ public final class PlayPortalAuth {
      Logout current user.
      
      - Returns: Void
-    */
+     */
     public func logout() -> Void {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "POST",
-            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.OAuth.logout,
-            andBody: [
-                "refresh_token": requestHandler.refreshToken
-            ]) else {
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, _ in
-            PlayPortalAuth.shared.requestHandler.clearTokens()
+        requestHandler.request(AuthRouter.logout(refreshToken: requestHandler.refreshToken)) { error, _ in
+            self.requestHandler.clearTokens()
             error != nil
-                ? PlayPortalAuth.shared.loginDelegate?.didLogout?(with: error!)
-                : PlayPortalAuth.shared.loginDelegate?.didLogoutSuccessfully?()
+                ? self.loginDelegate?.didLogout?(with: error!)
+                : self.loginDelegate?.didLogoutSuccessfully?()
         }
     }
 }

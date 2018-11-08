@@ -48,37 +48,37 @@ struct PlayPortalURLs {
         
         private init() {}
         
-        static let signIn = "/oauth/signin"
-        static let token = "/oauth/token"
-        static let logout = "/oauth/logout"
+        static let signIn = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/signin"
+        static let token = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/token"
+        static let logout = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/logout"
     }
     
     struct User {
         
         private init() {}
         
-        static let userProfile = "/user/v1/my/profile"
-        static let friendProfiles = "/user/v1/my/friends"
+        static let userProfile = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/profile"
+        static let friendProfiles = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/friends"
     }
     
     struct Image {
         
         private init() {}
         
-        static let staticImage = "/image/v1/static"
+        static let staticImage = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/image/v1/static"
     }
     
     struct Leaderboard {
         
         private init() {}
         
-        static let leaderboard = "/leaderboard/v1"
+        static let leaderboard = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/leaderboard/v1"
     }
     
     struct App {
         
         private init() {}
         
-        internal static let bucket = "/app/v1/bucket"
+        internal static let bucket = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/app/v1/bucket"
     }
 }

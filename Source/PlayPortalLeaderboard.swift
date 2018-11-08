@@ -6,6 +6,32 @@
 
 import Foundation
 
+//  Available routes for playPORTAL leaderboard api
+fileprivate enum LeaderBoardRouter: URLRequestConvertible {
+    
+    case get(categories: [String], page: Int?, limit: Int?)
+    case update(score: Double, categories: [String])
+    
+    func asURLRequest() -> URLRequest? {
+        switch self {
+        case let .get(categories, page, limit):
+            let params: [String: String?] = [
+                "categories": categories.joined(separator: ","),
+                "page": page.flatMap {String($0)},
+                "limit": limit.flatMap {String($0)}
+            ]
+            return Router.get(url: PlayPortalURLs.Leaderboard.leaderboard, params: params).asURLRequest()
+        case let .update(score, categories):
+            let body: [String: Any] = [
+                "score": score,
+                "categories": categories
+            ]
+            return Router.post(url: PlayPortalURLs.Leaderboard.leaderboard, body: body, params: nil).asURLRequest()
+        }
+    }
+}
+
+
 //  Responsible for making requests to playPORTAL leaderboard api
 public final class PlayPortalLeaderboard {
     
@@ -45,22 +71,7 @@ public final class PlayPortalLeaderboard {
         _ completion: @escaping (_ error: Error?, _ leaderboardEntries: [PlayPortalLeaderboardEntry]?) -> Void)
         -> Void
     {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "GET",
-            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.Leaderboard.leaderboard,
-            andQueryParams: [
-                "categories": categories.joined(separator: ","),
-                "page": page == nil ? nil : String(page!),
-                "limit": limit == nil ? nil : String(limit!)
-            ]) else {
-                completion(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, data in
+        requestHandler.request(LeaderBoardRouter.get(categories: categories, page: page, limit: limit)) { error, data in
             guard error == nil
                 , let json = data?.toJSON
                 , let docs = json["docs"] as? [[String: Any]]
@@ -90,21 +101,7 @@ public final class PlayPortalLeaderboard {
         _ completion: ((_ error: Error?, _ leaderboardEntry: PlayPortalLeaderboardEntry?) -> Void)?)
         -> Void
     {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "POST",
-            andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.Leaderboard.leaderboard,
-            andBody: [
-                "score": score,
-                "categories": categories
-            ]) else {
-                completion?(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, data in
+        requestHandler.request(LeaderBoardRouter.update(score: score, categories: categories)) { error, data in
             guard error == nil
                 , let json = data?.toJSON
                 else {

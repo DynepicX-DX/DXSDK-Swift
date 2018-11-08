@@ -99,7 +99,27 @@ extension AlamofireRequestHandler: RequestHandler {
                     completion?(nil, response.data)
                 }
         }
-    } 
+    }
+    
+    func request(_ request: URLRequestConvertible, _ completion: ((Error?, Data?) -> Void)?) {
+        guard let request = request.asURLRequest() else {
+            completion?(PlayPortalError.API.failedToMakeRequest(message: "An error occurred while constructing the request."), nil)
+            return
+        }
+        AlamofireRequestHandler.sessionManager
+            .request(request)
+            .validate(statusCode: 200..<300)
+            .response { response in
+                if response.error != nil {
+                    let error = response.response.map { PlayPortalError.API.createError(from: $0) }
+                        ?? response.error
+                        ?? PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize data from result.")
+                    completion?(error, nil)
+                } else {
+                    completion?(nil, response.data)
+                }
+        }
+    }
 }
 
 

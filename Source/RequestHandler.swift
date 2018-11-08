@@ -50,4 +50,9 @@ protocol RequestHandler {
      - Returns: Void
      */
     func request(_ request: URLRequest, _ completion: ((_ error: Error?, _ data: Data?) -> Void)?) -> Void
+    
+    /**
+     Same as above function, except takes `URLRequestConvertible` as an argument.
+    */
+    func request(_ request: URLRequestConvertible, _ completion: ((_ error: Error?, _ data: Data?) -> Void)?) -> Void
 }

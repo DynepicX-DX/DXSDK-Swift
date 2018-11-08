@@ -6,6 +6,20 @@
 
 import Foundation
 
+//  Available routes for playPORTAL image api
+fileprivate enum ImageRouter: URLRequestConvertible {
+    
+    case get(imageId:String)
+    
+    func asURLRequest() -> URLRequest? {
+        switch self {
+        case let .get(imageId):
+            return Router.get(url: PlayPortalURLs.Image.staticImage + "/" + imageId, params: nil).asURLRequest()
+        }
+    }
+}
+
+
 //  Responsible for making requests to playPORTAL image api
 public final class PlayPortalImage {
     
@@ -37,16 +51,7 @@ public final class PlayPortalImage {
      - Returns: Void
      */
     public func getImage(forImageId imageId: String, _ completion: @escaping (_ error: Error?, _ data: Data?) -> Void) -> Void {
-        
-        //  Create url request
-        guard let urlRequest = URLRequest.from(
-            method: "GET", andURL: PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + PlayPortalURLs.Image.staticImage + "/" + imageId) else {
-                completion(PlayPortalError.API.failedToMakeRequest(message: "Failed to construct 'URLRequest'."), nil)
-                return
-        }
-        
-        //  Make request
-        requestHandler.request(urlRequest) { error, data in
+        requestHandler.request(ImageRouter.get(imageId: imageId)) { error, data in
             guard error == nil
                 , let data = data
                 else {
