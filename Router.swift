@@ -7,11 +7,14 @@
 
 import Foundation
 
-internal protocol URLRequestConvertible {
+//  Protocol that requires a conforming type to be convertible to `URLRequest`
+protocol URLRequestConvertible {
     func asURLRequest() -> URLRequest?
 }
 
-internal enum Router: URLRequestConvertible {
+//  Enum that conforms to `URLRequestConvertible`
+//  Contains cases for possible HTTP methods
+enum Router: URLRequestConvertible {
     
     case get(url: String, params: [String: String?]?)
     case put(url: String, body: [String: Any?]?, params: [String: String?]?)

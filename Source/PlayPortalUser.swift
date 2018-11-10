@@ -26,18 +26,10 @@ fileprivate enum UserRouter: URLRequestConvertible {
 //  Responsible for making requests to playPORTAL user api
 public final class PlayPortalUser {
     
-    //  MARK: - Properties
-    
-    //  Singleton instance
     public static let shared = PlayPortalUser()
+    private let requestHandler: RequestHandler = globalRequestHandler
+    private let responseHandler: ResponseHandler = globalResponseHandler
     
-    //  Handler for making api requests
-    private var requestHandler: RequestHandler = globalRequestHandler
-    
-    
-    //  MARK: - Initializers
-    
-    //  Private init to force use of singleton
     private init() {}
     
     
@@ -53,16 +45,8 @@ public final class PlayPortalUser {
      - Returns: Void
      */
     public func getProfile(completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
-        requestHandler.request(UserRouter.getUserProfile) { error, data in
-            guard error == nil else {
-                completion(error, nil)
-                return
-            }
-            if let profile = data?.asDecodable(type: PlayPortalProfile.self) {
-                completion(nil, profile)
-            } else {
-                completion(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize data to 'PlayPortalProfile'."), nil)
-            }
+        requestHandler.request(UserRouter.getUserProfile) {
+            self.responseHandler.handleResponse(error: $0, response: $1, data: $2, completion)
         }
     }
     
@@ -76,17 +60,8 @@ public final class PlayPortalUser {
      - Returns: Void
     */
     public func getFriendProfiles(completion: @escaping (_ error: Error?, _ friendProfiles: [PlayPortalProfile]?) -> Void) -> Void {
-        requestHandler.request(UserRouter.getFriendProfiles) { error, data in
-            guard error == nil else {
-                completion(error, nil)
-                return
-            }
-//            let d = data!.toJSONArray
-            
-//            let friendProfiles = Array(data!).compactMap { $0.asDecodable(type(of: PlayPortalProfile.self ))}
-//            completion(friendProfiles, nil)
-//            let friendProfiles = jsonArray.compactMap { try? PlayPortalProfile(from: $0) }
-//            completion(nil, friendProfiles)
+        requestHandler.request(UserRouter.getFriendProfiles) {
+            self.responseHandler.handleResponse(error: $0, response: $1, data: $2, completion)
         }
     }
 }

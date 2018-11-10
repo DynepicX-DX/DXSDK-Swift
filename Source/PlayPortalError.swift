@@ -18,6 +18,8 @@ public enum PlayPortalError {
         case requestFailed(errorCode: API.ErrorCode, description: String)
         case requestFailedForUnknownReason(message: String)
         case unableToDeserializeResult(message: String)
+        case unableToDeserializeResponse
+        
         
         //  Error codes
         public enum ErrorCode: Int {
@@ -106,15 +108,15 @@ public enum PlayPortalError {
          
          - Returns: `PlayPortalError.API`
          */
-        internal static func createError(from response: HTTPURLResponse) -> API {
+        internal static func createError(from response: HTTPURLResponse) -> API? {
             guard let errorCode = response.allHeaderFields["errorcode"] as? String
                 , let code = Int(errorCode)
                 , let description = response.allHeaderFields["errordescription"] as? String
                 else {
-                    return .requestFailedForUnknownReason(message: "Unable to parse 'errorcode' or 'errordescription' from response headers.")
+                    return nil
             }
             guard let error = ErrorCode(rawValue: code) else {
-                return .requestFailedForUnknownReason(message: "Error code '\(code)' did not match any known types.")
+                return nil
             }
             return .requestFailed(errorCode: error, description: description)
         }

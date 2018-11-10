@@ -35,22 +35,11 @@ fileprivate enum LeaderBoardRouter: URLRequestConvertible {
 //  Responsible for making requests to playPORTAL leaderboard api
 public final class PlayPortalLeaderboard {
     
-    //  MARK: - Properties
-    
-    //  Singleton instance
     public static let shared = PlayPortalLeaderboard()
+    private let requestHandler: RequestHandler = globalRequestHandler
+    private let responseHandler: ResponseHandler = globalResponseHandler
     
-    //  Handler for making api requests
-    private var requestHandler: RequestHandler = globalRequestHandler
-    
-    
-    //  MARK: - Initializers
-    
-    //  Private init to force use of singleton
     private init() {}
-    
-    
-    //  MARK: - Methods
     
     /**
      Request leaderboard entries.
@@ -71,16 +60,18 @@ public final class PlayPortalLeaderboard {
         _ completion: @escaping (_ error: Error?, _ leaderboardEntries: [PlayPortalLeaderboardEntry]?) -> Void)
         -> Void
     {
-        requestHandler.request(LeaderBoardRouter.get(categories: categories, page: page, limit: limit)) { error, data in
-            guard error == nil
-                , let json = data?.toJSON
-                , let docs = json["docs"] as? [[String: Any]]
-                else {
-                    completion(error, nil)
-                    return
+        requestHandler.request(LeaderBoardRouter.get(categories: categories, page: page, limit: limit)) {
+            self.responseHandler.jsonResponse(error: $0, response: $1, data: $2) { error, json in
+//                guard error == nil
+//                    , let json = data?.toJSON
+//                    , let docs = json["docs"] as? [[String: Any]]
+//                    else {
+//                        completion(error ?? PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize data from response."), nil)
+//                        return
+//                }
+//                let leaderboardEntries = docs.compactMap { $0.asDecodable(type: PlayPortalLeaderboardEntry.self) }
+//                completion(nil, leaderboardEntries)
             }
-            let leaderboardEntries = docs.compactMap { try? PlayPortalLeaderboardEntry(from: $0) }
-            completion(nil, leaderboardEntries)
         }
     }
     
@@ -101,19 +92,8 @@ public final class PlayPortalLeaderboard {
         _ completion: ((_ error: Error?, _ leaderboardEntry: PlayPortalLeaderboardEntry?) -> Void)?)
         -> Void
     {
-        requestHandler.request(LeaderBoardRouter.update(score: score, categories: categories)) { error, data in
-            guard error == nil
-                , let json = data?.toJSON
-                else {
-                    completion?(error, nil)
-                    return
-            }
-            do {
-                let leaderboardEntry = try PlayPortalLeaderboardEntry(from: json)
-                completion?(nil, leaderboardEntry)
-            } catch {
-                completion?(error, nil)
-            }
+        requestHandler.request(LeaderBoardRouter.update(score: score, categories: categories)) {
+            self.responseHandler.decodableResponse(error: $0, response: $1, data: $2, completion)
         }
     }
 }

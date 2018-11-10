@@ -7,7 +7,7 @@
 import Foundation
 
 //  Available routes for playPORTAL data api
-fileprivate enum DataRouter: URLRequestConvertible {
+enum DataRouter: URLRequestConvertible {
     
     case create(bucketName: String, users: [String], isPublic: Bool)
     case write(bucketName: String, key: String, value: Any?)
@@ -47,23 +47,12 @@ fileprivate enum DataRouter: URLRequestConvertible {
 
 //  Responsible for making requests to playPORTAL app api
 public final class PlayPortalData {
-    
-    //  MARK: - Properties
-    
-    //  Singleton instance
+
     public static let shared = PlayPortalData()
+    private let requestHandler: RequestHandler = globalRequestHandler
+    private let responseHandler: ResponseHandler = globalResponseHandler
     
-    //  Handler for making api requests
-    private var requestHandler: RequestHandler = globalRequestHandler
-    
-    
-    //  MARK: - Initializers
-    
-    //  Private init to force use of singleton
     private init() {}
-    
-    
-    //  MARK: - Methods
     
     /**
      Create a data bucket.
@@ -214,4 +203,20 @@ public final class PlayPortalData {
     public func delete(bucketNamed bucketName: String, _ completion: ((_ error: Error?) -> Void)?) -> Void {
         requestHandler.request(DataRouter.delete(bucketName: bucketName)) { error, _ in completion?(error) }
     }
+    
+    // createBucket
+    
+    //  readBucketJSON
+    
+    //  readBucketDecodable
+    
+    //  writeBucketJSON
+    
+    //  writeBucketDecodable
+    
+    //  deleteFromBucketJSON
+    
+    //  deleteFromBucketDecodable
+    
+    //  deleteBucket
 }

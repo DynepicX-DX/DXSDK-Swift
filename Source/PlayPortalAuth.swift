@@ -86,33 +86,17 @@ fileprivate enum AuthRouter: URLRequestConvertible {
 //  Responsible for user authentication and token management
 public final class PlayPortalAuth {
     
-    //  MARK: - Properties
-    
-    //  Singleton instance
     public static let shared = PlayPortalAuth()
-    
-    //  App configuration
-    var environment = PlayPortalEnvironment.sandbox
+    internal var environment = PlayPortalEnvironment.sandbox
     private var clientId = ""
     private var clientSecret = ""
     private var redirectURI = ""
-    
-    //  Completion that will be called once user is authenticated through auth flow.
     private var isAuthenticatedCompletion: ((_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void)?
-    
-    //  Delegate used for login; will be passed any errors during SSO
     private weak var loginDelegate: PlayPortalLoginDelegate?
-    
-    //  Handler for making api requests
     private var requestHandler: RequestHandler = globalRequestHandler
-    
-    //  Maintain refrence to safari view controller so that it can be dismissed when SSO finishes
+    private var responseHandler: ResponseHandler = globalResponseHandler
     private var safariViewController: SFSafariViewController?
     
-    
-    //  MARK: - Initializers
-    
-    //  Private init to force use of singleton
     private init() {}
     
     
@@ -166,6 +150,9 @@ public final class PlayPortalAuth {
         if requestHandler.isAuthenticated {
             //  If authenticated, request current user's profile
             PlayPortalUser.shared.getProfile { error, userProfile in
+                if error != nil {
+                    self.requestHandler.clearTokens()
+                }
                 completion(error, userProfile)
             }
         } else {
@@ -235,23 +222,21 @@ public final class PlayPortalAuth {
      - Returns: Void
      */
     internal func refresh(completion: @escaping (_ error: Error?, _ accessToken: String?, _ refreshToken: String?) -> Void) -> Void {
-        requestHandler.request(AuthRouter.refresh(accessToken: requestHandler.accessToken, refreshToken: requestHandler.refreshToken, clientId: clientId, clientSecret: clientSecret, grantType: "refresh_token")) { error, data in
-            guard error == nil
-                , let json = data?.toJSON
-                else {
-                    //  Logout on unsuccessful refresh
-                    completion(error, nil, nil)
-                    self.requestHandler.clearTokens()
-                    self.loginDelegate?.didLogout?(with: error!)
-                    return
+        requestHandler.request(AuthRouter.refresh(accessToken: requestHandler.accessToken, refreshToken: requestHandler.refreshToken, clientId: clientId, clientSecret: clientSecret, grantType: "refresh_token")) {
+            self.responseHandler.handleResponse(error: $0, response: $1, data: $2) { (error, json: [String: String]?) in
+                
+                guard error == nil
+                    , let accessToken = json?["access_token"],
+                    let refreshToken = json?["refresh_token"]
+                    else {
+                        //  Logout on unsuccessful refresh
+                        completion(error ?? PlayPortalError.API.unableToDeserializeResponse, nil, nil)
+                        self.requestHandler.clearTokens()
+                        self.loginDelegate?.didLogout?(with: error!)
+                        return
+                }
+                completion(nil, accessToken, refreshToken)
             }
-            guard let accessToken = json["access_token"] as? String
-                , let refreshToken = json["refresh_token"] as? String
-                else {
-                    completion(PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize JSON from result."), nil, nil)
-                    return
-            }
-            completion(nil, accessToken, refreshToken)
         }
     }
     
@@ -261,11 +246,13 @@ public final class PlayPortalAuth {
      - Returns: Void
      */
     public func logout() -> Void {
-        requestHandler.request(AuthRouter.logout(refreshToken: requestHandler.refreshToken)) { error, _ in
-            self.requestHandler.clearTokens()
-            error != nil
-                ? self.loginDelegate?.didLogout?(with: error!)
-                : self.loginDelegate?.didLogoutSuccessfully?()
+        requestHandler.request(AuthRouter.logout(refreshToken: requestHandler.refreshToken)) {
+            self.responseHandler.handleResponse(error: $0, response: $1, data: $2) { (error, _: Data?) in
+                self.requestHandler.clearTokens()
+                error != nil
+                    ? self.loginDelegate?.didLogout?(with: error!)
+                    : self.loginDelegate?.didLogoutSuccessfully?()
+            }
         }
     }
 }

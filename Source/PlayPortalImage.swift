@@ -23,18 +23,10 @@ fileprivate enum ImageRouter: URLRequestConvertible {
 //  Responsible for making requests to playPORTAL image api
 public final class PlayPortalImage {
     
-    //  MARK: - Properties
-    
-    //  Singleton instance
     public static let shared = PlayPortalImage()
+    private let requestHandler: RequestHandler = globalRequestHandler
+    private let responseHandler: ResponseHandler = globalResponseHandler
     
-    //  Handler for making api requests
-    private var requestHandler: RequestHandler = globalRequestHandler
-    
-    
-    //  MARK: - Initializers
-    
-    //  Private init to force use of singleton
     private init() {}
     
     
@@ -51,14 +43,8 @@ public final class PlayPortalImage {
      - Returns: Void
      */
     public func getImage(forImageId imageId: String, _ completion: @escaping (_ error: Error?, _ data: Data?) -> Void) -> Void {
-        requestHandler.request(ImageRouter.get(imageId: imageId)) { error, data in
-            guard error == nil
-                , let data = data
-                else {
-                    completion(error, nil)
-                    return
-            }
-            completion(nil, data)
+        requestHandler.request(ImageRouter.get(imageId: imageId)) {
+            self.responseHandler.handleResponse(error: $0, response: $1, data: $2, completion)
         }
     }
 }
