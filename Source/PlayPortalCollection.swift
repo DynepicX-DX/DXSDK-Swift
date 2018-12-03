@@ -15,16 +15,33 @@ public final class PlayPortalCollection {
     public static let shared = PlayPortalCollection()
     private var requestHandler: RequestHandler = globalRequestHandler
     private var responseHandler: ResponseHandler = globalResponseHandler
-    private var collections = [String: [Any]]()
+    private var collections = CollectionContainer()
     
     private init() {}
     
-    private func encodedCollection(named collectionName: String) -> [[String: Any]]? {
-        return (collections[collectionName] as? [Codable])?.compactMap { $0.asDictionary }
+    private func encode<C: CollectionType>(_ collection: [C]) -> [[String: Any]] {
+        return collection.compactMap { $0.asDictionary }
     }
     
-    private func encode<C: CollectionType>(collection: [C]) -> [[String: Any]] {
-        return collection.compactMap { $0.asDictionary }
+    private class CollectionContainer {
+        
+        private var collections = [String: [Any]]()
+        private let queue = DispatchQueue(label: "com.dynepic.playPORTAL.collectionQueue", attributes: .concurrent)
+        
+        subscript(collectionName: String) -> [Any]? {
+            get {
+                var copy: [Any]?
+                queue.sync {
+                    copy = collections[collectionName]
+                }
+                return copy
+            }
+            set(newValue) {
+                queue.async(flags: .barrier) { [unowned self] in
+                    self.collections[collectionName] = newValue
+                }
+            }
+        }
     }
     
     /**
@@ -95,7 +112,7 @@ public final class PlayPortalCollection {
         assert(collections[collectionName] as? [C] != nil, "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
         
         let updatedCollection: [C] = collections[collectionName]! + [element] as! [C]
-        requestHandler.request(DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(collection: updatedCollection))) {
+        requestHandler.request(DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))) {
             self.responseHandler.handleResponse($0, $1, $2, atKey: "data.\(collectionName)") { (error, collection: [C]?) in
                 if error == nil {
                     self.collections[collectionName] = updatedCollection
@@ -124,7 +141,7 @@ public final class PlayPortalCollection {
         assert(collections[collectionName] as? [C] != nil, "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
         
         let updatedCollection = (collections[collectionName]! as! [C]).filter { $0 != value }
-        requestHandler.request(DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(collection: updatedCollection))) {
+        requestHandler.request(DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))) {
             self.responseHandler.handleResponse($0, $1, $2, atKey: "data.\(collectionName)") { (error, collection: [C]?) in
                 if error == nil {
                     self.collections[collectionName] = updatedCollection
@@ -155,7 +172,7 @@ public final class PlayPortalCollection {
         assert(collections[collectionName] as? [C] != nil, "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
         
         let updatedCollection = (collections[collectionName]! as! [C]).map { $0 == oldValue ? newValue: $0 }
-        requestHandler.request(DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(collection: updatedCollection))) {
+        requestHandler.request(DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))) {
             self.responseHandler.handleResponse($0, $1, $2, atKey: "data.\(collectionName)") { (error, collection: [C]?) in
                 if error == nil {
                     self.collections[collectionName] = updatedCollection
@@ -181,7 +198,7 @@ public final class PlayPortalCollection {
         requestHandler.request(DataRouter.delete(bucketName: collectionName)) {
             self.responseHandler.handleResponse($0, $1, $2) { (error, _ data: Data?) in
                 if error == nil {
-                    self.collections.removeValue(forKey: collectionName)
+                    self.collections[collectionName] = nil
                 }
                 completion?(error)
             }
