@@ -1,5 +1,5 @@
 //
-//  PlayPortalURLs.swift
+//  URLs.swift
 //
 //  Created by Lincoln Fraley on 10/24/18.
 //
@@ -7,7 +7,7 @@
 import Foundation
 
 //  Struct containing playPORTAl api available hosts and paths
-struct PlayPortalURLs {
+struct URLs {
     
     //  MARK: - Properties
     
@@ -33,11 +33,11 @@ struct PlayPortalURLs {
     static func getHost(forEnvironment environment: PlayPortalEnvironment) -> String {
         switch environment {
         case .sandbox:
-            return PlayPortalURLs.sandboxHost
+            return URLs.sandboxHost
         case .develop:
-            return PlayPortalURLs.developHost
+            return URLs.developHost
         case .production:
-            return PlayPortalURLs.productionHost
+            return URLs.productionHost
         }
     }
     
@@ -48,37 +48,37 @@ struct PlayPortalURLs {
         
         private init() {}
         
-        static let signIn = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/signin"
-        static let token = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/token"
-        static let logout = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/logout"
+        static let signIn = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/signin"
+        static let token = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/token"
+        static let logout = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/logout"
     }
     
     struct User {
         
         private init() {}
         
-        static let userProfile = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/profile"
-        static let friendProfiles = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/friends"
+        static let userProfile = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/profile"
+        static let friendProfiles = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/friends"
     }
     
     struct Image {
         
         private init() {}
         
-        static let staticImage = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/image/v1/static"
+        static let staticImage = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/image/v1/static"
     }
     
     struct Leaderboard {
         
         private init() {}
         
-        static let leaderboard = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/leaderboard/v1"
+        static let leaderboard = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/leaderboard/v1"
     }
     
     struct App {
         
         private init() {}
         
-        internal static let bucket = PlayPortalURLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/app/v1/bucket"
+        internal static let bucket = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/app/v1/bucket"
     }
 }

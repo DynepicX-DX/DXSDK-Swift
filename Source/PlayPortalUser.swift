@@ -16,9 +16,9 @@ fileprivate enum UserRouter: URLRequestConvertible {
     func asURLRequest() -> URLRequest? {
         switch self {
         case .getUserProfile:
-            return Router.get(url: PlayPortalURLs.User.userProfile, params: nil).asURLRequest()
+            return Router.get(url: URLs.User.userProfile, params: nil).asURLRequest()
         case .getFriendProfiles:
-            return Router.get(url: PlayPortalURLs.User.friendProfiles, params: nil).asURLRequest()
+            return Router.get(url: URLs.User.friendProfiles, params: nil).asURLRequest()
         }
     }
 }

@@ -22,25 +22,25 @@ enum DataRouter: URLRequestConvertible {
                 "users": users,
                 "public": isPublic
             ]
-            return Router.put(url: PlayPortalURLs.App.bucket, body: body, params: nil).asURLRequest()
+            return Router.put(url: URLs.App.bucket, body: body, params: nil).asURLRequest()
         case let .write(bucketName, key, value):
             let body: [String: Any?] = [
                 "id": bucketName,
                 "key": key,
                 "value": value
             ]
-            return Router.post(url: PlayPortalURLs.App.bucket, body: body, params: nil).asURLRequest()
+            return Router.post(url: URLs.App.bucket, body: body, params: nil).asURLRequest()
         case let .read(bucketName, key):
             let params = [
                 "id": bucketName,
                 "key": key
             ]
-            return Router.get(url: PlayPortalURLs.App.bucket, params: params).asURLRequest()
+            return Router.get(url: URLs.App.bucket, params: params).asURLRequest()
         case let .delete(bucketName):
             let body = [
                 "id": bucketName
             ]
-            return Router.delete(url: PlayPortalURLs.App.bucket, body: body, params: nil).asURLRequest()
+            return Router.delete(url: URLs.App.bucket, body: body, params: nil).asURLRequest()
         }
     }
 }

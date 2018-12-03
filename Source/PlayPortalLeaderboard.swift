@@ -20,13 +20,13 @@ fileprivate enum LeaderBoardRouter: URLRequestConvertible {
                 "page": page.flatMap {String($0)},
                 "limit": limit.flatMap {String($0)}
             ]
-            return Router.get(url: PlayPortalURLs.Leaderboard.leaderboard, params: params).asURLRequest()
+            return Router.get(url: URLs.Leaderboard.leaderboard, params: params).asURLRequest()
         case let .update(score, categories):
             let body: [String: Any] = [
                 "score": score,
                 "categories": categories
             ]
-            return Router.post(url: PlayPortalURLs.Leaderboard.leaderboard, body: body, params: nil).asURLRequest()
+            return Router.post(url: URLs.Leaderboard.leaderboard, body: body, params: nil).asURLRequest()
         }
     }
 }

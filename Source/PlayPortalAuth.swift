@@ -66,7 +66,7 @@ fileprivate enum AuthRouter: URLRequestConvertible {
                 "response_type": responseType,
                 "state": state
             ]
-            return Router.get(url: PlayPortalURLs.OAuth.signIn, params: params).asURLRequest()
+            return Router.get(url: URLs.OAuth.signIn, params: params).asURLRequest()
         case let .refresh(accessToken, refreshToken, clientId, clientSecret, grantType):
             let params = [
                 "access_token": accessToken,
@@ -75,9 +75,9 @@ fileprivate enum AuthRouter: URLRequestConvertible {
                 "client_secret": clientSecret,
                 "grant_type": grantType
             ]
-            return Router.post(url: PlayPortalURLs.OAuth.token, body: nil, params: params).asURLRequest()
+            return Router.post(url: URLs.OAuth.token, body: nil, params: params).asURLRequest()
         case let .logout(refreshToken):
-            return Router.post(url: PlayPortalURLs.OAuth.logout, body: ["refresh_token": refreshToken], params: nil).asURLRequest()
+            return Router.post(url: URLs.OAuth.logout, body: ["refresh_token": refreshToken], params: nil).asURLRequest()
         }
     }
 }

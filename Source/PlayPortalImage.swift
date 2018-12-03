@@ -14,7 +14,7 @@ fileprivate enum ImageRouter: URLRequestConvertible {
     func asURLRequest() -> URLRequest? {
         switch self {
         case let .get(imageId):
-            return Router.get(url: PlayPortalURLs.Image.staticImage + "/" + imageId, params: nil).asURLRequest()
+            return Router.get(url: URLs.Image.staticImage + "/" + imageId, params: nil).asURLRequest()
         }
     }
 }
