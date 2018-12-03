@@ -14,7 +14,7 @@ extension Data {
      
      - Returns: JSON if able to successfully serialize
      */
-    var toJSON: [String: Any]? {
+    var asJSON: [String: Any]? {
         get {
             guard let json = try? JSONSerialization.jsonObject(with: self, options: []) else { return nil }
             return json as? [String: Any]
@@ -26,7 +26,7 @@ extension Data {
      
      - Returns: JSON array if able to successfully serialize
      */
-    var toJSONArray: [[String: Any]]? {
+    var asJSONArray: [[String: Any]]? {
         get {
             guard let json = try? JSONSerialization.jsonObject(with: self, options: [])
                 , let array = json as? [Any]
@@ -51,7 +51,7 @@ extension Data {
 
 
 //  MARK: - Dictionary
-internal extension Dictionary where Key == String, Value == Any {
+extension Dictionary where Key == String, Value == Any {
     
     /**
      Decode JSON to a `Decodable` type
@@ -63,6 +63,19 @@ internal extension Dictionary where Key == String, Value == Any {
     func asDecodable<D: Decodable>(type: D.Type) -> D? {
         guard let data = try? JSONSerialization.data(withJSONObject: self, options: []) else { return nil }
         return try? JSONDecoder().decode(type, from: data)
+    }
+    
+    func valueAtNestedKey(_ key: String) -> Any? {
+        let keys = key.split(separator: ".")
+            .map { String($0) }
+        var json: [String: Any]? = self
+        for key in keys.dropLast() {
+            json = json?[key] as? [String: Any]
+        }
+        print()
+        return json?[keys.last!]
+//        return keys.dropLast()
+//            .reduce(self) { current, next in current?[next] as? [String: Any] }?[keys.last ?? ""]
     }
 }
 

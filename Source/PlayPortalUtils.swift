@@ -11,15 +11,7 @@ import StoreKit
 //  Publicly available utility functions
 public final class PlayPortalUtils: NSObject {
     
-    //  MARK: - Properties
-    
-    //  Work around for adding a delegate to `SKStoreProductViewController`
     private static let shared = PlayPortalUtils()
-    
-    
-    //  MARK: - Initializers
-    
-    //  Should not be initialized; all methods are static
     private override init() {}
     
     

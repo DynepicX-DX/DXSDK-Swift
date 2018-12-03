@@ -43,13 +43,12 @@ protocol RequestHandler {
      Make request.
      
      - Parameter request: The request being made.
-     - Parameter completion: The closure called after the request is made.
+     - Parameter completion: The closure invoked after the request is made.
      - Parameter error: The error returned for an unsuccessful request.
-     - Parameter json: The data returned for a successful request.
+     - Parameter response: The response returned for the request.
+     - Parameter data: The data returned for a successful request.
      
      - Returns: Void
      */
-    func request(_ request: URLRequestConvertible, _ completion: ((_ error: Error?, _ data: Data?) -> Void)?) -> Void
-    
     func request(_ request: URLRequestConvertible, _ completion: ((_ error: Error?, _ response: HTTPURLResponse?, _ data: Data?) -> Void)?) -> Void
 }

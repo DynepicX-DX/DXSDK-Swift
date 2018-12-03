@@ -170,7 +170,7 @@ public final class PlayPortalAuth {
      
      - Returns: Void
      */
-    internal func login(from viewController: UIViewController? = UIApplication.topMostViewController()) {
+    func login(from viewController: UIViewController? = UIApplication.topMostViewController()) {
 
         let url = AuthRouter.login(clientId: clientId, clientSecret: clientSecret, redirectURI: redirectURI, responseType: "implicit", state: "state").asURLRequest()?.url
         
@@ -190,9 +190,7 @@ public final class PlayPortalAuth {
     public func open(url: URL) -> Void {
         
         //  Dismiss safari view controller
-        defer {
-            safariViewController?.dismiss(animated: true, completion: nil)
-        }
+        safariViewController?.dismiss(animated: true, completion: nil)
         
         //  Extract tokens
         guard let accessToken = url.getParameter(for: "access_token") else {
@@ -211,6 +209,17 @@ public final class PlayPortalAuth {
         }
     }
     
+    struct TokenResponse: Codable {
+        
+        let accessToken: String
+        let refreshToken: String
+        
+        enum CodingKeys: String, CodingKey {
+            case accessToken = "access_token"
+            case refreshToken = "refresh_token"
+        }
+    }
+    
     /**
      Called when a refresh is required.
      
@@ -221,21 +230,14 @@ public final class PlayPortalAuth {
      
      - Returns: Void
      */
-    internal func refresh(completion: @escaping (_ error: Error?, _ accessToken: String?, _ refreshToken: String?) -> Void) -> Void {
+    func refresh(completion: @escaping (_ error: Error?, _ accessToken: String?, _ refreshToken: String?) -> Void) -> Void {
         requestHandler.request(AuthRouter.refresh(accessToken: requestHandler.accessToken, refreshToken: requestHandler.refreshToken, clientId: clientId, clientSecret: clientSecret, grantType: "refresh_token")) {
-            self.responseHandler.handleResponse(error: $0, response: $1, data: $2) { (error, json: [String: String]?) in
-                
-                guard error == nil
-                    , let accessToken = json?["access_token"],
-                    let refreshToken = json?["refresh_token"]
-                    else {
-                        //  Logout on unsuccessful refresh
-                        completion(error ?? PlayPortalError.API.unableToDeserializeResponse, nil, nil)
-                        self.requestHandler.clearTokens()
-                        self.loginDelegate?.didLogout?(with: error!)
-                        return
+            self.responseHandler.handleResponse($0, $1, $2) { (error, tokenResponse: TokenResponse?) in
+                if let error = error {
+                    self.requestHandler.clearTokens()
+                    self.loginDelegate?.didLogout?(with: error)
                 }
-                completion(nil, accessToken, refreshToken)
+                completion(error, tokenResponse?.accessToken, tokenResponse?.refreshToken)
             }
         }
     }
@@ -247,7 +249,7 @@ public final class PlayPortalAuth {
      */
     public func logout() -> Void {
         requestHandler.request(AuthRouter.logout(refreshToken: requestHandler.refreshToken)) {
-            self.responseHandler.handleResponse(error: $0, response: $1, data: $2) { (error, _: Data?) in
+            self.responseHandler.handleResponse($0, $1, $2) { (error, _: Data?) in
                 self.requestHandler.clearTokens()
                 error != nil
                     ? self.loginDelegate?.didLogout?(with: error!)

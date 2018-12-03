@@ -56,71 +56,54 @@ public final class PlayPortalData {
     
     /**
      Create a data bucket.
-     
      - Parameter bucketName: Name given to the bucket.
-     - Parameter includingUsers: Ids of users who will have access to the bucket.
+     - Parameter includingUsers: Ids of users who will have access to the bucket; defaults to empty.
      - Parameter isPublic: Indicates if the bucket is globally available; defaults to false.
      - Parameter completion: The closure invoked when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
-     - Parameter bucket: The newly created bucket.
-     
      - Returns: Void
     */
     public func create(
         buckedNamed bucketName: String,
-        includingUsers users: [String],
+        includingUsers users: [String] = [],
         isPublic: Bool = false,
-        _ completion: ((_ error: Error?, _ bucket: PlayPortalDataBucket?) -> Void)?)
+        _ completion: ((_ error: Error?) -> Void)?)
         -> Void
     {
-        requestHandler.request(DataRouter.create(bucketName: bucketName, users: users, isPublic: isPublic)) { error, data in
-            guard error == nil
-                , let json = data?.toJSON
-                else {
-                    completion?(error, nil)
-                    return
-            }
-            do {
-                let bucket = try PlayPortalDataBucket(from: json)
-                completion?(nil, bucket)
-            } catch {
-                completion?(error, nil)
-            }
+        requestHandler.request(DataRouter.create(bucketName: bucketName, users: users, isPublic: isPublic)) {
+            self.responseHandler.handleResponse($0, $1, $2) { (error, _ data: Data?) in completion?(error) }
         }
     }
     
     /**
      Write data to a bucket.
-     
      - Parameter toBucket: The name of the bucket being written to.
      - Parameter atKey: At what key in the bucket the data will be written to. For nested keys, use a period-separated string eg. 'root.sub'.
      - Parameter withValue: The value being added to the bucket.
      - Parameter completion: The closure called when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Parameter bucket: The bucket the data was added to returned for a successful request.
-     
      - Returns: Void
     */
-    public func write(
+    public func write<V: Codable>(
         toBucket bucketName: String,
         atKey key: String,
-        withValue value: Any,
-        _  completion: ((_ error: Error?, _ bucket: PlayPortalDataBucket?) -> Void)?)
+        withValue value: V,
+        _  completion: ((_ error: Error?, _ data: Any?) -> Void)?)
         -> Void
     {
-        requestHandler.request(DataRouter.write(bucketName: bucketName, key: key, value: value)) { error, data in
+        var val: Any?
+        if let encoded = try? JSONEncoder().encode(["value": value]), let json = try? JSONSerialization.jsonObject(with: encoded, options: .allowFragments) as? [String: Any] {
+            val = json?["value"]
+        }
+        requestHandler.request(DataRouter.write(bucketName: bucketName, key: key, value: val)) { error, response, data in
             guard error == nil
-                , let json = data?.toJSON
+                , let data = data?.asJSON?.valueAtNestedKey("data.\(key)")
                 else {
                     completion?(error, nil)
                     return
             }
-            do {
-                let bucket = try PlayPortalDataBucket(from: json)
-                completion?(nil, bucket)
-            } catch {
-                completion?(error, nil)
-            }
+            completion?(error, data)
         }
     }
     
@@ -139,22 +122,19 @@ public final class PlayPortalData {
     public func read(
         fromBucket bucketName: String,
         atKey key: String? = nil,
-        _ completion: ((_ error: Error?, _ value: PlayPortalDataBucket?) -> Void)?)
+        _ completion: @escaping (_ error: Error?, _ value: Any?) -> Void)
         -> Void
     {
-        requestHandler.request(DataRouter.read(bucketName: bucketName, key: key)) { error, data in
+        requestHandler.request(DataRouter.read(bucketName: bucketName, key: key)) { error, _, data in
             guard error == nil
-                , let json = data?.toJSON
+                , let json = data?.asJSON
+                , let d = json["data"] as? [String: Any]
+                , let value = key != nil ? d[key!] : d
                 else {
-                    completion?(error, nil)
+                    completion(error, nil)
                     return
             }
-            do {
-                let bucket = try PlayPortalDataBucket(from: json)
-                completion?(nil, bucket)
-            } catch {
-                completion?(error, nil)
-            }
+            completion(error, value)
         }
     }
     
@@ -172,22 +152,21 @@ public final class PlayPortalData {
     public func delete(
         fromBucket bucketName: String,
         atKey key: String,
-        _ completion: ((_ error: Error?, _ bucket: PlayPortalDataBucket?) -> Void)?)
+        _ completion: ((_ error: Error?, _ bucket: Any?) -> Void)?)
         -> Void
     {
-        requestHandler.request(DataRouter.write(bucketName: bucketName, key: key, value: nil)) { error, data in
+        requestHandler.request(DataRouter.write(bucketName: bucketName, key: key, value: nil)) { error, response, data in
+            if let e = response.map({ PlayPortalError.API.createError(from: $0) }), e != nil {
+                print(e)
+                print()
+            }
             guard error == nil
-                , let json = data?.toJSON
+                , let value = data?.asJSON?["data"]
                 else {
                     completion?(error, nil)
                     return
             }
-            do {
-                let bucket = try PlayPortalDataBucket(from: json)
-                completion?(nil, bucket)
-            } catch {
-                completion?(error, nil)
-            }
+            completion?(error, value)
         }
     }
     
@@ -201,7 +180,7 @@ public final class PlayPortalData {
      - Returns: Void
     */
     public func delete(bucketNamed bucketName: String, _ completion: ((_ error: Error?) -> Void)?) -> Void {
-        requestHandler.request(DataRouter.delete(bucketName: bucketName)) { error, _ in completion?(error) }
+//        requestHandler.request(DataRouter.delete(bucketName: bucketName)) { error, _ in completion?(error) }
     }
     
     // createBucket

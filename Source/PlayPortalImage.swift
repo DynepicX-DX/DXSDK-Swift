@@ -44,7 +44,7 @@ public final class PlayPortalImage {
      */
     public func getImage(forImageId imageId: String, _ completion: @escaping (_ error: Error?, _ data: Data?) -> Void) -> Void {
         requestHandler.request(ImageRouter.get(imageId: imageId)) {
-            self.responseHandler.handleResponse(error: $0, response: $1, data: $2, completion)
+            self.responseHandler.handleResponse($0, $1, $2, completion)
         }
     }
 }

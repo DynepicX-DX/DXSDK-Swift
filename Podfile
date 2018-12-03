@@ -7,8 +7,8 @@ target 'PPSDK-Swift' do
   pod 'KeychainSwift', '~> 12.0'
 
   target 'PPSDK-SwiftTests' do
-    inherit! :search_paths
-    
+      pod 'Quick'
+      pod 'Nimble'
   end
 
 end

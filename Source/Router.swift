@@ -74,7 +74,7 @@ enum Router: URLRequestConvertible {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method
         
-        if let body = body?.filter( { $0.value != nil }).mapValues( { $0! }) {
+        if let body = body {
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [.prettyPrinted])
         }

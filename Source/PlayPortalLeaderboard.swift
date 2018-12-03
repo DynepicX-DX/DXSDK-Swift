@@ -43,14 +43,12 @@ public final class PlayPortalLeaderboard {
     
     /**
      Request leaderboard entries.
-     
      - Parameter page: Supports pagination: at what page to get leaderboards from; defaults to nil (returns first page).
      - Parameter limit: How many entries to get; defaults to nil (returns 10 entries).
      - Parameter forCategories: What entries to return based on their tags.
      - Parameter completion: The closure called when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Parameter leaderboardEntries: The leaderboard entries returned for a successful request.
-     
      - Returns: Void
     */
     public func getLeaderboard(
@@ -61,29 +59,17 @@ public final class PlayPortalLeaderboard {
         -> Void
     {
         requestHandler.request(LeaderBoardRouter.get(categories: categories, page: page, limit: limit)) {
-            self.responseHandler.jsonResponse(error: $0, response: $1, data: $2) { error, json in
-//                guard error == nil
-//                    , let json = data?.toJSON
-//                    , let docs = json["docs"] as? [[String: Any]]
-//                    else {
-//                        completion(error ?? PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize data from response."), nil)
-//                        return
-//                }
-//                let leaderboardEntries = docs.compactMap { $0.asDecodable(type: PlayPortalLeaderboardEntry.self) }
-//                completion(nil, leaderboardEntries)
-            }
+            self.responseHandler.handleResponse($0, $1, $2, atKey: "docs", completion)
         }
     }
     
     /**
      Add score to the global leaderboard.
-     
      - Parameter score: The score being added.
      - Parameter forCategories: List of categories to tag the score with.
      - Parameter completion: The closure called when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Parameter leaderboardEntry: The leaderboard entry returned for a successful request.
-     
      - Returns: Void
     */
     public func updateLeaderboard(
@@ -93,7 +79,7 @@ public final class PlayPortalLeaderboard {
         -> Void
     {
         requestHandler.request(LeaderBoardRouter.update(score: score, categories: categories)) {
-            self.responseHandler.decodableResponse(error: $0, response: $1, data: $2, completion)
+            self.responseHandler.handleResponse($0, $1, $2, completion)
         }
     }
 }

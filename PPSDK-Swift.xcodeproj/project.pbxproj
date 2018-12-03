@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1C32F787218A000B00B9F773 /* PlayPortalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C32F784218A000A00B9F773 /* PlayPortalUtils.swift */; };
+		1C3A99F621979A7A0041DB2E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3A99F221979A790041DB2E /* Extensions.swift */; };
+		1C3A99F721979A7A0041DB2E /* ResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3A99F321979A790041DB2E /* ResponseHandler.swift */; };
+		1C3A99F821979A7A0041DB2E /* PlayPortalCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3A99F421979A790041DB2E /* PlayPortalCollection.swift */; };
+		1C3A99F921979A7A0041DB2E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3A99F521979A790041DB2E /* Router.swift */; };
+		1C3A99FB21979A8E0041DB2E /* ResponseHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3A99FA21979A8E0041DB2E /* ResponseHandlerTests.swift */; };
 		1C477F8E217F977600B42160 /* PlayPortalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F87217F977500B42160 /* PlayPortalError.swift */; };
 		1C477F8F217F977600B42160 /* PlayPortalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F88217F977500B42160 /* PlayPortalData.swift */; };
 		1C477F90217F977600B42160 /* PlayPortalAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F89217F977500B42160 /* PlayPortalAuth.swift */; };
@@ -15,9 +20,7 @@
 		1C477F92217F977600B42160 /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8B217F977600B42160 /* RequestHandler.swift */; };
 		1C477F93217F977600B42160 /* PlayPortalLeaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8C217F977600B42160 /* PlayPortalLeaderboard.swift */; };
 		1C477F94217F977600B42160 /* PlayPortalLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */; };
-		1C5DB0172194E82300A73FC1 /* PlayPortalCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5DB0142194E82200A73FC1 /* PlayPortalCollection.swift */; };
-		1C5DB0182194E82300A73FC1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5DB0152194E82300A73FC1 /* Router.swift */; };
-		1C5DB0192194E82300A73FC1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5DB0162194E82300A73FC1 /* Extensions.swift */; };
+		1C6B6C852198B1C800380305 /* PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */; };
 		1C70554C218892CA007EB006 /* PlayPortalDataBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70554A218892CA007EB006 /* PlayPortalDataBucket.swift */; };
 		1C70554D218892CA007EB006 /* PlayPortalLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */; };
 		1C89E5542184BD2B00CA3528 /* PlayPortalProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */; };
@@ -31,11 +34,11 @@
 		1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55F2184BD3200CA3528 /* AnonUserCover.png */; };
 		1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5602184BD3200CA3528 /* QuestionMark.jpg */; };
 		1C89E5652184BD3200CA3528 /* SSOButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5612184BD3200CA3528 /* SSOButton.png */; };
-		1CD1E3D4217F441900C2B083 /* PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */; };
 		1CD1E3D9217F441900C2B083 /* PPSDK_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */; };
 		1CD1E3DB217F441900C2B083 /* PPSDK_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4D2D1533C5976112A7EA5B9E /* Pods_PPSDK_SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E27FD91D66EBC9027E6241D8 /* Pods_PPSDK_SwiftTests.framework */; };
+		43C71B0EA19E0C5CA37F1779 /* Pods_PPSDK_Swift_PPSDK_SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3A99FE2197A22E0041DB2E /* Pods_PPSDK_Swift_PPSDK_SwiftTests.framework */; };
 		5BFBC701ED68D0C51E0DB054 /* Pods_PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93DED3B5A44F93D6DE8322E /* Pods_PPSDK_Swift.framework */; };
+		82BA06FE8EC89E1BC657D88E /* Pods_PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3A9A002197A22E0041DB2E /* Pods_PPSDK_Swift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,14 @@
 
 /* Begin PBXFileReference section */
 		1C32F784218A000A00B9F773 /* PlayPortalUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalUtils.swift; sourceTree = "<group>"; };
+		1C3A99F221979A790041DB2E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		1C3A99F321979A790041DB2E /* ResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseHandler.swift; sourceTree = "<group>"; };
+		1C3A99F421979A790041DB2E /* PlayPortalCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalCollection.swift; sourceTree = "<group>"; };
+		1C3A99F521979A790041DB2E /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		1C3A99FA21979A8E0041DB2E /* ResponseHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseHandlerTests.swift; sourceTree = "<group>"; };
+		1C3A99FC2197A21F0041DB2E /* Pods_PPSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_PPSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C3A99FE2197A22E0041DB2E /* Pods_PPSDK_Swift_PPSDK_SwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_PPSDK_Swift_PPSDK_SwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C3A9A002197A22E0041DB2E /* Pods_PPSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_PPSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C477F87217F977500B42160 /* PlayPortalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalError.swift; sourceTree = "<group>"; };
 		1C477F88217F977500B42160 /* PlayPortalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalData.swift; sourceTree = "<group>"; };
 		1C477F89217F977500B42160 /* PlayPortalAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalAuth.swift; sourceTree = "<group>"; };
@@ -57,9 +68,6 @@
 		1C477F8B217F977600B42160 /* RequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		1C477F8C217F977600B42160 /* PlayPortalLeaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboard.swift; sourceTree = "<group>"; };
 		1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLoginButton.swift; sourceTree = "<group>"; };
-		1C5DB0142194E82200A73FC1 /* PlayPortalCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalCollection.swift; sourceTree = SOURCE_ROOT; };
-		1C5DB0152194E82300A73FC1 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = SOURCE_ROOT; };
-		1C5DB0162194E82300A73FC1 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = SOURCE_ROOT; };
 		1C70554A218892CA007EB006 /* PlayPortalDataBucket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalDataBucket.swift; sourceTree = "<group>"; };
 		1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboardEntry.swift; sourceTree = "<group>"; };
 		1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalProfile.swift; sourceTree = "<group>"; };
@@ -79,12 +87,15 @@
 		1CD1E3D3217F441900C2B083 /* PPSDK-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PPSDK-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPSDK_SwiftTests.swift; sourceTree = "<group>"; };
 		1CD1E3DA217F441900C2B083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A271FB6259AEF8AF1CB8798 /* Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift-PPSDK-SwiftTests/Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		49D0A53B87D85EE8CCCCAAE5 /* Pods-PPSDK-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift.debug.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift/Pods-PPSDK-Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		69479C60CBE99044F3C31BB7 /* Pods-PPSDK-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-SwiftTests/Pods-PPSDK-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		9E3C56CF9D74175435F4ACDD /* Pods-PPSDK-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift/Pods-PPSDK-Swift.release.xcconfig"; sourceTree = "<group>"; };
 		B66826F818F79C3C264678B4 /* Pods-PPSDK-SwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-SwiftTests.debug.xcconfig"; path = "Target Support Files/Pods-PPSDK-SwiftTests/Pods-PPSDK-SwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D2206F3CCA4E7140A1F56BD7 /* Pods_PPSDK_Swift_PPSDK_SwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PPSDK_Swift_PPSDK_SwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E27FD91D66EBC9027E6241D8 /* Pods_PPSDK_SwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PPSDK_SwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93DED3B5A44F93D6DE8322E /* Pods_PPSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PPSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC4C2F9DA469F512F7FECE9A /* Pods-PPSDK-Swift-PPSDK-SwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift-PPSDK-SwiftTests.debug.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift-PPSDK-SwiftTests/Pods-PPSDK-Swift-PPSDK-SwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +104,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BFBC701ED68D0C51E0DB054 /* Pods_PPSDK_Swift.framework in Frameworks */,
+				82BA06FE8EC89E1BC657D88E /* Pods_PPSDK_Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,8 +112,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CD1E3D4217F441900C2B083 /* PPSDK_Swift.framework in Frameworks */,
-				4D2D1533C5976112A7EA5B9E /* Pods_PPSDK_SwiftTests.framework in Frameworks */,
+				1C6B6C852198B1C800380305 /* PPSDK_Swift.framework in Frameworks */,
+				43C71B0EA19E0C5CA37F1779 /* Pods_PPSDK_Swift_PPSDK_SwiftTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +166,7 @@
 			children = (
 				1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */,
 				1CD1E3DA217F441900C2B083 /* Info.plist */,
+				1C3A99FA21979A8E0041DB2E /* ResponseHandlerTests.swift */,
 			);
 			path = "PPSDK-SwiftTests";
 			sourceTree = "<group>";
@@ -161,9 +174,10 @@
 		1CD1E3E6217F45D700C2B083 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				1C5DB0162194E82300A73FC1 /* Extensions.swift */,
-				1C5DB0142194E82200A73FC1 /* PlayPortalCollection.swift */,
-				1C5DB0152194E82300A73FC1 /* Router.swift */,
+				1C3A99F221979A790041DB2E /* Extensions.swift */,
+				1C3A99F421979A790041DB2E /* PlayPortalCollection.swift */,
+				1C3A99F321979A790041DB2E /* ResponseHandler.swift */,
+				1C3A99F521979A790041DB2E /* Router.swift */,
 				1C32F784218A000A00B9F773 /* PlayPortalUtils.swift */,
 				1C70554A218892CA007EB006 /* PlayPortalDataBucket.swift */,
 				1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */,
@@ -189,8 +203,12 @@
 		27E10C00A72106979C509533 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1C3A99FE2197A22E0041DB2E /* Pods_PPSDK_Swift_PPSDK_SwiftTests.framework */,
+				1C3A9A002197A22E0041DB2E /* Pods_PPSDK_Swift.framework */,
+				1C3A99FC2197A21F0041DB2E /* Pods_PPSDK_Swift.framework */,
 				E93DED3B5A44F93D6DE8322E /* Pods_PPSDK_Swift.framework */,
 				E27FD91D66EBC9027E6241D8 /* Pods_PPSDK_SwiftTests.framework */,
+				D2206F3CCA4E7140A1F56BD7 /* Pods_PPSDK_Swift_PPSDK_SwiftTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -202,6 +220,8 @@
 				9E3C56CF9D74175435F4ACDD /* Pods-PPSDK-Swift.release.xcconfig */,
 				B66826F818F79C3C264678B4 /* Pods-PPSDK-SwiftTests.debug.xcconfig */,
 				69479C60CBE99044F3C31BB7 /* Pods-PPSDK-SwiftTests.release.xcconfig */,
+				FC4C2F9DA469F512F7FECE9A /* Pods-PPSDK-Swift-PPSDK-SwiftTests.debug.xcconfig */,
+				2A271FB6259AEF8AF1CB8798 /* Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -247,6 +267,7 @@
 				1CD1E3CF217F441900C2B083 /* Sources */,
 				1CD1E3D0217F441900C2B083 /* Frameworks */,
 				1CD1E3D1217F441900C2B083 /* Resources */,
+				C31AC1612C32CEEDBC847407 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -347,11 +368,39 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PPSDK-SwiftTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PPSDK-Swift-PPSDK-SwiftTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C31AC1612C32CEEDBC847407 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PPSDK-Swift-PPSDK-SwiftTests/Pods-PPSDK-Swift-PPSDK-SwiftTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PPSDK-Swift-PPSDK-SwiftTests/Pods-PPSDK-Swift-PPSDK-SwiftTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -362,21 +411,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C477F94217F977600B42160 /* PlayPortalLoginButton.swift in Sources */,
+				1C3A99F821979A7A0041DB2E /* PlayPortalCollection.swift in Sources */,
+				1C3A99F721979A7A0041DB2E /* ResponseHandler.swift in Sources */,
+				1C3A99F621979A7A0041DB2E /* Extensions.swift in Sources */,
 				1C89E5562184BD2B00CA3528 /* KeychainStorageManager.swift in Sources */,
 				1C477F8E217F977600B42160 /* PlayPortalError.swift in Sources */,
 				1C477F91217F977600B42160 /* PlayPortalUser.swift in Sources */,
 				1C70554C218892CA007EB006 /* PlayPortalDataBucket.swift in Sources */,
 				1C89E5542184BD2B00CA3528 /* PlayPortalProfile.swift in Sources */,
-				1C5DB0182194E82300A73FC1 /* Router.swift in Sources */,
 				1C32F787218A000B00B9F773 /* PlayPortalUtils.swift in Sources */,
+				1C3A99F921979A7A0041DB2E /* Router.swift in Sources */,
 				1C70554D218892CA007EB006 /* PlayPortalLeaderboardEntry.swift in Sources */,
 				1C89E55C2184BD2B00CA3528 /* Utils.swift in Sources */,
 				1C477F92217F977600B42160 /* RequestHandler.swift in Sources */,
 				1C89E5552184BD2B00CA3528 /* AlamofireRequestHandler.swift in Sources */,
 				1C477F90217F977600B42160 /* PlayPortalAuth.swift in Sources */,
 				1C89E55A2184BD2B00CA3528 /* PlayPortalURLs.swift in Sources */,
-				1C5DB0172194E82300A73FC1 /* PlayPortalCollection.swift in Sources */,
-				1C5DB0192194E82300A73FC1 /* Extensions.swift in Sources */,
 				1C477F8F217F977600B42160 /* PlayPortalData.swift in Sources */,
 				1C477F93217F977600B42160 /* PlayPortalLeaderboard.swift in Sources */,
 				1C89E5582184BD2B00CA3528 /* PlayPortalImage.swift in Sources */,
@@ -389,6 +439,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CD1E3D9217F441900C2B083 /* PPSDK_SwiftTests.swift in Sources */,
+				1C3A99FB21979A8E0041DB2E /* ResponseHandlerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,12 +636,13 @@
 		};
 		1CD1E3E2217F441900C2B083 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B66826F818F79C3C264678B4 /* Pods-PPSDK-SwiftTests.debug.xcconfig */;
+			baseConfigurationReference = FC4C2F9DA469F512F7FECE9A /* Pods-PPSDK-Swift-PPSDK-SwiftTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SA5YU43KDL;
 				INFOPLIST_FILE = "PPSDK-SwiftTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -605,12 +657,13 @@
 		};
 		1CD1E3E3217F441900C2B083 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69479C60CBE99044F3C31BB7 /* Pods-PPSDK-SwiftTests.release.xcconfig */;
+			baseConfigurationReference = 2A271FB6259AEF8AF1CB8798 /* Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SA5YU43KDL;
 				INFOPLIST_FILE = "PPSDK-SwiftTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

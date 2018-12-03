@@ -46,7 +46,7 @@ public final class PlayPortalUser {
      */
     public func getProfile(completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
         requestHandler.request(UserRouter.getUserProfile) {
-            self.responseHandler.handleResponse(error: $0, response: $1, data: $2, completion)
+            self.responseHandler.handleResponse($0, $1, $2, completion)
         }
     }
     
@@ -61,7 +61,7 @@ public final class PlayPortalUser {
     */
     public func getFriendProfiles(completion: @escaping (_ error: Error?, _ friendProfiles: [PlayPortalProfile]?) -> Void) -> Void {
         requestHandler.request(UserRouter.getFriendProfiles) {
-            self.responseHandler.handleResponse(error: $0, response: $1, data: $2, completion)
+            self.responseHandler.handleResponse($0, $1, $2, completion)
         }
     }
 }
