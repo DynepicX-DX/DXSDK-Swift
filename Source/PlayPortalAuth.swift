@@ -52,19 +52,20 @@ public enum PlayPortalEnvironment: String {
 //  Available routes for playPORTAL oauth api
 fileprivate enum AuthRouter: URLRequestConvertible {
     
-    case login(clientId: String, clientSecret: String, redirectURI: String, responseType: String, state: String)
+    case login(clientId: String, clientSecret: String, redirectURI: String, responseType: String, state: String, appLogin: Bool)
     case refresh(accessToken: String?, refreshToken: String?, clientId: String, clientSecret: String, grantType: String)
     case logout(refreshToken: String?)
     
     func asURLRequest() -> URLRequest? {
         switch self {
-        case let .login(clientId, clientSecret, redirectURI, responseType, state):
+        case let .login(clientId, clientSecret, redirectURI, responseType, state, appLogin):
             let params = [
                 "client_id": clientId,
                 "client_secret": clientSecret,
                 "redirect_uri": redirectURI,
                 "response_type": responseType,
-                "state": state
+                "state": state,
+                "app_login": String(appLogin)
             ]
             return Router.get(url: URLs.OAuth.signIn, params: params).asURLRequest()
         case let .refresh(accessToken, refreshToken, clientId, clientSecret, grantType):
@@ -172,7 +173,7 @@ public final class PlayPortalAuth {
      */
     func login(from viewController: UIViewController? = UIApplication.topMostViewController()) {
 
-        let url = AuthRouter.login(clientId: clientId, clientSecret: clientSecret, redirectURI: redirectURI, responseType: "implicit", state: "state").asURLRequest()?.url
+        let url = AuthRouter.login(clientId: clientId, clientSecret: clientSecret, redirectURI: redirectURI, responseType: "implicit", state: "state", appLogin: environment != .sandbox).asURLRequest()?.url
         
         //  Open SSO sign in with safari view controller
         safariViewController = SFSafariViewController(url: url!)
