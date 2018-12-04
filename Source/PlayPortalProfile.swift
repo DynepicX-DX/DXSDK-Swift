@@ -40,3 +40,10 @@ public struct PlayPortalProfile: Codable {
         case community = "Community"
     }
 }
+
+extension PlayPortalProfile: Equatable {
+    
+    public static func ==(lhs: PlayPortalProfile, rhs: PlayPortalProfile) -> Bool {
+        return lhs.userId == rhs.userId
+    }
+}
