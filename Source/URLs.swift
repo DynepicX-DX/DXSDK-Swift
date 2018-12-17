@@ -6,22 +6,12 @@
 
 import Foundation
 
-//  Struct containing playPORTAl api available hosts and paths
-struct URLs {
-    
-    //  MARK: - Properties
+//  Namespace containing playPORTAl api available hosts and paths
+enum URLs {
     
     static let sandboxHost = "https://sandbox.playportal.io"
     static let productionHost = "https://api.playportal.io"
     static let developHost = "https://develop-api.goplayportal.com"
-    
-    
-    //  MARK: - Initializers
-    
-    private init() {}
-    
-    
-    //  MARK: - Methods
     
     /**
      Get playPORTAL api host based on environment.
@@ -41,44 +31,31 @@ struct URLs {
         }
     }
     
-    
-    //  MARK: - Internal structs for representing available apis and their endpoints
-    
-    struct OAuth {
-        
-        private init() {}
+    enum OAuth {
         
         static let signIn = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/signin"
         static let token = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/token"
         static let logout = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/logout"
     }
     
-    struct User {
-        
-        private init() {}
+    enum User {
         
         static let userProfile = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/profile"
         static let friendProfiles = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/friends"
     }
     
-    struct Image {
-        
-        private init() {}
+    enum Image {
         
         static let staticImage = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/image/v1/static"
     }
     
-    struct Leaderboard {
-        
-        private init() {}
+    enum Leaderboard {
         
         static let leaderboard = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/leaderboard/v1"
     }
     
-    struct App {
+    enum App {
         
-        private init() {}
-        
-        internal static let bucket = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/app/v1/bucket"
+        static let bucket = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/app/v1/bucket"
     }
 }

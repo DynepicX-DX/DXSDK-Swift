@@ -13,7 +13,7 @@ fileprivate enum UserRouter: URLRequestConvertible {
     case getUserProfile
     case getFriendProfiles
     
-    func asURLRequest() -> URLRequest? {
+    func asURLRequest() -> URLRequest {
         switch self {
         case .getUserProfile:
             return Router.get(url: URLs.User.userProfile, params: nil).asURLRequest()
@@ -27,13 +27,8 @@ fileprivate enum UserRouter: URLRequestConvertible {
 public final class PlayPortalUser {
     
     public static let shared = PlayPortalUser()
-    private let requestHandler: RequestHandler = globalRequestHandler
-    private let responseHandler: ResponseHandler = globalResponseHandler
     
     private init() {}
-    
-    
-    //  MARK: - Methods
     
     /**
      Get currently authenticated user's playPORTAL profile.
@@ -45,9 +40,7 @@ public final class PlayPortalUser {
      - Returns: Void
      */
     public func getProfile(completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
-        requestHandler.request(UserRouter.getUserProfile) {
-            self.responseHandler.handleResponse($0, $1, $2, completion)
-        }
+        RequestManager.shared.request(UserRouter.getUserProfile, completion)
     }
     
     /**
@@ -60,8 +53,6 @@ public final class PlayPortalUser {
      - Returns: Void
     */
     public func getFriendProfiles(completion: @escaping (_ error: Error?, _ friendProfiles: [PlayPortalProfile]?) -> Void) -> Void {
-        requestHandler.request(UserRouter.getFriendProfiles) {
-            self.responseHandler.handleResponse($0, $1, $2, completion)
-        }
+        RequestManager.shared.request(UserRouter.getFriendProfiles, completion)
     }
 }

@@ -14,7 +14,7 @@ enum DataRouter: URLRequestConvertible {
     case read(bucketName: String, key: String?)
     case delete(bucketName: String)
     
-    func asURLRequest() -> URLRequest? {
+    func asURLRequest() -> URLRequest {
         switch self {
         case let .create(bucketName, users, isPublic):
             let body: [String: Any] = [
@@ -49,8 +49,6 @@ enum DataRouter: URLRequestConvertible {
 public final class PlayPortalData {
 
     public static let shared = PlayPortalData()
-    private let requestHandler: RequestHandler = globalRequestHandler
-    private let responseHandler: ResponseHandler = globalResponseHandler
     
     private init() {}
     
@@ -58,7 +56,6 @@ public final class PlayPortalData {
      Create a data bucket.
      - Parameter bucketName: Name given to the bucket.
      - Parameter includingUsers: Ids of users who will have access to the bucket; defaults to empty.
-     - Parameter isPublic: Indicates if the bucket is globally available; defaults to false.
      - Parameter completion: The closure invoked when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Returns: Void
@@ -66,13 +63,11 @@ public final class PlayPortalData {
     public func create(
         buckedNamed bucketName: String,
         includingUsers users: [String] = [],
-        isPublic: Bool = false,
+//        isPublic: Bool = false,
         _ completion: ((_ error: Error?) -> Void)?)
         -> Void
     {
-        requestHandler.request(DataRouter.create(bucketName: bucketName, users: users, isPublic: isPublic)) {
-            self.responseHandler.handleResponse($0, $1, $2) { (error, _ data: Data?) in completion?(error) }
-        }
+        RequestManager.shared.request(DataRouter.create(bucketName: bucketName, users: users, isPublic: false), completion)
     }
     
     /**
@@ -92,19 +87,13 @@ public final class PlayPortalData {
         _  completion: ((_ error: Error?, _ data: Any?) -> Void)?)
         -> Void
     {
+        //  TODO: this code should probably be moved out of here
         var val: Any?
-        if let encoded = try? JSONEncoder().encode(["value": value]), let json = try? JSONSerialization.jsonObject(with: encoded, options: .allowFragments) as? [String: Any] {
+        if let encoded = try? JSONEncoder().encode(["value": value]),
+            let json = try? JSONSerialization.jsonObject(with: encoded, options: .allowFragments) as? [String: Any] {
             val = json?["value"]
         }
-        requestHandler.request(DataRouter.write(bucketName: bucketName, key: key, value: val)) { error, response, data in
-            guard error == nil
-                , let data = data?.asJSON?.valueAtNestedKey("data.\(key)")
-                else {
-                    completion?(error, nil)
-                    return
-            }
-            completion?(error, data)
-        }
+        RequestManager.shared.request(DataRouter.write(bucketName: bucketName, key: key, value: val), at: "data.\(key)", completion)
     }
     
     /**
@@ -125,17 +114,8 @@ public final class PlayPortalData {
         _ completion: @escaping (_ error: Error?, _ value: Any?) -> Void)
         -> Void
     {
-        requestHandler.request(DataRouter.read(bucketName: bucketName, key: key)) { error, _, data in
-            guard error == nil
-                , let json = data?.asJSON
-                , let d = json["data"] as? [String: Any]
-                , let value = key != nil ? d[key!] : d
-                else {
-                    completion(error, nil)
-                    return
-            }
-            completion(error, value)
-        }
+        let keyPath = "data" + (key.flatMap { "." + $0 } ?? "")
+        RequestManager.shared.request(DataRouter.read(bucketName: bucketName, key: key), at: keyPath, completion)
     }
     
     /**
@@ -155,19 +135,7 @@ public final class PlayPortalData {
         _ completion: ((_ error: Error?, _ bucket: Any?) -> Void)?)
         -> Void
     {
-        requestHandler.request(DataRouter.write(bucketName: bucketName, key: key, value: nil)) { error, response, data in
-            if let e = response.map({ PlayPortalError.API.createError(from: $0) }), e != nil {
-                print(e)
-                print()
-            }
-            guard error == nil
-                , let value = data?.asJSON?["data"]
-                else {
-                    completion?(error, nil)
-                    return
-            }
-            completion?(error, value)
-        }
+        RequestManager.shared.request(DataRouter.write(bucketName: bucketName, key: key, value: nil), at: key, completion)
     }
     
     /**
@@ -179,23 +147,11 @@ public final class PlayPortalData {
      
      - Returns: Void
     */
-    public func delete(bucketNamed bucketName: String, _ completion: ((_ error: Error?) -> Void)?) -> Void {
-//        requestHandler.request(DataRouter.delete(bucketName: bucketName)) { error, _ in completion?(error) }
+    public func delete(
+        bucketNamed bucketName: String,
+        _ completion: ((_ error: Error?) -> Void)?)
+        -> Void
+    {
+        RequestManager.shared.request(DataRouter.delete(bucketName: bucketName), completion)
     }
-    
-    // createBucket
-    
-    //  readBucketJSON
-    
-    //  readBucketDecodable
-    
-    //  writeBucketJSON
-    
-    //  writeBucketDecodable
-    
-    //  deleteFromBucketJSON
-    
-    //  deleteFromBucketDecodable
-    
-    //  deleteBucket
 }

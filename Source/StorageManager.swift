@@ -52,3 +52,11 @@ protocol StorageManager {
     @discardableResult
     func clear() -> Bool
 }
+
+//  Add conformance for `KeychainSwift` to `StorageManager`
+extension KeychainSwift: StorageManager {
+    
+    func set(_ value: String, atKey key: String) -> Bool {
+        return set(value, forKey: key)
+    }
+}

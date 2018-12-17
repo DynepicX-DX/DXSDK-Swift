@@ -89,6 +89,13 @@ extension Encodable {
     }
 }
 
+extension Sequence {
+    
+    func matches<T>(type: T.Type) -> Bool {
+        return allSatisfy { $0 is T }
+    }
+}
+
 
 //  MARK: - URL
 extension URL {

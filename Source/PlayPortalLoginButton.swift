@@ -14,13 +14,7 @@ import UIKit
  */
 public final class PlayPortalLoginButton: UIButton {
     
-    //  MARK: - Properties
-    
-    //  The UIViewController to present the SSO web view
     private weak var from: UIViewController?
-    
-    
-    //  MARK: - Initializers
     
     /**
      Create login button.
@@ -57,9 +51,6 @@ public final class PlayPortalLoginButton: UIButton {
     internal required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    //  MARK: - Methods
     
     /**
      When PlayPortalLoginButton is tapped, SSO flow will begin.

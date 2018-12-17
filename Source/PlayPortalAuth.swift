@@ -12,9 +12,7 @@ import SafariServices
 public enum PlayPortalEnvironment: String {
     
     case sandbox = "SANDBOX"
-    
     case develop = "DEVELOP"
-    
     case production = "PRODUCTION"
 }
 
@@ -50,13 +48,13 @@ public enum PlayPortalEnvironment: String {
 
 
 //  Available routes for playPORTAL oauth api
-fileprivate enum AuthRouter: URLRequestConvertible {
+enum AuthRouter: URLRequestConvertible {
     
     case login(clientId: String, clientSecret: String, redirectURI: String, responseType: String, state: String, appLogin: Bool)
     case refresh(accessToken: String?, refreshToken: String?, clientId: String, clientSecret: String, grantType: String)
     case logout(refreshToken: String?)
     
-    func asURLRequest() -> URLRequest? {
+    func asURLRequest() -> URLRequest {
         switch self {
         case let .login(clientId, clientSecret, redirectURI, responseType, state, appLogin):
             let params = [
@@ -88,20 +86,17 @@ fileprivate enum AuthRouter: URLRequestConvertible {
 public final class PlayPortalAuth {
     
     public static let shared = PlayPortalAuth()
-    internal var environment = PlayPortalEnvironment.sandbox
+    private(set) var environment = PlayPortalEnvironment.sandbox
     private var clientId = ""
     private var clientSecret = ""
     private var redirectURI = ""
     private var isAuthenticatedCompletion: ((_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void)?
     private weak var loginDelegate: PlayPortalLoginDelegate?
-    private var requestHandler: RequestHandler = globalRequestHandler
-    private var responseHandler: ResponseHandler = globalResponseHandler
     private var safariViewController: SFSafariViewController?
     
-    private init() {}
-    
-    
-    //  MARK: - Methods
+    private init() {
+        EventHandler.shared.subscribe(self)
+    }
     
     /**
      Configures the sdk with an app's credentials, environment and redirect URI.
@@ -122,9 +117,9 @@ public final class PlayPortalAuth {
     {
         //  Because keychain items aren't cleared on app uninstall, but user defaults is,
         //  check flag in user defaults so that old keychain items can be cleared
-        if !UserDefaults.standard.bool(forKey: "firstRun") {
-            requestHandler.clearTokens()
-            UserDefaults.standard.set(true, forKey: "firstRun")
+        if !UserDefaults.standard.bool(forKey: "PPSDK-firstRun") {
+            UserDefaults.standard.set(true, forKey: "PPSDK-firstRun")
+            EventHandler.shared.publish(.firstRun)
         }
         
         //  Set configuration
@@ -148,14 +143,9 @@ public final class PlayPortalAuth {
         
         self.loginDelegate = loginDelegate
         
-        if requestHandler.isAuthenticated {
+        if RequestManager.shared.isAuthenticated {
             //  If authenticated, request current user's profile
-            PlayPortalUser.shared.getProfile { error, userProfile in
-                if error != nil {
-                    self.requestHandler.clearTokens()
-                }
-                completion(error, userProfile)
-            }
+            PlayPortalUser.shared.getProfile(completion: completion)
         } else {
             //  If not authenticated, set `isAuthenticatedCompletion` to be used after SSO flow finishes
             isAuthenticatedCompletion = completion
@@ -173,10 +163,10 @@ public final class PlayPortalAuth {
      */
     func login(from viewController: UIViewController? = UIApplication.topMostViewController()) {
 
-        let url = AuthRouter.login(clientId: clientId, clientSecret: clientSecret, redirectURI: redirectURI, responseType: "implicit", state: "state", appLogin: environment != .sandbox).asURLRequest()?.url
+        let url = AuthRouter.login(clientId: clientId, clientSecret: clientSecret, redirectURI: redirectURI, responseType: "implicit", state: "state", appLogin: environment != .sandbox).asURLRequest().url!
         
         //  Open SSO sign in with safari view controller
-        safariViewController = SFSafariViewController(url: url!)
+        safariViewController = SFSafariViewController(url: url)
         safariViewController!.modalTransitionStyle = .coverVertical
         viewController?.present(safariViewController!, animated: true, completion: nil)
     }
@@ -202,11 +192,12 @@ public final class PlayPortalAuth {
             loginDelegate?.didFailToLogin?(with: PlayPortalError.SSO.ssoFailed(message: "Could not extract refresh token from redirect uri."))
             return
         }
-        requestHandler.set(accessToken: accessToken, andRefreshToken: refreshToken)
+        
+        EventHandler.shared.publish(Event.authenticated(accessToken: accessToken, refreshToken: refreshToken))
         
         //  Request current user's profile
-        PlayPortalUser.shared.getProfile { error, userProfile in
-            self.isAuthenticatedCompletion?(error, userProfile)
+        if let completion = isAuthenticatedCompletion {
+            PlayPortalUser.shared.getProfile(completion: completion)
         }
     }
     
@@ -231,15 +222,15 @@ public final class PlayPortalAuth {
      
      - Returns: Void
      */
-    func refresh(completion: @escaping (_ error: Error?, _ accessToken: String?, _ refreshToken: String?) -> Void) -> Void {
-        requestHandler.request(AuthRouter.refresh(accessToken: requestHandler.accessToken, refreshToken: requestHandler.refreshToken, clientId: clientId, clientSecret: clientSecret, grantType: "refresh_token")) {
-            self.responseHandler.handleResponse($0, $1, $2) { (error, tokenResponse: TokenResponse?) in
-                if let error = error {
-                    self.requestHandler.clearTokens()
-                    self.loginDelegate?.didLogout?(with: error)
-                }
-                completion(error, tokenResponse?.accessToken, tokenResponse?.refreshToken)
-            }
+    func refresh(
+        accessToken: String,
+        refreshToken: String,
+        completion: @escaping (_ error: Error?, _ accessToken: String?, _ refreshToken: String?) -> Void)
+        -> Void
+    {
+        let request = AuthRouter.refresh(accessToken: accessToken, refreshToken: refreshToken, clientId: clientId, clientSecret: clientSecret, grantType: "refresh_token")
+        RequestManager.shared.request(request) { (error, tokenResponse: TokenResponse?) in
+            completion(error, tokenResponse?.accessToken, tokenResponse?.refreshToken)
         }
     }
     
@@ -249,13 +240,24 @@ public final class PlayPortalAuth {
      - Returns: Void
      */
     public func logout() -> Void {
-        requestHandler.request(AuthRouter.logout(refreshToken: requestHandler.refreshToken)) {
-            self.responseHandler.handleResponse($0, $1, $2) { (error, _: Data?) in
-                self.requestHandler.clearTokens()
-                error != nil
-                    ? self.loginDelegate?.didLogout?(with: error!)
-                    : self.loginDelegate?.didLogoutSuccessfully?()
+        RequestManager.shared.logout { error in
+            EventHandler.shared.publish(.loggedOut(error: error))
+        }
+    }
+}
+
+extension PlayPortalAuth: EventSubscriber {
+    
+    func on(event: Event) {
+        switch event {
+        case let .loggedOut(error):
+            if let error = error {
+                loginDelegate?.didLogout?(with: error)
+            } else {
+                loginDelegate?.didLogoutSuccessfully?()
             }
+        default:
+            break
         }
     }
 }
