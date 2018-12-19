@@ -16,13 +16,13 @@ protocol URLRequestConvertible {
 //  Contains cases for possible HTTP methods
 enum Router: URLRequestConvertible {
     
-    case get(url: String, params: [String: String?]?)
-    case put(url: String, body: [String: Any?]?, params: [String: String?]?)
-    case post(url: String, body: [String: Any?]?, params: [String: String?]?)
-    case delete(url: String, body: [String: Any?]?, params: [String: String?]?)
+    case get(url: String, params: [String: Any?]?)
+    case put(url: String, body: [String: Any?]?, params: [String: Any?]?)
+    case post(url: String, body: [String: Any?]?, params: [String: Any?]?)
+    case delete(url: String, body: [String: Any?]?, params: [String: Any?]?)
     
     func asURLRequest() -> URLRequest {
-        var (method, url, body, params): (String, URL, [String: Any?]?, [String: String?]?) = {
+        var (method, url, body, params): (String, URL, [String: Any?]?, [String: Any?]?) = {
             switch self {
             case let .get(url, params):
                 return ("GET", URL(string: url)!, nil, params)
@@ -36,8 +36,8 @@ enum Router: URLRequestConvertible {
         }()
         
         if let params = params, var components = URLComponents(url: url, resolvingAgainstBaseURL: true) {
-            components.queryItems = params.map { URLQueryItem(name: $0, value: $1) }
-            url =  try! components.asURL()
+            components.queryItems = params.map { URLQueryItem(name: $0.0, value: $0.1 as? String) }
+            url = try! components.asURL()
         }
         
         var urlRequest = URLRequest(url: url)

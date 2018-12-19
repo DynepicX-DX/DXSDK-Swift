@@ -67,7 +67,8 @@ public final class PlayPortalData {
         _ completion: ((_ error: Error?) -> Void)?)
         -> Void
     {
-        RequestManager.shared.request(DataRouter.create(bucketName: bucketName, users: users, isPublic: false), completion)
+        let request = DataRouter.create(bucketName: bucketName, users: users, isPublic: false)
+        RequestHandler.shared.request(request, completion)
     }
     
     /**
@@ -93,7 +94,8 @@ public final class PlayPortalData {
             let json = try? JSONSerialization.jsonObject(with: encoded, options: .allowFragments) as? [String: Any] {
             val = json?["value"]
         }
-        RequestManager.shared.request(DataRouter.write(bucketName: bucketName, key: key, value: val), at: "data.\(key)", completion)
+        let request = DataRouter.write(bucketName: bucketName, key: key, value: val)
+        RequestHandler.shared.request(request, at: "data.\(key)", completion)
     }
     
     /**
@@ -115,7 +117,8 @@ public final class PlayPortalData {
         -> Void
     {
         let keyPath = "data" + (key.flatMap { "." + $0 } ?? "")
-        RequestManager.shared.request(DataRouter.read(bucketName: bucketName, key: key), at: keyPath, completion)
+        let request = DataRouter.read(bucketName: bucketName, key: key)
+        RequestHandler.shared.request(request, at: keyPath, completion)
     }
     
     /**
@@ -135,7 +138,8 @@ public final class PlayPortalData {
         _ completion: ((_ error: Error?, _ bucket: Any?) -> Void)?)
         -> Void
     {
-        RequestManager.shared.request(DataRouter.write(bucketName: bucketName, key: key, value: nil), at: key, completion)
+        let request = DataRouter.write(bucketName: bucketName, key: key, value: nil)
+        RequestHandler.shared.request(request, at: key, completion)
     }
     
     /**
@@ -152,6 +156,7 @@ public final class PlayPortalData {
         _ completion: ((_ error: Error?) -> Void)?)
         -> Void
     {
-        RequestManager.shared.request(DataRouter.delete(bucketName: bucketName), completion)
+        let request = DataRouter.delete(bucketName: bucketName)
+        RequestHandler.shared.request(request, completion)
     }
 }

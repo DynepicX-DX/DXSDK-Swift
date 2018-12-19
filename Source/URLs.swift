@@ -42,6 +42,8 @@ enum URLs {
         
         static let userProfile = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/profile"
         static let friendProfiles = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/friends"
+        static let search = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/search"
+        static let randomSearch = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/search/random"
     }
     
     enum Image {

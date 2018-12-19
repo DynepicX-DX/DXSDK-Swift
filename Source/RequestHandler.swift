@@ -1,6 +1,5 @@
 //
-//  RequestManager.swift
-//  Alamofire
+//  RequestHandler.swift
 //
 //  Created by Lincoln Fraley on 12/4/18.
 //
@@ -22,7 +21,7 @@ fileprivate final class AlamofireHTTPRequester {
     static let shared = AlamofireHTTPRequester()
     fileprivate static let sessionManager: SessionManager = {
         var sessionManager = SessionManager(configuration: .default)
-        sessionManager.retrier = RequestManager.shared
+        sessionManager.retrier = RequestHandler.shared
         return sessionManager
     }()
     
@@ -43,9 +42,9 @@ extension AlamofireHTTPRequester: HTTPRequester {
     }
 }
 
-final class RequestManager {
+final class RequestHandler {
     
-    static let shared = RequestManager()
+    static let shared = RequestHandler()
     private let requester: HTTPRequester = AlamofireHTTPRequester.shared
     private let lock = NSLock()
     private var requestsToRetry = [RequestRetryCompletion]()
@@ -53,18 +52,18 @@ final class RequestManager {
     private let queue = DispatchQueue(label: "com.dynepic.playPORTAL.RequestManagerQueue", attributes: .concurrent)
     private var isRefreshing = Synchronized(value: false)
     private var accessToken: String? {
-        get { return queue.sync { globalStorageManager.get("PPSDK-accessToken") }}
+        get { return queue.sync { globalStorageHandler.get("PPSDK-accessToken") }}
         set(accessToken) {
             if let accessToken = accessToken {
-                queue.async(flags: .barrier) { globalStorageManager.set(accessToken, atKey: "PPSDK-accessToken") }
+                queue.async(flags: .barrier) { globalStorageHandler.set(accessToken, atKey: "PPSDK-accessToken") }
             }
         }
     }
     private var refreshToken: String? {
-        get { return queue.sync { globalStorageManager.get("PPSDK-refreshToken") }}
+        get { return queue.sync { globalStorageHandler.get("PPSDK-refreshToken") }}
         set(refreshToken) {
             if let refreshToken = refreshToken {
-                queue.async(flags: .barrier) { globalStorageManager.set(refreshToken, atKey: "PPSDK-refreshToken") }
+                queue.async(flags: .barrier) { globalStorageHandler.set(refreshToken, atKey: "PPSDK-refreshToken") }
             }
         }
     }
@@ -72,8 +71,10 @@ final class RequestManager {
         get { return accessToken != nil && refreshToken != nil }
     }
     
-    private init() {
-        EventHandler.shared.subscribe(self)
+    private init() { }
+    
+    deinit {
+        EventHandler.shared.unsubscribe(self)
     }
     
     private func _request(
@@ -86,14 +87,19 @@ final class RequestManager {
         if let accessToken = accessToken {
             request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         }
-        requester.request(request) { error, response, result in
+        requester.request(request) { error, response, data in
             if let error = response.flatMap({ PlayPortalError.API.createError(from: $0) }) {
                 completion?(error, nil)
             } else if error != nil {
                 completion?(error, nil)
             } else {
-                let err = result == nil ? PlayPortalError.API.unableToDeserializeResponse : nil
-                completion?(err, result)
+                var result = data as Any?
+                if let keys = keyPath?.split(separator: ".").map(String.init),
+                    let json = data?.asJSON,
+                    let nestedValue = json.valueAtNestedKey(keys) {
+                    result = try? JSONSerialization.data(withJSONObject: nestedValue, options: [])
+                }
+                completion?(nil, result)
             }
         }
     }
@@ -125,31 +131,32 @@ final class RequestManager {
         -> Void
     {
         _request(request, at: keyPath) { error, result in
-            //  TODO: this needs to be cleaned up
-            var data = result as? Data
-            if let keys = keyPath?.split(separator: ".").map({ String($0) }), let json = data?.asJSON {
-                //  TODO: create an extension for getting nested values 
-                let nestedValue = keys.dropLast()
-                    .reduce(json) { current, next in current?[next] as? [String: Any] }?[keys.last ?? ""]
-                data = nestedValue.flatMap { try? JSONSerialization.data(withJSONObject: $0, options: []) } ?? data
+            if let error = error {
+                completion?(error, nil)
+            } else {
+                let result: Result? = {
+                    switch Result.self {
+                    case is Data.Type:
+                        return result as? Result
+                    default:
+                        return (result as? Data).flatMap { try? self.decoder.decode(Result.self, from: $0) }
+                    }
+                }()
+                let err = result == nil ? PlayPortalError.API.unableToDeserializeResponse : nil
+                completion?(err, result)
             }
-            let result = data?.asJSON == nil
-                ? data as? Result
-                : data.flatMap { try? self.decoder.decode(Result.self, from: $0) }
-            let err = result == nil ? PlayPortalError.API.unableToDeserializeResponse : nil
-            completion?(err, result)
         }
     }
     
     //  TODO: handle logout clean up
     func logout(_ completion: @escaping (Error?) -> Void) -> Void {
-        request(AuthRouter.logout(refreshToken: refreshToken)) { (error, _: Data?) in
+        request(AuthRouter.logout(refreshToken: refreshToken)) { error in
             completion(error)
         }
     }
 }
 
-extension RequestManager: EventSubscriber {
+extension RequestHandler: EventSubscriber {
     
     func on(event: Event) {
         switch event {
@@ -157,16 +164,16 @@ extension RequestManager: EventSubscriber {
             self.accessToken = accessToken
             self.refreshToken = refreshToken
         case .firstRun:
-            globalStorageManager.delete("accessToken")
-            globalStorageManager.delete("refreshToken")
+            globalStorageHandler.delete("PPSDK-accessToken")
+            globalStorageHandler.delete("PPSDK-refreshToken")
         case .loggedOut:
-            globalStorageManager.delete("accessToken")
-            globalStorageManager.delete("refreshToken")
+            globalStorageHandler.delete("PPSDK-accessToken")
+            globalStorageHandler.delete("PPSDK-refreshToken")
         }
     }
 }
 
-extension RequestManager: RequestRetrier {
+extension RequestHandler: RequestRetrier {
     
     func should(
         _ manager: SessionManager,
@@ -177,8 +184,8 @@ extension RequestManager: RequestRetrier {
         lock.lock(); defer { lock.unlock() }
         requestsToRetry.append(completion)
         
-        if let response = request.task?.response as? HTTPURLResponse
-            , PlayPortalError.API.ErrorCode.errorCode(for: response) == .tokenRefreshRequired {
+        if let response = request.task?.response as? HTTPURLResponse,
+            PlayPortalError.API.ErrorCode.errorCode(for: response) == .tokenRefreshRequired {
             if !isRefreshing.value {
                 isRefreshing.value = true
                 //  TODO: handle when tokens are nil

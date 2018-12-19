@@ -42,6 +42,6 @@ public final class PlayPortalImage {
         _ completion: @escaping (_ error: Error?, _ data: Data?) -> Void)
         -> Void
     {
-        RequestManager.shared.request(ImageRouter.get(imageId: imageId), completion)
+        RequestHandler.shared.request(ImageRouter.get(imageId: imageId), completion)
     }
 }

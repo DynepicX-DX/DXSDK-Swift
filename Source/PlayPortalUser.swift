@@ -12,6 +12,8 @@ fileprivate enum UserRouter: URLRequestConvertible {
     
     case getUserProfile
     case getFriendProfiles
+    case search(searchTerm: String, page: Int?, limit: Int?)
+    case randomSearch(count: Int)
     
     func asURLRequest() -> URLRequest {
         switch self {
@@ -19,6 +21,18 @@ fileprivate enum UserRouter: URLRequestConvertible {
             return Router.get(url: URLs.User.userProfile, params: nil).asURLRequest()
         case .getFriendProfiles:
             return Router.get(url: URLs.User.friendProfiles, params: nil).asURLRequest()
+        case let .search(searchTerm, page, limit):
+            let params: [String: Any?] = [
+                "term": searchTerm,
+                "page": page,
+                "limit": limit
+            ]
+            return Router.get(url: URLs.User.search, params: params).asURLRequest()
+        case let .randomSearch(count):
+            let params = [
+                "count": count
+            ]
+            return Router.get(url: URLs.User.randomSearch, params: params).asURLRequest()
         }
     }
 }
@@ -39,8 +53,11 @@ public final class PlayPortalUser {
      
      - Returns: Void
      */
-    public func getProfile(completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
-        RequestManager.shared.request(UserRouter.getUserProfile, completion)
+    public func getProfile(
+        completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void)
+        -> Void
+    {
+        RequestHandler.shared.request(UserRouter.getUserProfile, completion)
     }
     
     /**
@@ -52,7 +69,46 @@ public final class PlayPortalUser {
      
      - Returns: Void
     */
-    public func getFriendProfiles(completion: @escaping (_ error: Error?, _ friendProfiles: [PlayPortalProfile]?) -> Void) -> Void {
-        RequestManager.shared.request(UserRouter.getFriendProfiles, completion)
+    public func getFriendProfiles(
+        completion: @escaping (_ error: Error?, _ friendProfiles: [PlayPortalProfile]?) -> Void)
+        -> Void
+    {
+        RequestHandler.shared.request(UserRouter.getFriendProfiles, completion)
+    }
+    
+    /**
+     Search for users by search term.
+     - Parameter searchTerm: Term to search users by.
+     - Parameter page: Supports pagination; at what page to get users from.
+     - Paramter limit: How many entries to return.
+     - Parameter completion: The closure called when the request finishes.
+     - Parameter error: The error returned for an unsuccessful request.
+     - Parameter users: The users returned for a successful request.
+    */
+    public func searchUsers(
+        searchTerm: String,
+        page: Int? = nil,
+        limit: Int? = nil,
+        completion: @escaping (_ error: Error?, _ users: [PlayPortalProfile]?) -> Void)
+        -> Void
+    {
+        let request = UserRouter.search(searchTerm: searchTerm, page: page, limit: limit)
+        RequestHandler.shared.request(request, at: "docs", completion)
+    }
+    
+    /**
+     Get a random number of users.
+     - Parameter count: The number of users being requested.
+     - Parameter completion: The closure called when the request finishes.
+     - Parameter error: The error returned for an unsuccessful request.
+     - Parameter users: The random users returned for a successful request.
+    */
+    public func searchRandomUsers(
+        count: Int,
+        completion: @escaping (_ error: Error?, _ users: [PlayPortalProfile]?) -> Void)
+        -> Void
+    {
+        let request = UserRouter.randomSearch(count: count)
+        RequestHandler.shared.request(request, completion)
     }
 }

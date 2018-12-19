@@ -7,7 +7,6 @@
 import Foundation
 import SafariServices
 
-
 //  Available playPORTAL environments
 public enum PlayPortalEnvironment: String {
     
@@ -94,8 +93,10 @@ public final class PlayPortalAuth {
     private weak var loginDelegate: PlayPortalLoginDelegate?
     private var safariViewController: SFSafariViewController?
     
-    private init() {
-        EventHandler.shared.subscribe(self)
+    private init() { }
+    
+    deinit {
+        EventHandler.shared.unsubscribe(self)
     }
     
     /**
@@ -115,6 +116,8 @@ public final class PlayPortalAuth {
         andRedirectURI redirectURI: String)
         -> Void
     {
+        EventHandler.shared.addSubscriptions()
+        
         //  Because keychain items aren't cleared on app uninstall, but user defaults is,
         //  check flag in user defaults so that old keychain items can be cleared
         if !UserDefaults.standard.bool(forKey: "PPSDK-firstRun") {
@@ -140,10 +143,10 @@ public final class PlayPortalAuth {
      - Returns: Void
      */
     public func isAuthenticated(loginDelegate: PlayPortalLoginDelegate? = nil, _ completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
-        
+        EventHandler.shared.addSubscriptions()
         self.loginDelegate = loginDelegate
         
-        if RequestManager.shared.isAuthenticated {
+        if RequestHandler.shared.isAuthenticated {
             //  If authenticated, request current user's profile
             PlayPortalUser.shared.getProfile(completion: completion)
         } else {
@@ -229,7 +232,7 @@ public final class PlayPortalAuth {
         -> Void
     {
         let request = AuthRouter.refresh(accessToken: accessToken, refreshToken: refreshToken, clientId: clientId, clientSecret: clientSecret, grantType: "refresh_token")
-        RequestManager.shared.request(request) { (error, tokenResponse: TokenResponse?) in
+        RequestHandler.shared.request(request) { (error, tokenResponse: TokenResponse?) in
             completion(error, tokenResponse?.accessToken, tokenResponse?.refreshToken)
         }
     }
@@ -240,7 +243,7 @@ public final class PlayPortalAuth {
      - Returns: Void
      */
     public func logout() -> Void {
-        RequestManager.shared.logout { error in
+        RequestHandler.shared.logout { error in
             EventHandler.shared.publish(.loggedOut(error: error))
         }
     }

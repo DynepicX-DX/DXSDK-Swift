@@ -15,8 +15,10 @@ public final class PlayPortalCollection {
     public static let shared = PlayPortalCollection()
     private var collections = Synchronized<[String: [Any]]>(value: [:])
     
-    private init() {
-        EventHandler.shared.subscribe(self)
+    private init() { }
+    
+    deinit {
+        EventHandler.shared.unsubscribe(self)
     }
     
     //  TODO: create an extension for this
@@ -39,7 +41,8 @@ public final class PlayPortalCollection {
         _ completion: ((_ error: Error?) -> Void)?)
         -> Void
     {
-        RequestManager.shared.request(DataRouter.create(bucketName: collectionName, users: users, isPublic: false)) { error in
+        let request = DataRouter.create(bucketName: collectionName, users: users, isPublic: false)
+        RequestHandler.shared.request(request) { error in
             if error == nil {
                 self.collections.value[collectionName] = []
             }
@@ -60,7 +63,8 @@ public final class PlayPortalCollection {
         _ completion: @escaping (_ error: Error?, _ collection: [C]?) -> Void)
         -> Void
     {
-        RequestManager.shared.request(DataRouter.read(bucketName: collectionName, key: collectionName)) { (error, collection: [C]?) in
+        let request = DataRouter.read(bucketName: collectionName, key: collectionName)
+        RequestHandler.shared.request(request) { (error, collection: [C]?) in
             if error == nil {
                 self.collections.value[collectionName] = collection
             }
@@ -89,7 +93,8 @@ public final class PlayPortalCollection {
         precondition(collection.matches(type: C.self), "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
         
         let updatedCollection: [C] = collection + [element] as! [C]
-        RequestManager.shared.request(DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))) { (error, collection: [C]?) in
+        let request = DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))
+        RequestHandler.shared.request(request) { (error, collection: [C]?) in
             if error == nil {
                 self.collections.value[collectionName] = collection
             }
@@ -118,7 +123,8 @@ public final class PlayPortalCollection {
         precondition(collection.matches(type: C.self), "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
         
         let updatedCollection: [C] = (collection as! [C]).filter { $0 != value }
-        RequestManager.shared.request(DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))) { (error, collection: [C]?) in
+        let request = DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))
+        RequestHandler.shared.request(request) { (error, collection: [C]?) in
             if error == nil {
                 self.collections.value[collectionName] = collection
             }
@@ -155,7 +161,8 @@ public final class PlayPortalCollection {
         }
         
         updatedCollection[index] = newValue
-        RequestManager.shared.request(DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))) { (error, collection: [C]?) in
+        let request = DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))
+        RequestHandler.shared.request(request) { (error, collection: [C]?) in
             if error == nil {
                 self.collections.value[collectionName] = collection
             }
@@ -175,7 +182,7 @@ public final class PlayPortalCollection {
         _ completion: ((_ error: Error?) -> Void)?)
         -> Void
     {
-        RequestManager.shared.request(DataRouter.delete(bucketName: collectionName)) { error in
+        RequestHandler.shared.request(DataRouter.delete(bucketName: collectionName)) { error in
             if error == nil {
                 self.collections.value[collectionName] = nil
             }
