@@ -68,7 +68,15 @@ public final class PlayPortalData {
         -> Void
     {
         let request = DataRouter.create(bucketName: bucketName, users: users, isPublic: false)
-        RequestHandler.shared.request(request, completion)
+        RequestHandler.shared.request(request) { error in
+            if let error = error as? PlayPortalError.API
+                , case PlayPortalError.API.requestFailed(.alreadyExists, _) = error
+            {
+                completion?(nil)
+            } else {
+                completion?(error)
+            }
+        }
     }
     
     /**

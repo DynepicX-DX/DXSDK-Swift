@@ -22,6 +22,7 @@ fileprivate final class AlamofireHTTPRequester {
     fileprivate static let sessionManager: SessionManager = {
         var sessionManager = SessionManager(configuration: .default)
         sessionManager.retrier = RequestHandler.shared
+        sessionManager.adapter = RequestHandler.shared
         return sessionManager
     }()
     
@@ -50,7 +51,7 @@ final class RequestHandler {
     private var requestsToRetry = [RequestRetryCompletion]()
     private let decoder = JSONDecoder()
     private let queue = DispatchQueue(label: "com.dynepic.playPORTAL.RequestManagerQueue", attributes: .concurrent)
-    private var isRefreshing = Synchronized(value: false)
+    private var isRefreshing = false
     private var accessToken: String? {
         get { return queue.sync { globalStorageHandler.get("PPSDK-accessToken") }}
         set(accessToken) {
@@ -97,7 +98,9 @@ final class RequestHandler {
                 if let keys = keyPath?.split(separator: ".").map(String.init),
                     let json = data?.asJSON,
                     let nestedValue = json.valueAtNestedKey(keys) {
-                    result = try? JSONSerialization.data(withJSONObject: nestedValue, options: [])
+                    print("valid json: \(JSONSerialization.isValidJSONObject(["value": nestedValue]))")
+                    print()
+                    result = try? JSONSerialization.data(withJSONObject: nestedValue, options: .prettyPrinted)
                 }
                 completion?(nil, result)
             }
@@ -173,6 +176,17 @@ extension RequestHandler: EventSubscriber {
     }
 }
 
+extension RequestHandler: RequestAdapter {
+    
+    func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
+        var urlRequest = urlRequest
+        if let accessToken = accessToken {
+            urlRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        }
+        return urlRequest
+    }
+}
+
 extension RequestHandler: RequestRetrier {
     
     func should(
@@ -186,8 +200,8 @@ extension RequestHandler: RequestRetrier {
         
         if let response = request.task?.response as? HTTPURLResponse,
             PlayPortalError.API.ErrorCode.errorCode(for: response) == .tokenRefreshRequired {
-            if !isRefreshing.value {
-                isRefreshing.value = true
+            if !isRefreshing {
+                isRefreshing = true
                 //  TODO: handle when tokens are nil
                 PlayPortalAuth.shared.refresh(accessToken: accessToken!, refreshToken: refreshToken!) { error, accessToken, refreshToken in
                     self.lock.lock(); defer { self.lock.unlock() }
@@ -195,7 +209,7 @@ extension RequestHandler: RequestRetrier {
                     self.refreshToken = refreshToken
                     self.requestsToRetry.forEach { $0(error == nil, 0.0) }
                     self.requestsToRetry.removeAll()
-                    self.isRefreshing.value = false
+                    self.isRefreshing = false
                     if error != nil {
                         EventHandler.shared.publish(.loggedOut(error: error))
                     }
