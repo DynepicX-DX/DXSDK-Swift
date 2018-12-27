@@ -51,7 +51,7 @@ final class RequestHandler {
     private var requestsToRetry = [RequestRetryCompletion]()
     private let decoder = JSONDecoder()
     private let queue = DispatchQueue(label: "com.dynepic.playPORTAL.RequestManagerQueue", attributes: .concurrent)
-    private var isRefreshing = Synchronized(value: false)
+    private var isRefreshing = false
     
     private let accessTokenKey = "PPSDK-accessToken"
     private(set) var accessToken: String? {
