@@ -16,19 +16,8 @@ extension Data {
         }
     }
     
-    var asJSONArray: [[String: Any]]? {
-        get {
-            guard let json = try? JSONSerialization.jsonObject(with: self, options: [])
-                , let array = json as? [Any]
-                else {
-                    return nil
-            }
-            return array.compactMap { $0 as? [String: Any] }
-        }
-    }
-    
-    func asDecodable<D: Decodable>(type: D.Type) -> D? {
-        return try? JSONDecoder().decode(type, from: self)
+    var toHex: String {
+        get { return map { String(format: "%02.2hhx", $0) }.joined() }
     }
 }
 
@@ -45,11 +34,6 @@ extension Dictionary {
             }
         }
         return result
-    }
-    
-    func asDecodable<D: Decodable>(type: D.Type) -> D? {
-        guard let data = try? JSONSerialization.data(withJSONObject: self, options: []) else { return nil }
-        return try? JSONDecoder().decode(type, from: data)
     }
 }
 

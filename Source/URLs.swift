@@ -33,31 +33,45 @@ enum URLs {
     
     enum OAuth {
         
-        static let signIn = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/signin"
-        static let token = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/token"
-        static let logout = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/oauth/logout"
+        private static let prefix = "/oauth"
+        static let signIn = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + OAuth.prefix + "/signin"
+        static let token = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + OAuth.prefix + "/token"
+        static let logout = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + OAuth.prefix + "/logout"
     }
     
     enum User {
         
-        static let userProfile = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/profile"
-        static let friendProfiles = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/my/friends"
-        static let search = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/search"
-        static let randomSearch = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/user/v1/search/random"
+        private static let prefix = "/user/v1"
+        static let userProfile = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + User.prefix + "/my/profile"
+        static let friendProfiles = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + User.prefix + "/my/friends"
+        static let search = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + User.prefix + "/search"
+        static let randomSearch = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + User.prefix + "/search/random"
     }
     
     enum Image {
         
-        static let staticImage = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/image/v1/static"
+        private static let prefix = "/image/v1"
+        static let staticImage = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + Image.prefix + "/static"
     }
     
     enum Leaderboard {
         
-        static let leaderboard = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/leaderboard/v1"
+        private static let prefix = "/leaderboard/v1"
+        static let leaderboard = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + Leaderboard.prefix
     }
     
     enum App {
         
-        static let bucket = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + "/app/v1/bucket"
+        private static let prefix = "/app/v1"
+        static let bucket = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + App.prefix + "/bucket"
+    }
+    
+    enum Notification {
+        
+        private static let prefix = "/notification/v1"
+        static let create = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + Notification.prefix
+        static let register = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + Notification.prefix + "/register"
+        static let read = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + Notification.prefix
+        static let acknowledge = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + Notification.prefix + "/acknowledge"
     }
 }

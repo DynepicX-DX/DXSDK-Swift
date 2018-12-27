@@ -51,20 +51,24 @@ final class RequestHandler {
     private var requestsToRetry = [RequestRetryCompletion]()
     private let decoder = JSONDecoder()
     private let queue = DispatchQueue(label: "com.dynepic.playPORTAL.RequestManagerQueue", attributes: .concurrent)
-    private var isRefreshing = false
-    private var accessToken: String? {
-        get { return queue.sync { globalStorageHandler.get("PPSDK-accessToken") }}
+    private var isRefreshing = Synchronized(value: false)
+    
+    private let accessTokenKey = "PPSDK-accessToken"
+    private(set) var accessToken: String? {
+        get { return queue.sync { globalStorageHandler.get(accessTokenKey) }}
         set(accessToken) {
             if let accessToken = accessToken {
-                queue.async(flags: .barrier) { globalStorageHandler.set(accessToken, atKey: "PPSDK-accessToken") }
+                queue.async(flags: .barrier) { globalStorageHandler.set(accessToken, atKey: self.accessTokenKey) }
             }
         }
     }
-    private var refreshToken: String? {
-        get { return queue.sync { globalStorageHandler.get("PPSDK-refreshToken") }}
+    
+    private let refreshTokenKey = "PPSDK-refreshToken"
+    private(set) var refreshToken: String? {
+        get { return queue.sync { globalStorageHandler.get(refreshTokenKey) }}
         set(refreshToken) {
             if let refreshToken = refreshToken {
-                queue.async(flags: .barrier) { globalStorageHandler.set(refreshToken, atKey: "PPSDK-refreshToken") }
+                queue.async(flags: .barrier) { globalStorageHandler.set(refreshToken, atKey: self.refreshTokenKey) }
             }
         }
     }
@@ -150,13 +154,6 @@ final class RequestHandler {
             }
         }
     }
-    
-    //  TODO: handle logout clean up
-    func logout(_ completion: @escaping (Error?) -> Void) -> Void {
-        request(AuthRouter.logout(refreshToken: refreshToken)) { error in
-            completion(error)
-        }
-    }
 }
 
 extension RequestHandler: EventSubscriber {
@@ -167,11 +164,11 @@ extension RequestHandler: EventSubscriber {
             self.accessToken = accessToken
             self.refreshToken = refreshToken
         case .firstRun:
-            globalStorageHandler.delete("PPSDK-accessToken")
-            globalStorageHandler.delete("PPSDK-refreshToken")
+            globalStorageHandler.delete(accessTokenKey)
+            globalStorageHandler.delete(refreshTokenKey)
         case .loggedOut:
-            globalStorageHandler.delete("PPSDK-accessToken")
-            globalStorageHandler.delete("PPSDK-refreshToken")
+            globalStorageHandler.delete(accessTokenKey)
+            globalStorageHandler.delete(refreshTokenKey)
         }
     }
 }

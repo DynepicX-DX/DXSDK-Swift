@@ -108,14 +108,12 @@ public final class PlayPortalData {
     
     /**
      Read data from a bucket.
-     
      - Parameter fromBucket: Name of the bucket being read from.
      - Parameter atKey: If provided, will read data from the bucket at this key, otherwise the entire bucket is returned;
         defaults to nil. For nested keys, use a period-separated string eg. 'root.sub'.
      - Parameter completion: The closure called when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Parameter bucket: A `PlayPortalDataBucket` instance containing the data at `atKey` returned for a successful request.
-     
      - Returns: Void
     */
     public func read(
@@ -131,13 +129,11 @@ public final class PlayPortalData {
     
     /**
      Delete data from a bucket.
-     
      - Parameter fromBucket: Name of the bucket where data is being deleted from.
      - Parameter atKey: At what key to delete data.
      - Parameter completion: The closure called when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Parameter bucket: The updated bucket returned for a successful request.
-     
      - Returns: Void
     */
     public func delete(
@@ -152,11 +148,9 @@ public final class PlayPortalData {
     
     /**
      Delete an entire bucket.
-     
      - Parameter bucketNamed: The name of the bucket being deleted.
      - Parameter completion: The closure called when the request completes.
      - Parameter error: The error returned for an unsuccessful request.
-     
      - Returns: Void
     */
     public func delete(

@@ -47,7 +47,7 @@ public enum PlayPortalEnvironment: String {
 
 
 //  Available routes for playPORTAL oauth api
-enum AuthRouter: URLRequestConvertible {
+fileprivate enum AuthRouter: URLRequestConvertible {
     
     case login(clientId: String, clientSecret: String, redirectURI: String, responseType: String, state: String, appLogin: Bool)
     case refresh(accessToken: String?, refreshToken: String?, clientId: String, clientSecret: String, grantType: String)
@@ -243,7 +243,9 @@ public final class PlayPortalAuth {
      - Returns: Void
      */
     public func logout() -> Void {
-        RequestHandler.shared.logout { error in
+        //  TODO: handle when token nil 
+        let request = AuthRouter.logout(refreshToken: RequestHandler.shared.refreshToken!)
+        RequestHandler.shared.request(request) { error in
             EventHandler.shared.publish(.loggedOut(error: error))
         }
     }
