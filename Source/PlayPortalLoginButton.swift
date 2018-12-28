@@ -8,10 +8,16 @@
 import Foundation
 import UIKit
 
+public enum PlayPortalLoginButtonImage: String {
+    
+    case `default` = "SSOButtonDefault"
+    case flat = "SSOButtonFlat"
+    case flatColor = "SSOButtonFlatColor"
+    case flatTransparent = "SSOButtonFlatTransparent"
+    case gradient = "SSOButtonGradient"
+}
 
-/**
- Responsible for initializing SSO flow when tapped.
- */
+//  Responsible for initializing SSO flow when tapped.
 public final class PlayPortalLoginButton: UIButton {
     
     private weak var from: UIViewController?
@@ -20,8 +26,9 @@ public final class PlayPortalLoginButton: UIButton {
      Create login button.
      
      - Parameter from: UIViewController that will present SFSafariViewController; defaults to topmost UIViewController.
+     - Parameter image: Image to use for login button.
      */
-    public init(from viewController: UIViewController? = nil) {
+    public init(from viewController: UIViewController? = nil, image: PlayPortalLoginButtonImage = .default) {
         self.from = viewController
         
         // Width ratio is 279w / 55h
@@ -40,7 +47,7 @@ public final class PlayPortalLoginButton: UIButton {
         addTarget(self, action: #selector(PlayPortalLoginButton.loginTapped), for: .touchUpInside)
         
         //  Set image
-        guard let image = Utils.getImageAsset(byName: "SSOButton") else { return }
+        guard let image = Utils.getImageAsset(byName: image.rawValue) else { return }
         let ssoButtonImage = UIImageView(image: image)
         ssoButtonImage.frame = bounds
         ssoButtonImage.contentMode = .scaleAspectFit

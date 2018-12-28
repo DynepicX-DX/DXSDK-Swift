@@ -68,7 +68,7 @@ enum URLs {
     
     enum Notification {
         
-        private static let prefix = "/notification/v1"
+        private static let prefix = "/notifications/v1"
         static let create = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + Notification.prefix
         static let register = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + Notification.prefix + "/register"
         static let read = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + Notification.prefix

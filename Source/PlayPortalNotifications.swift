@@ -55,6 +55,19 @@ public class PlayPortalNotifications {
     
     private init() {}
     
+    
+    //  Request api to add device token to current session.
+    private func register(
+        deviceToken: String,
+        _ completion: @escaping (_ error: Error?) -> Void)
+        -> Void
+    {
+        assert(RequestHandler.shared.refreshToken != nil, "User must be logged in before registering for push notifications.")
+        print("device token: \(deviceToken)")
+        let request = NotificationRouter.register(refreshToken: RequestHandler.shared.refreshToken ?? "", deviceToken: deviceToken)
+        RequestHandler.shared.request(request, completion)
+    }
+    
     /**
      Register for remote notifications.
      - Parameter options: The authorization options you want your app to have.
@@ -111,14 +124,58 @@ public class PlayPortalNotifications {
         }
     }
     
-    //  Request api to add device token to current session.
-    private func register(
-        deviceToken: String,
-        _ completion: @escaping (_ error: Error?) -> Void)
+    /**
+     Create and send a notification to another playPORTAL user.
+     - Parameter text: The notification text; this is what would be displayed in the alert.
+     - Parameter receiver: The playPORTAL user that will receive the notification.
+     - Parameter persist: Should the notification be saved; if `true`, `receiver` will be able to retrieve the notification when requesting their notifications.
+     - Parameter completion: The closure invoked when the request finishes.
+     - Parameter error: The error returned for an unsuccessful request.
+    */
+    public func createNotification(
+        text: String,
+        receiver: String,
+        persist: Bool = true,
+        _ completion: ((_ error: Error?) -> Void)?)
         -> Void
     {
-        assert(RequestHandler.shared.refreshToken != nil, "User must be logged in before registering for push notifications.")
-        let request = NotificationRouter.register(refreshToken: RequestHandler.shared.refreshToken ?? "", deviceToken: deviceToken)
+        let request = NotificationRouter.create(text: text, receiver: receiver, persist: persist)
         RequestHandler.shared.request(request, completion)
+    }
+    
+    /**
+     Request current user's notifications.
+     - Parameter since: Return notifications from after this time; expected to be in Unix epoch time; defaults to nil (return all notifications regardless of created date).
+     - Parameter page: Supports pagination: at what page to get notifications from; defaults to nil (returns first page).
+     - Parameter limit: How many notifications to get; defaults to nil (returns 10 entries).
+     - Parameter acknowledged: If `true`, will also return notifications that have been acknowledged; defaults to true.
+     - Parameter completion: The closure invoked when the request finishes.
+     - Parameter error: The error returned for an unsuccessful request.
+     - Parameter notifications: The notifications returned for an unsuccessful request.
+    */
+    public func readNotifications(
+        since: Int? = nil,
+        page: Int? = nil,
+        limit: Int? = nil,
+        acknowledged: Bool = true,
+        _ completion: @escaping (_ error: Error?, _ notifications: [PlayPortalNotification]?) -> Void)
+        -> Void
+    {
+        let request = NotificationRouter.read(since: since, page: page, limit: limit, acknowledged: acknowledged)
+        RequestHandler.shared.request(request, at: "docs", completion)
+    }
+    
+    /**
+     Acknowledge that a playPORTAL notification has been seen.
+     - Parameter notificationId: The id of the notification being acknowledged.
+     - Parameter completion: The closure invoked when the request finishes.
+     - Parameter error: The error returned for an unsuccessful request.
+    */
+    public func acknowledgeNotification(
+        notificationId: String,
+        _ completion: ((_ error: Error?) -> Void)?)
+        -> Void
+    {
+        RequestHandler.shared.request(NotificationRouter.acknowledge(notificationId: notificationId), completion)
     }
 }

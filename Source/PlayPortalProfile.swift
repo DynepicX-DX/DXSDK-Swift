@@ -6,7 +6,7 @@
 
 import Foundation
 
-//  Class representing a playPORTAL user's profile.
+//  Struct representing a playPORTAL user's profile.
 public struct PlayPortalProfile: Codable {
     
     public let userId: String

@@ -20,6 +20,11 @@
 		1C477F94217F977600B42160 /* PlayPortalLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */; };
 		1C6B6C852198B1C800380305 /* PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */; };
 		1C70554D218892CA007EB006 /* PlayPortalLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */; };
+		1C75B34A21D67B2C00480EE2 /* SSOButtonFlatTransparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C75B34921D67B2C00480EE2 /* SSOButtonFlatTransparent.png */; };
+		1C75B34C21D67B3A00480EE2 /* SSOButtonFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C75B34B21D67B3A00480EE2 /* SSOButtonFlat.png */; };
+		1C75B34E21D67B4800480EE2 /* SSOButtonFlatColor.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C75B34D21D67B4800480EE2 /* SSOButtonFlatColor.png */; };
+		1C75B35221D67B7B00480EE2 /* SSOButtonGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C75B35121D67B7B00480EE2 /* SSOButtonGradient.png */; };
+		1C75B35421D67C2D00480EE2 /* SSOButtonDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C75B35321D67C2D00480EE2 /* SSOButtonDefault.png */; };
 		1C8468B821CAAB3C00A540C8 /* StorageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8468B721CAAB3C00A540C8 /* StorageHandler.swift */; };
 		1C8468BB21CAAB7800A540C8 /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8468B921CAAB7800A540C8 /* RequestHandler.swift */; };
 		1C8468BC21CAAB7800A540C8 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8468BA21CAAB7800A540C8 /* Events.swift */; };
@@ -29,7 +34,6 @@
 		1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55E2184BD3200CA3528 /* AnonUser.png */; };
 		1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55F2184BD3200CA3528 /* AnonUserCover.png */; };
 		1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5602184BD3200CA3528 /* QuestionMark.jpg */; };
-		1C89E5652184BD3200CA3528 /* SSOButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5612184BD3200CA3528 /* SSOButton.png */; };
 		1CD1E3D9217F441900C2B083 /* PPSDK_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */; };
 		1CD1E3DB217F441900C2B083 /* PPSDK_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1CF68EA321B6C73D001CC433 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF68EA221B6C73D001CC433 /* URLs.swift */; };
@@ -64,6 +68,11 @@
 		1C477F8C217F977600B42160 /* PlayPortalLeaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboard.swift; sourceTree = "<group>"; };
 		1C477F8D217F977600B42160 /* PlayPortalLoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLoginButton.swift; sourceTree = "<group>"; };
 		1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboardEntry.swift; sourceTree = "<group>"; };
+		1C75B34921D67B2C00480EE2 /* SSOButtonFlatTransparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlatTransparent.png; sourceTree = "<group>"; };
+		1C75B34B21D67B3A00480EE2 /* SSOButtonFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlat.png; sourceTree = "<group>"; };
+		1C75B34D21D67B4800480EE2 /* SSOButtonFlatColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlatColor.png; sourceTree = "<group>"; };
+		1C75B35121D67B7B00480EE2 /* SSOButtonGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonGradient.png; sourceTree = "<group>"; };
+		1C75B35321D67C2D00480EE2 /* SSOButtonDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonDefault.png; sourceTree = "<group>"; };
 		1C8468B721CAAB3C00A540C8 /* StorageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageHandler.swift; sourceTree = "<group>"; };
 		1C8468B921CAAB7800A540C8 /* RequestHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
 		1C8468BA21CAAB7800A540C8 /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
@@ -73,7 +82,6 @@
 		1C89E55E2184BD3200CA3528 /* AnonUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUser.png; sourceTree = "<group>"; };
 		1C89E55F2184BD3200CA3528 /* AnonUserCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUserCover.png; sourceTree = "<group>"; };
 		1C89E5602184BD3200CA3528 /* QuestionMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = QuestionMark.jpg; sourceTree = "<group>"; };
-		1C89E5612184BD3200CA3528 /* SSOButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButton.png; sourceTree = "<group>"; };
 		1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PPSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPSDK_Swift.h; sourceTree = "<group>"; };
 		1CD1E3CE217F441900C2B083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -117,10 +125,14 @@
 		1CC6076A2180B5D600B47385 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1C75B35321D67C2D00480EE2 /* SSOButtonDefault.png */,
+				1C75B35121D67B7B00480EE2 /* SSOButtonGradient.png */,
+				1C75B34D21D67B4800480EE2 /* SSOButtonFlatColor.png */,
+				1C75B34B21D67B3A00480EE2 /* SSOButtonFlat.png */,
+				1C75B34921D67B2C00480EE2 /* SSOButtonFlatTransparent.png */,
 				1C89E55E2184BD3200CA3528 /* AnonUser.png */,
 				1C89E55F2184BD3200CA3528 /* AnonUserCover.png */,
 				1C89E5602184BD3200CA3528 /* QuestionMark.jpg */,
-				1C89E5612184BD3200CA3528 /* SSOButton.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -314,9 +326,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */,
-				1C89E5652184BD3200CA3528 /* SSOButton.png in Resources */,
 				1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */,
+				1C75B34A21D67B2C00480EE2 /* SSOButtonFlatTransparent.png in Resources */,
 				1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */,
+				1C75B35221D67B7B00480EE2 /* SSOButtonGradient.png in Resources */,
+				1C75B35421D67C2D00480EE2 /* SSOButtonDefault.png in Resources */,
+				1C75B34E21D67B4800480EE2 /* SSOButtonFlatColor.png in Resources */,
+				1C75B34C21D67B3A00480EE2 /* SSOButtonFlat.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
