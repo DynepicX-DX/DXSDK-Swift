@@ -81,6 +81,11 @@ final class RequestHandler {
         EventHandler.shared.unsubscribe(self)
     }
     
+    func deleteKeys() {
+        globalStorageHandler.delete(accessTokenKey)
+        globalStorageHandler.delete(refreshTokenKey)
+    }
+    
     private func _request(
         _ request: PPSDK_Swift.URLRequestConvertible,
         at keyPath: String? = nil,
@@ -101,8 +106,6 @@ final class RequestHandler {
                 if let keys = keyPath?.split(separator: ".").map(String.init),
                     let json = data?.asJSON,
                     let nestedValue = json.valueAtNestedKey(keys) {
-                    print("valid json: \(JSONSerialization.isValidJSONObject(["value": nestedValue]))")
-                    print()
                     result = try? JSONSerialization.data(withJSONObject: nestedValue, options: .prettyPrinted)
                 }
                 completion?(nil, result)
@@ -198,8 +201,11 @@ extension RequestHandler: RequestRetrier {
             PlayPortalError.API.ErrorCode.errorCode(for: response) == .tokenRefreshRequired {
             if !isRefreshing {
                 isRefreshing = true
-                //  TODO: handle when tokens are nil
-                PlayPortalAuth.shared.refresh(accessToken: accessToken!, refreshToken: refreshToken!) { error, accessToken, refreshToken in
+                guard let accessToken = accessToken, let refreshToken = refreshToken else {
+                    completion(false, 0.0)
+                    return
+                }
+                PlayPortalAuth.shared.refresh(accessToken: accessToken, refreshToken: refreshToken) { error, accessToken, refreshToken in
                     self.lock.lock(); defer { self.lock.unlock() }
                     self.accessToken = accessToken
                     self.refreshToken = refreshToken

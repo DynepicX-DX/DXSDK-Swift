@@ -243,8 +243,11 @@ public final class PlayPortalAuth {
      - Returns: Void
      */
     public func logout() -> Void {
-        //  TODO: handle when token nil 
-        let request = AuthRouter.logout(refreshToken: RequestHandler.shared.refreshToken!)
+        //  TODO: handle when token nil
+        guard let refreshToken = RequestHandler.shared.refreshToken else {
+            return
+        }
+        let request = AuthRouter.logout(refreshToken: refreshToken)
         RequestHandler.shared.request(request) { error in
             EventHandler.shared.publish(.loggedOut(error: error))
         }
@@ -256,6 +259,7 @@ extension PlayPortalAuth: EventSubscriber {
     func on(event: Event) {
         switch event {
         case let .loggedOut(error):
+            RequestHandler.shared.deleteKeys()
             if let error = error {
                 loginDelegate?.didLogout?(with: error)
             } else {
