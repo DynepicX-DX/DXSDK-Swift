@@ -122,13 +122,15 @@ public extension UIImageView {
      - Returns: Void
      */
     func playPortalProfilePic(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
+        image = Utils.getImageAsset(byName: "anonUser")
         guard let imageId = imageId else {
-            image = Utils.getImageAsset(byName: "anonUser")
             completion?(nil)
             return
         }
         PlayPortalImage.shared.getImage(forImageId: imageId) { [weak self] error, data in
-            self?.image = data.map { UIImage(data: $0) } ?? Utils.getImageAsset(byName: "anonUser")
+            if let image = data.map({ UIImage(data: $0) }) {
+                self?.image = image
+            }
             completion?(error)
         }
     }
@@ -144,13 +146,15 @@ public extension UIImageView {
      - Returns: Void
      */
     func playPortalCoverPhoto(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
+        image = Utils.getImageAsset(byName: "anonUserCover")
         guard let imageId = imageId else {
-            image = Utils.getImageAsset(byName: "anonUserCover")
             completion?(nil)
             return
         }
         PlayPortalImage.shared.getImage(forImageId: imageId) { [weak self] error, data in
-            self?.image = data.map { UIImage(data: $0) } ?? Utils.getImageAsset(byName: "anonUserCover")
+            if let image = data.map({ UIImage(data: $0) }) {
+                self?.image = image
+            }
             completion?(error)
         }
     }

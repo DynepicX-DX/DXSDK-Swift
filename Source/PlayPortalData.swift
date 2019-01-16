@@ -61,7 +61,7 @@ public final class PlayPortalData {
      - Returns: Void
     */
     public func create(
-        buckedNamed bucketName: String,
+        bucketNamed bucketName: String,
         includingUsers users: [String] = [],
 //        isPublic: Bool = false,
         _ completion: ((_ error: Error?) -> Void)?)

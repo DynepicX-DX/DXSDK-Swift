@@ -142,7 +142,11 @@ public final class PlayPortalAuth {
      
      - Returns: Void
      */
-    public func isAuthenticated(loginDelegate: PlayPortalLoginDelegate? = nil, _ completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void) -> Void {
+    public func isAuthenticated(
+        loginDelegate: PlayPortalLoginDelegate? = nil,
+        _ completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void)
+        -> Void
+    {
         EventHandler.shared.addSubscriptions()
         self.loginDelegate = loginDelegate
         
