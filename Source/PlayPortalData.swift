@@ -103,7 +103,7 @@ public final class PlayPortalData {
             val = json?["value"]
         }
         let request = DataRouter.write(bucketName: bucketName, key: key, value: val)
-        RequestHandler.shared.request(request, at: "data.\(key)", completion)
+        RequestHandler.shared.request(request, at: "data", completion)
     }
     
     /**

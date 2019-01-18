@@ -101,6 +101,7 @@ public class PlayPortalNotifications {
                         return
                     }
                     DispatchQueue.main.async {
+                        completion?(nil)
                         UIApplication.shared.registerForRemoteNotifications()
                     }
                 }
