@@ -106,9 +106,9 @@ final class RequestHandler {
                 if let keys = keyPath?.split(separator: ".").map(String.init),
                     let json = data?.asJSON,
                     let nestedValue = json.valueAtNestedKey(keys) {
-                    result = try? JSONSerialization.data(withJSONObject: ["result": nestedValue], options: .prettyPrinted)
-                    result = (result as? Data)?.asJSON?["result"]
-                    
+                    result = JSONSerialization.isValidJSONObject(nestedValue)
+                        ? try? JSONSerialization.data(withJSONObject: nestedValue, options: .prettyPrinted)
+                        : (try? JSONSerialization.data(withJSONObject: ["result": nestedValue], options: .prettyPrinted))?.asJSON?["result"]
                 }
                 completion?(nil, result)
             }

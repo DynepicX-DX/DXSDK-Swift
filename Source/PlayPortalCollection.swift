@@ -43,10 +43,29 @@ public final class PlayPortalCollection {
     {
         let request = DataRouter.create(bucketName: collectionName, users: users, isPublic: false)
         RequestHandler.shared.request(request) { error in
-            if error == nil {
-                self.collections.value[collectionName] = []
+            let alreadyExistsError: Bool = {
+                if let error = error as? PlayPortalError.API
+                    , case PlayPortalError.API.requestFailed(.alreadyExists, _) = error {
+                    return true
+                } else {
+                    return false
+                }
+            }()
+            if error == nil || alreadyExistsError {
+                
+                //  The purpose of this is to populate the bucket with an empty array after creation
+                //  Otherwise, reading immediately after creating a collection will return an error, as the bucket would have no
+                //  collection in it
+                let request = DataRouter.write(bucketName: collectionName, key: collectionName, value: Array<Int>())
+                RequestHandler.shared.request(request, at: "data.\(collectionName)") { (error, collection: [Int]?) in
+                    if error == nil {
+                        self.collections.value[collectionName] = []
+                    }
+                    completion?(error)
+                }
+            } else {
+                completion?(error)
             }
-            completion?(error)
         }
     }
     
@@ -64,7 +83,7 @@ public final class PlayPortalCollection {
         -> Void
     {
         let request = DataRouter.read(bucketName: collectionName, key: collectionName)
-        RequestHandler.shared.request(request) { (error, collection: [C]?) in
+        RequestHandler.shared.request(request, at: "data.\(collectionName)") { (error, collection: [C]?) in
             if error == nil {
                 self.collections.value[collectionName] = collection
             }
@@ -87,18 +106,25 @@ public final class PlayPortalCollection {
         _ completion: @escaping (_ error: Error?, _ collection: [C]?) -> Void)
         -> Void
     {
-        guard let collection = collections.value[collectionName] else {
-            preconditionFailure("Cannot perform operations on a collection that hasn't been created.")
-        }
-        precondition(collection.matches(type: C.self), "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
-        
-        let updatedCollection: [C] = collection + [element] as! [C]
-        let request = DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))
-        RequestHandler.shared.request(request) { (error, collection: [C]?) in
-            if error == nil {
-                self.collections.value[collectionName] = collection
+        if let collection = collections.value[collectionName] {
+            precondition(collection.matches(type: C.self), "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
+            
+            let updatedCollection: [C] = collection + [element] as! [C]
+            let request = DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))
+            RequestHandler.shared.request(request, at: "data.\(collectionName)") { (error, collection: [C]?) in
+                if error == nil {
+                    self.collections.value[collectionName] = collection
+                }
+                completion(error, collection)
             }
-            completion(error, collection)
+        } else {
+            read(fromCollection: collectionName) { (error, collection: [C]?) in
+                if let error = error {
+                    completion(error, nil)
+                } else {
+                    self.add(toCollection: collectionName, element: element, completion)
+                }
+            }
         }
     }
     
@@ -117,18 +143,25 @@ public final class PlayPortalCollection {
         _ completion: @escaping (_ error: Error?, _ collection: [C]?) -> Void)
         -> Void
     {
-        guard let collection = collections.value[collectionName] else {
-            preconditionFailure("Cannot perform operations on a collection that hasn't been created.")
-        }
-        precondition(collection.matches(type: C.self), "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
-        
-        let updatedCollection: [C] = (collection as! [C]).filter { $0 != value }
-        let request = DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))
-        RequestHandler.shared.request(request) { (error, collection: [C]?) in
-            if error == nil {
-                self.collections.value[collectionName] = collection
+        if let collection = collections.value[collectionName] {
+            precondition(collection.matches(type: C.self), "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
+            
+            let updatedCollection: [C] = (collection as! [C]).filter { $0 != value }
+            let request = DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))
+            RequestHandler.shared.request(request, at: "data.\(collectionName)") { (error, collection: [C]?) in
+                if error == nil {
+                    self.collections.value[collectionName] = collection
+                }
+                completion(error, collection)
             }
-            completion(error, collection)
+        } else {
+            read(fromCollection: collectionName) { (error, collection: [C]?) in
+                if let error = error {
+                    completion(error, nil)
+                } else {
+                    self.remove(fromCollection: collectionName, value: value, completion)
+                }
+            }
         }
     }
     
@@ -149,24 +182,31 @@ public final class PlayPortalCollection {
         _ completion: @escaping (_ error: Error?, _ collection: [C]?) -> Void)
         -> Void
     {
-        guard let collection = collections.value[collectionName] else {
-            preconditionFailure("Cannot perform operations on a collection that hasn't been created.")
-        }
-        precondition(collection.matches(type: C.self), "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
-        
-        var updatedCollection: [C] = collection as! [C]
-        guard let index = updatedCollection.firstIndex(of: oldValue) else {
-            completion(nil, updatedCollection)
-            return
-        }
-        
-        updatedCollection[index] = newValue
-        let request = DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))
-        RequestHandler.shared.request(request) { (error, collection: [C]?) in
-            if error == nil {
-                self.collections.value[collectionName] = collection
+        if let collection = collections.value[collectionName] {
+            precondition(collection.matches(type: C.self), "Elements in collection `\(collectionName)` do not match type \(type(of: C.self)).")
+            
+            var updatedCollection: [C] = collection as! [C]
+            guard let index = updatedCollection.firstIndex(of: oldValue) else {
+                completion(nil, updatedCollection)
+                return
             }
-            completion(error, collection)
+            
+            updatedCollection[index] = newValue
+            let request = DataRouter.write(bucketName: collectionName, key: collectionName, value: encode(updatedCollection))
+            RequestHandler.shared.request(request, at: "data.\(collectionName)") { (error, collection: [C]?) in
+                if error == nil {
+                    self.collections.value[collectionName] = collection
+                }
+                completion(error, collection)
+            }
+        } else {
+            read(fromCollection: collectionName) { (error, collection: [C]?) in
+                if let error = error {
+                    completion(error, nil)
+                } else {
+                    self.update(inCollection: collectionName, oldValue: oldValue, newValue: newValue, completion)
+                }
+            }
         }
     }
     
