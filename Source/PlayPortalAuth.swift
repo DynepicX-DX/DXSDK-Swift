@@ -88,6 +88,11 @@ public final class PlayPortalAuth {
     private(set) var environment = PlayPortalEnvironment.sandbox
     private var clientId = ""
     private var clientSecret = ""
+    var appId: String {
+        get {
+            return clientId + clientSecret
+        }
+    }
     private var redirectURI = ""
     private var isAuthenticatedCompletion: ((_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void)?
     private weak var loginDelegate: PlayPortalLoginDelegate?
@@ -120,8 +125,8 @@ public final class PlayPortalAuth {
         
         //  Because keychain items aren't cleared on app uninstall, but user defaults is,
         //  check flag in user defaults so that old keychain items can be cleared
-        if !UserDefaults.standard.bool(forKey: "PPSDK-firstRun") {
-            UserDefaults.standard.set(true, forKey: "PPSDK-firstRun")
+        if !UserDefaults.standard.bool(forKey: "\(clientId)-PPSDK-firstRun") {
+            UserDefaults.standard.set(true, forKey: "\(clientId)-PPSDK-firstRun")
             EventHandler.shared.publish(.firstRun)
         }
         

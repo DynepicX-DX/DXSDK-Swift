@@ -12,7 +12,6 @@ public struct PlayPortalNotification: Codable {
     
     public let notificationId: String
     public let text: String
-    public let path: String
     public let sender: String
     public let acknowledged: Bool
     

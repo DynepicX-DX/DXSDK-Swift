@@ -52,7 +52,7 @@ final class RequestHandler {
     private let queue = DispatchQueue(label: "com.dynepic.playPORTAL.RequestManagerQueue", attributes: .concurrent)
     private var isRefreshing = false
     
-    private let accessTokenKey = "PPSDK-accessToken"
+    private let accessTokenKey = "\(PlayPortalAuth.shared.appId)-PPSDK-accessToken"
     private(set) var accessToken: String? {
         get { return queue.sync { globalStorageHandler.get(accessTokenKey) }}
         set(accessToken) {
@@ -62,7 +62,7 @@ final class RequestHandler {
         }
     }
     
-    private let refreshTokenKey = "PPSDK-refreshToken"
+    private let refreshTokenKey = "\(PlayPortalAuth.shared.appId)-PPSDK-refreshToken"
     private(set) var refreshToken: String? {
         get { return queue.sync { globalStorageHandler.get(refreshTokenKey) }}
         set(refreshToken) {
