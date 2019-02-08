@@ -36,6 +36,8 @@
 		1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5602184BD3200CA3528 /* QuestionMark.jpg */; };
 		1CD1E3D9217F441900C2B083 /* PPSDK_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */; };
 		1CD1E3DB217F441900C2B083 /* PPSDK_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1CE0F8C8220DF81C00FCB87C /* PlayPortalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0F8C6220DF81C00FCB87C /* PlayPortalNotification.swift */; };
+		1CE0F8C9220DF81C00FCB87C /* PlayPortalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0F8C7220DF81C00FCB87C /* PlayPortalNotifications.swift */; };
 		1CF68EA321B6C73D001CC433 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF68EA221B6C73D001CC433 /* URLs.swift */; };
 		43C71B0EA19E0C5CA37F1779 /* Pods_PPSDK_Swift_PPSDK_SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3A99FE2197A22E0041DB2E /* Pods_PPSDK_Swift_PPSDK_SwiftTests.framework */; };
 		5BFBC701ED68D0C51E0DB054 /* Pods_PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93DED3B5A44F93D6DE8322E /* Pods_PPSDK_Swift.framework */; };
@@ -88,6 +90,8 @@
 		1CD1E3D3217F441900C2B083 /* PPSDK-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PPSDK-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPSDK_SwiftTests.swift; sourceTree = "<group>"; };
 		1CD1E3DA217F441900C2B083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CE0F8C6220DF81C00FCB87C /* PlayPortalNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalNotification.swift; sourceTree = "<group>"; };
+		1CE0F8C7220DF81C00FCB87C /* PlayPortalNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalNotifications.swift; sourceTree = "<group>"; };
 		1CF68EA221B6C73D001CC433 /* URLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		2A271FB6259AEF8AF1CB8798 /* Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift-PPSDK-SwiftTests/Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		49D0A53B87D85EE8CCCCAAE5 /* Pods-PPSDK-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift.debug.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift/Pods-PPSDK-Swift.debug.xcconfig"; sourceTree = "<group>"; };
@@ -180,6 +184,8 @@
 		1CD1E3E6217F45D700C2B083 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1CE0F8C6220DF81C00FCB87C /* PlayPortalNotification.swift */,
+				1CE0F8C7220DF81C00FCB87C /* PlayPortalNotifications.swift */,
 				1C8468BA21CAAB7800A540C8 /* Events.swift */,
 				1C8468B921CAAB7800A540C8 /* RequestHandler.swift */,
 				1C8468B721CAAB3C00A540C8 /* StorageHandler.swift */,
@@ -419,6 +425,7 @@
 			files = (
 				1C477F94217F977600B42160 /* PlayPortalLoginButton.swift in Sources */,
 				1C3A99F821979A7A0041DB2E /* PlayPortalCollection.swift in Sources */,
+				1CE0F8C9220DF81C00FCB87C /* PlayPortalNotifications.swift in Sources */,
 				1C3A99F621979A7A0041DB2E /* Extensions.swift in Sources */,
 				1C477F8E217F977600B42160 /* PlayPortalError.swift in Sources */,
 				1C477F91217F977600B42160 /* PlayPortalUser.swift in Sources */,
@@ -428,6 +435,7 @@
 				1CF68EA321B6C73D001CC433 /* URLs.swift in Sources */,
 				1C3A99F921979A7A0041DB2E /* Router.swift in Sources */,
 				1C70554D218892CA007EB006 /* PlayPortalLeaderboardEntry.swift in Sources */,
+				1CE0F8C8220DF81C00FCB87C /* PlayPortalNotification.swift in Sources */,
 				1C89E55C2184BD2B00CA3528 /* Utils.swift in Sources */,
 				1C477F90217F977600B42160 /* PlayPortalAuth.swift in Sources */,
 				1C477F8F217F977600B42160 /* PlayPortalData.swift in Sources */,

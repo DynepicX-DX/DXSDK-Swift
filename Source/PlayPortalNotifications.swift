@@ -86,7 +86,7 @@ public class PlayPortalNotifications {
                 completion?(error)
             }
         } else {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.badge]) { granted, error in
+            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert]) { granted, error in
                 guard granted else {
                     completion?(nil)
                     return
