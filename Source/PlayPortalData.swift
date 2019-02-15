@@ -12,6 +12,7 @@ enum DataRouter: URLRequestConvertible {
     case create(bucketName: String, users: [String], isPublic: Bool)
     case write(bucketName: String, key: String, value: Any?)
     case read(bucketName: String, key: String?)
+    case readAllBuckets
     case delete(bucketName: String)
     
     func asURLRequest() -> URLRequest {
@@ -36,6 +37,8 @@ enum DataRouter: URLRequestConvertible {
                 "key": key
             ]
             return Router.get(url: URLs.App.bucket, params: params).asURLRequest()
+        case .readAllBuckets:
+            return Router.get(url: URLs.App.bucketList, params: nil).asURLRequest()
         case let .delete(bucketName):
             let body = [
                 "id": bucketName
@@ -125,6 +128,20 @@ public final class PlayPortalData {
         let keyPath = "data" + (key.flatMap { "." + $0 } ?? "")
         let request = DataRouter.read(bucketName: bucketName, key: key)
         RequestHandler.shared.request(request, at: keyPath, completion)
+    }
+    
+    /**
+     Read all buckets that the curernt user has access to.
+     - Parameter completion: The closure called when the request finishes.
+     - Parameter error: The error returned for an unsuccessful request.
+     - Parameter buckets: An array of the names of the buckets the current user has access to.
+     - Returns: Void
+    */
+    public func readAllBuckets(
+        _ completion: @escaping (_ error: Error?, _ buckets: [String]?) -> Void)
+        -> Void
+    {
+        RequestHandler.shared.request(DataRouter.readAllBuckets, completion)
     }
     
     /**
