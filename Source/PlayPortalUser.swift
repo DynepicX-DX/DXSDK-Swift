@@ -14,6 +14,7 @@ fileprivate enum UserRouter: URLRequestConvertible {
     case getFriendProfiles
     case search(searchTerm: String, page: Int?, limit: Int?)
     case randomSearch(count: Int)
+    case createRandomUser(clientId: String, dateOfBirth: String, deviceToken: String?)
     
     func asURLRequest() -> URLRequest {
         switch self {
@@ -33,6 +34,14 @@ fileprivate enum UserRouter: URLRequestConvertible {
                 "count": count
             ]
             return Router.get(url: URLs.User.randomSearch, params: params).asURLRequest()
+        case let .createRandomUser(clientId, dateOfBirth, deviceToken):
+            let body: [String: Any?] = [
+                "clientId": clientId,
+                "dateOfBirth": dateOfBirth,
+                "deviceToken": deviceToken,
+                "anonymous": true
+            ]
+            return Router.put(url: URLs.User.userProfile, body: body, params: nil).asURLRequest()
         }
     }
 }
@@ -109,6 +118,26 @@ public final class PlayPortalUser {
         -> Void
     {
         let request = UserRouter.randomSearch(count: count)
+        RequestHandler.shared.request(request, completion)
+    }
+    
+    /**
+    Create an anonymous user that can be used in place of a user created through the playPORTAL signup flow.
+     - Parameter clientId: Client id associated with the app.
+     - Parameter dateOfBirth: Date string representing the user's date of birth. This is required to create the appropriate type of account for the user.
+     - Parameter deviceToken: Device token used for push notifications for this user.
+     - Parameter completion: The closure called when the request finishes.
+     - Parameter error: The error returned for an unsuccessful request.
+     - Parameter anonymousUser: The anonymous user created for a successful request.
+    */
+    public func createAnonymousUser(
+        clientId: String,
+        dateOfBirth: String,
+        deviceToken: Data? = nil,
+        completion: @escaping (_ error: Error?, _ anonymousUser: PlayPortalProfile?) -> Void)
+        -> Void
+    {
+        let request = UserRouter.createRandomUser(clientId: clientId, dateOfBirth: dateOfBirth, deviceToken: deviceToken?.toHex)
         RequestHandler.shared.request(request, completion)
     }
 }
