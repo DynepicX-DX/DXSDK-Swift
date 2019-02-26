@@ -103,13 +103,24 @@ final class RequestHandler {
                 completion?(error, nil)
             } else {
                 var result = data as Any?
-                if let keys = keyPath?.split(separator: ".").map(String.init),
-                    let json = data?.asJSON,
-                    let nestedValue = json.valueAtNestedKey(keys) {
-                    result = JSONSerialization.isValidJSONObject(nestedValue)
-                        ? try? JSONSerialization.data(withJSONObject: nestedValue, options: .prettyPrinted)
-                        : (try? JSONSerialization.data(withJSONObject: ["result": nestedValue], options: .prettyPrinted))?.asJSON?["result"]
+                if var json = data?.asJSON {
+                    var value: Any = json
+                    if let keys = keyPath?.split(separator: ".").map(String.init) {
+                        value = json.valueAtNestedKey(keys)
+                    }
+                    result = JSONSerialization.isValidJSONObject(value)
+                        ? (try? JSONSerialization.data(withJSONObject: value, options: .prettyPrinted))?.asJSON
+                        : (try? JSONSerialization.data(withJSONObject: ["result": value], options: .prettyPrinted))?.asJSON?["result"]
                 }
+//                if let keys = keyPath?.split(separator: ".").map(String.init),
+//                    let json = data?.asJSON,
+//                    let nestedValue = json.valueAtNestedKey(keys) {
+//                    print("json")
+//                    print(json)
+//                    result = JSONSerialization.isValidJSONObject(nestedValue)
+//                        ? try? JSONSerialization.data(withJSONObject: nestedValue, options: .prettyPrinted).asJSON
+//                        : (try? JSONSerialization.data(withJSONObject: ["result": nestedValue], options: .prettyPrinted))?.asJSON?["result"]
+//                }
                 completion?(nil, result)
             }
         }
@@ -144,13 +155,16 @@ final class RequestHandler {
         _request(request, at: keyPath) { error, result in
             if let error = error {
                 completion?(error, nil)
+            } else if result == nil {
+                completion?(PlayPortalError.API.unableToDeserializeResponse, nil)
             } else {
                 let result: Result? = {
                     switch Result.self {
                     case is Data.Type:
                         return result as? Result
                     default:
-                        return (result as? Data).flatMap { try? self.decoder.decode(Result.self, from: $0) }
+                        return (try? JSONSerialization.data(withJSONObject: result!, options: .prettyPrinted))
+                            .flatMap { try? self.decoder.decode(Result.self, from: $0) }
                     }
                 }()
                 let err = result == nil ? PlayPortalError.API.unableToDeserializeResponse : nil

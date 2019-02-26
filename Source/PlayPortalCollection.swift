@@ -30,6 +30,7 @@ public final class PlayPortalCollection {
      Create a collection.
      - Parameter collectionNamed: Name of the collection.
      - Parameter includingUsers: List of users that are able to view the collection; defaults to none.
+     - Parameter isPublic: Whether or not this collection is public within your app space.
      - Parameter completion: The closure invoked when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Returns: Void
@@ -37,11 +38,11 @@ public final class PlayPortalCollection {
     public func create(
         collectionNamed collectionName: String,
         includingUsers users: [String] = [],
-//        public isPublic: Bool = false,
+        public isPublic: Bool = false,
         _ completion: ((_ error: Error?) -> Void)?)
         -> Void
     {
-        let request = DataRouter.create(bucketName: collectionName, users: users, isPublic: false)
+        let request = DataRouter.create(bucketName: collectionName, users: users, isPublic: isPublic)
         RequestHandler.shared.request(request) { error in
             let alreadyExistsError: Bool = {
                 if let error = error as? PlayPortalError.API
