@@ -18,6 +18,7 @@ public struct PlayPortalProfile: Codable {
     public var profilePic: String?
     public var coverPhoto: String?
     public let country: String
+    public let anonymous: Bool
     
     private init() {
         fatalError("`PlayPortalProfile` instances should only be initialized by decoding.")

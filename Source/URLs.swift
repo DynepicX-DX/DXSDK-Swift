@@ -63,6 +63,7 @@ enum URLs {
     enum App {
         
         private static let prefix = "/app/v1"
+        static let data = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + App.prefix + "/data"
         static let bucket = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + App.prefix + "/bucket"
         static let bucketList = URLs.getHost(forEnvironment: PlayPortalAuth.shared.environment) + App.prefix + "/bucket/list"
     }
