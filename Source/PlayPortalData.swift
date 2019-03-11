@@ -74,7 +74,7 @@ public final class PlayPortalData {
     
     /**
      Read a user's private app data.
-     - Parameter userId: User id for the owner of the app data to retrieve. A user can only query for his or her own app data of the app data of their kid's accounts.
+     - Parameter userId: User id for the owner of the app data to retrieve. A user can only query for his or her own app data of the app data of their kids' accounts.
      - Parameter completion: The closure invoked when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Parameter data: The private app data returned for a successful request.
@@ -92,7 +92,7 @@ public final class PlayPortalData {
      Update a user's private app data.
      - Parameter atKey: Location in app data to update, using dot object notation.
      - Parameter withValue: Value to insert or update at the location specified by the `key` parameter. This can be any valid JSON data.
-     - Parameter userId: User id for the owner of the app data to update. A user can only update his or her own app data or the app data of their kid's accounts.
+     - Parameter userId: User id for the owner of the app data to update. A user can only update his or her own app data or the app data of their kids' accounts.
      - Parameter completion: The closure invoked when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Parameter data: The updated data returned for a successful request.

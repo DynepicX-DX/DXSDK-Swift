@@ -86,6 +86,38 @@ final class RequestHandler {
         globalStorageHandler.delete(refreshTokenKey)
     }
     
+    // This isn't great but oh well
+    func createAnonymousUser(
+        _ request: PPSDK_Swift.URLRequestConvertible,
+        _ completion: @escaping (_ error: Error?, _ anonymousProfile: PlayPortalProfile?) -> Void)
+        -> Void
+    {
+        var request = request.asURLRequest()
+        if let accessToken = accessToken {
+            request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        }
+        requester.request(request) { error, response, data in
+            if let error = response.flatMap({ PlayPortalError.API.createError(from: $0) }) {
+                completion(error, nil)
+            } else if error != nil {
+                completion(error, nil)
+            } else {
+                guard let accessToken = response?.allHeaderFields["access_token"] as? String
+                    , let refreshToken = response?.allHeaderFields["refresh_token"] as? String
+                    else {
+                        return completion(PlayPortalError.API.requestFailedForUnknownReason(message: "Could not retrieve tokens from response headers."), nil)
+                }
+                self.accessToken = accessToken
+                self.refreshToken = refreshToken
+                let anonymousProfile = data?.asJSON
+                    .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: .prettyPrinted) }
+                    .flatMap { try? self.decoder.decode(PlayPortalProfile.self, from: $0) }
+                let err = anonymousProfile == nil ? PlayPortalError.API.unableToDeserializeResponse : nil
+                completion(err, anonymousProfile)
+            }
+        }
+    }
+    
     private func _request(
         _ request: PPSDK_Swift.URLRequestConvertible,
         at keyPath: String? = nil,
@@ -103,24 +135,15 @@ final class RequestHandler {
                 completion?(error, nil)
             } else {
                 var result = data as Any?
-                if var json = data?.asJSON {
+                if let json = data?.asJSON {
                     var value: Any = json
                     if let keys = keyPath?.split(separator: ".").map(String.init) {
                         value = json.valueAtNestedKey(keys)
                     }
-                    result = JSONSerialization.isValidJSONObject(value)
-                        ? (try? JSONSerialization.data(withJSONObject: value, options: .prettyPrinted))?.asJSON
-                        : (try? JSONSerialization.data(withJSONObject: ["result": value], options: .prettyPrinted))?.asJSON?["result"]
+                    if JSONSerialization.isValidJSONObject(value) {
+                        result = (try? JSONSerialization.data(withJSONObject: ["result": value], options: .prettyPrinted))?.asJSON?["result"]
+                    }
                 }
-//                if let keys = keyPath?.split(separator: ".").map(String.init),
-//                    let json = data?.asJSON,
-//                    let nestedValue = json.valueAtNestedKey(keys) {
-//                    print("json")
-//                    print(json)
-//                    result = JSONSerialization.isValidJSONObject(nestedValue)
-//                        ? try? JSONSerialization.data(withJSONObject: nestedValue, options: .prettyPrinted).asJSON
-//                        : (try? JSONSerialization.data(withJSONObject: ["result": nestedValue], options: .prettyPrinted))?.asJSON?["result"]
-//                }
                 completion?(nil, result)
             }
         }

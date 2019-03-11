@@ -138,6 +138,6 @@ public final class PlayPortalUser {
         -> Void
     {
         let request = UserRouter.createRandomUser(clientId: clientId, dateOfBirth: dateOfBirth, deviceToken: deviceToken?.toHex)
-        RequestHandler.shared.request(request, completion)
+        RequestHandler.shared.createAnonymousUser(request, completion)
     }
 }

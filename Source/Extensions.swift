@@ -105,8 +105,10 @@ public extension UIImageView {
             completion?(nil)
             return
         }
-        PlayPortalImage.shared.getImage(forImageId: imageId) { [weak self] error, data in
-            self?.image = data.map { UIImage(data: $0) } ?? nil
+        PlayPortalImage.shared.getImage(forImageId: imageId) { error, data in
+            DispatchQueue.main.async { [weak self] in
+                self?.image = data.map { UIImage(data: $0) } ?? nil
+            }
             completion?(error)
         }
     }
@@ -122,14 +124,18 @@ public extension UIImageView {
      - Returns: Void
      */
     func playPortalProfilePic(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
-        image = Utils.getImageAsset(byName: "anonUser")
+        DispatchQueue.main.async { [weak self] in
+            self?.image = Utils.getImageAsset(byName: "anonUser")
+        }
         guard let imageId = imageId else {
             completion?(nil)
             return
         }
-        PlayPortalImage.shared.getImage(forImageId: imageId) { [weak self] error, data in
+        PlayPortalImage.shared.getImage(forImageId: imageId) { error, data in
             if let image = data.map({ UIImage(data: $0) }) {
-                self?.image = image
+                DispatchQueue.main.async { [weak self] in
+                    self?.image = image
+                }
             }
             completion?(error)
         }
@@ -146,14 +152,18 @@ public extension UIImageView {
      - Returns: Void
      */
     func playPortalCoverPhoto(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
-        image = Utils.getImageAsset(byName: "anonUserCover")
+        DispatchQueue.main.async { [weak self] in
+            self?.image = Utils.getImageAsset(byName: "anonUserCover")
+        }
         guard let imageId = imageId else {
             completion?(nil)
             return
         }
-        PlayPortalImage.shared.getImage(forImageId: imageId) { [weak self] error, data in
+        PlayPortalImage.shared.getImage(forImageId: imageId) { error, data in
             if let image = data.map({ UIImage(data: $0) }) {
-                self?.image = image
+                DispatchQueue.main.async { [weak self] in
+                    self?.image = image
+                }
             }
             completion?(error)
         }
