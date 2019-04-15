@@ -63,7 +63,6 @@ public class PlayPortalNotifications {
         -> Void
     {
         assert(RequestHandler.shared.refreshToken != nil, "User must be logged in before registering for push notifications.")
-        print("device token: \(deviceToken)")
         let request = NotificationRouter.register(refreshToken: RequestHandler.shared.refreshToken ?? "", deviceToken: deviceToken)
         RequestHandler.shared.request(request, completion)
     }

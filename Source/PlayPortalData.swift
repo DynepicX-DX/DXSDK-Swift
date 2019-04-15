@@ -63,7 +63,7 @@ public final class PlayPortalData {
     public func create(
         bucketNamed bucketName: String,
         includingUsers users: [String] = [],
-//        isPublic: Bool = false,
+        isPublic: Bool = false,
         _ completion: ((_ error: Error?) -> Void)?)
         -> Void
     {
@@ -122,9 +122,20 @@ public final class PlayPortalData {
         _ completion: @escaping (_ error: Error?, _ value: Any?) -> Void)
         -> Void
     {
-        let keyPath = "data" + (key.flatMap { "." + $0 } ?? "")
         let request = DataRouter.read(bucketName: bucketName, key: key)
-        RequestHandler.shared.request(request, at: keyPath, completion)
+        RequestHandler.shared.request(request, at: "data") { error, data in
+            if let error = error {
+                completion(error, nil)
+            } else {
+                if let key = key,
+                    let json = data as? [String: Any],
+                    let nestedValue = json[key] {
+                    completion(nil, nestedValue)
+                } else {
+                    completion(nil, data)
+                }
+            }
+        }
     }
     
     /**

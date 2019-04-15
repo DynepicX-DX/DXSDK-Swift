@@ -121,7 +121,29 @@ final class RequestHandler {
         _ completion: ((_ error: Error?, _ result: Any?) -> Void)?)
         -> Void
     {
-        _request(request, at: keyPath, completion)
+        var request = request.asURLRequest()
+        if let accessToken = accessToken {
+            request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        }
+        requester.request(request) { error, response, data in
+            if let error = response.flatMap({ PlayPortalError.API.createError(from: $0) }) {
+                completion?(error, nil)
+            } else if error != nil {
+                completion?(error, nil)
+            } else {
+                var result = data as Any?
+                if let data = data {
+                    result = (try? JSONSerialization.jsonObject(with: data, options: [.allowFragments]))
+                    
+                    if let keys = keyPath?.split(separator: ".").map(String.init),
+                        let json = result as? [String: Any],
+                        let nestedValue = json.valueAtNestedKey(keys) {
+                        result = nestedValue
+                    }
+                }
+                completion?(nil, result)
+            }
+        }
     }
     
     func request(

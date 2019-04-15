@@ -36,7 +36,9 @@ enum Router: URLRequestConvertible {
         }()
         
         if let params = params, var components = URLComponents(url: url, resolvingAgainstBaseURL: true) {
-            components.queryItems = params.map { URLQueryItem(name: $0.0, value: $0.1 as? String) }
+            components.queryItems = params
+                .filter { $0.1 != nil }
+                .map { URLQueryItem(name: $0.0, value: String(describing: $0.1!) ) }
             url = try! components.asURL()
         }
         
