@@ -18,6 +18,23 @@ public struct PlayPortalProfile: Codable {
     public var profilePic: String?
     public var coverPhoto: String?
     public let country: String
+    private var _anonymous: Bool?
+    public var anonymous: Bool {
+        return _anonymous ?? false
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case userId
+        case userType
+        case accountType
+        case handle
+        case firstName
+        case lastName
+        case profilePic
+        case coverPhoto
+        case country
+        case _anonymous = "anonymous"
+    }
     
     private init() {
         fatalError("`PlayPortalProfile` instances should only be initialized by decoding.")
