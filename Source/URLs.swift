@@ -9,9 +9,8 @@ import Foundation
 //  Namespace containing playPORTAl api available hosts and paths
 enum URLs {
     
-    static let sandboxHost = "https://sandbox.playportal.io"
-    static let productionHost = "https://api.playportal.io"
-    static let developHost = "https://develop-api.goplayportal.com"
+    static let sandboxHost = "https://sandbox.afcreate.com"
+    static let productionHost = "https://api.afcreate.com"
     
     /**
      Get playPORTAL api host based on environment.
@@ -24,8 +23,6 @@ enum URLs {
         switch environment {
         case .sandbox:
             return URLs.sandboxHost
-        case .develop:
-            return URLs.developHost
         case .production:
             return URLs.productionHost
         }
