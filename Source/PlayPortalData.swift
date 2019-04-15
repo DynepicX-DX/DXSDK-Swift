@@ -9,13 +9,31 @@ import Foundation
 //  Available routes for playPORTAL data api
 enum DataRouter: URLRequestConvertible {
     
+    case readPrivateData(userId: String?)
+    case writePrivateData(key: String, value: Any?, userId: String?)
     case create(bucketName: String, users: [String], isPublic: Bool)
     case write(bucketName: String, key: String, value: Any?)
     case read(bucketName: String, key: String?)
+    case readAllBuckets
     case delete(bucketName: String)
     
     func asURLRequest() -> URLRequest {
         switch self {
+        case let .readPrivateData(userId):
+            var params: [String: Any] = [:]
+            if let userId = userId {
+                params["userId"] = userId
+            }
+            return Router.get(url: URLs.App.data, params: params).asURLRequest()
+        case let .writePrivateData(key, value, userId):
+            var body: [String: Any?] = [
+                "key": key,
+                "value": value
+            ]
+            if let userId = userId {
+                body["userId"] = userId
+            }
+            return Router.post(url: URLs.App.data, body: body, params: nil).asURLRequest()
         case let .create(bucketName, users, isPublic):
             let body: [String: Any] = [
                 "id": bucketName,
@@ -36,6 +54,8 @@ enum DataRouter: URLRequestConvertible {
                 "key": key
             ]
             return Router.get(url: URLs.App.bucket, params: params).asURLRequest()
+        case .readAllBuckets:
+            return Router.get(url: URLs.App.bucketList, params: nil).asURLRequest()
         case let .delete(bucketName):
             let body = [
                 "id": bucketName
@@ -53,9 +73,51 @@ public final class PlayPortalData {
     private init() {}
     
     /**
+     Read a user's private app data.
+     - Parameter userId: User id for the owner of the app data to retrieve. A user can only query for his or her own app data of the app data of their kids' accounts.
+     - Parameter completion: The closure invoked when the request finishes.
+     - Parameter error: The error returned for an unsuccessful request.
+     - Parameter data: The private app data returned for a successful request.
+    */
+    public func readPrivateData(
+        userId: String? = nil,
+        completion: @escaping (_ error: Error?, _ data: Any?) -> Void)
+        -> Void
+    {
+        let request = DataRouter.readPrivateData(userId: userId)
+        RequestHandler.shared.request(request, completion)
+    }
+    
+    /**
+     Update a user's private app data.
+     - Parameter atKey: Location in app data to update, using dot object notation.
+     - Parameter withValue: Value to insert or update at the location specified by the `key` parameter. This can be any valid JSON data.
+     - Parameter userId: User id for the owner of the app data to update. A user can only update his or her own app data or the app data of their kids' accounts.
+     - Parameter completion: The closure invoked when the request finishes.
+     - Parameter error: The error returned for an unsuccessful request.
+     - Parameter data: The updated data returned for a successful request.
+    */
+    public func writePrivateData<V: Codable>(
+        atKey key: String,
+        withValue value: V,
+        userId: String? = nil,
+        _  completion: ((_ error: Error?, _ data: Any?) -> Void)?)
+        -> Void
+    {
+        var val: Any? = value
+        if let encoded = try? JSONEncoder().encode(["value": value]),
+            let json = try? JSONSerialization.jsonObject(with: encoded, options: .allowFragments) as? [String: Any] {
+            val = json?["value"]
+        }
+        let request = DataRouter.writePrivateData(key: key, value: val, userId: userId)
+        RequestHandler.shared.request(request, completion)
+    }
+    
+    /**
      Create a data bucket.
      - Parameter bucketName: Name given to the bucket.
      - Parameter includingUsers: Ids of users who will have access to the bucket; defaults to empty.
+     - Parameter isPublic: Whether or not this bucket is public within your app space.
      - Parameter completion: The closure invoked when the request finishes.
      - Parameter error: The error returned for an unsuccessful request.
      - Returns: Void
@@ -67,7 +129,7 @@ public final class PlayPortalData {
         _ completion: ((_ error: Error?) -> Void)?)
         -> Void
     {
-        let request = DataRouter.create(bucketName: bucketName, users: users, isPublic: false)
+        let request = DataRouter.create(bucketName: bucketName, users: users, isPublic: isPublic)
         RequestHandler.shared.request(request) { error in
             if let error = error as? PlayPortalError.API
                 , case PlayPortalError.API.requestFailed(.alreadyExists, _) = error
@@ -97,7 +159,7 @@ public final class PlayPortalData {
         -> Void
     {
         //  TODO: this code should probably be moved out of here
-        var val: Any?
+        var val: Any? = value
         if let encoded = try? JSONEncoder().encode(["value": value]),
             let json = try? JSONSerialization.jsonObject(with: encoded, options: .allowFragments) as? [String: Any] {
             val = json?["value"]
@@ -136,6 +198,20 @@ public final class PlayPortalData {
                 }
             }
         }
+    }
+    
+    /**
+     Read all buckets that the curernt user has access to.
+     - Parameter completion: The closure called when the request finishes.
+     - Parameter error: The error returned for an unsuccessful request.
+     - Parameter buckets: An array of the names of the buckets the current user has access to.
+     - Returns: Void
+    */
+    public func readAllBuckets(
+        _ completion: @escaping (_ error: Error?, _ buckets: [String]?) -> Void)
+        -> Void
+    {
+        RequestHandler.shared.request(DataRouter.readAllBuckets, completion)
     }
     
     /**
