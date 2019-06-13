@@ -6,42 +6,43 @@
 
 import Foundation
 
-//  Available routes for playPORTAL image api
-fileprivate enum ImageRouter: URLRequestConvertible {
-    
-    case get(imageId:String)
-    
-    func asURLRequest() -> URLRequest {
-        switch self {
-        case let .get(imageId):
-            return Router.get(url: URLs.Image.staticImage + "/" + imageId, params: nil).asURLRequest()
-        }
-    }
+
+//  Available image endpoints
+class ImageEndpoints: EndpointsBase {
+  
+  private static let base = ImageEndpoints.host + "/image/v1"
+  
+  static let `static` = ImageEndpoints.base + "/static"
 }
 
 
 //  Responsible for making requests to playPORTAL image api
-public final class PlayPortalImage {
-    
-    public static let shared = PlayPortalImage()
-    
-    private init() {}
-    
-    /**
-     Make request for playPORTAL image by its id
-     
-     - Parameter forImageId: Id of the image being requested
-     - Parameter completion: The closure called when the request finishes.
-     - Parameter error: The error returned for an unsuccessful request.
-     - Parameter data: The data representing the image returned for a successful request.
-     
-     - Returns: Void
-     */
-    public func getImage(
-        forImageId imageId: String,
-        _ completion: @escaping (_ error: Error?, _ data: Data?) -> Void)
-        -> Void
-    {
-        RequestHandler.shared.request(ImageRouter.get(imageId: imageId), completion)
-    }
+public final class PlayPortalImage: PlayPortalClient {
+  
+  public static let shared = PlayPortalImage()
+  
+  private override init() {}
+  
+  /**
+   Make request for playPORTAL image by its id
+   
+   - Parameter forImageId: Id of the image being requested
+   - Parameter completion: The closure called when the request finishes.
+   - Parameter error: The error returned for an unsuccessful request.
+   - Parameter data: The data representing the image returned for a successful request.
+   
+   - Returns: Void
+   */
+  public func getImage(
+    forImageId imageId: String,
+    _ completion: @escaping (_ error: Error?, _ data: Data?) -> Void)
+    -> Void
+  {
+    request(
+      url: ImageEndpoints.static + "/" + imageId,
+      method: .get,
+      handleSuccess: { _, data in data },
+      completion
+    )
+  }
 }

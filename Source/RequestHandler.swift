@@ -251,7 +251,7 @@ extension RequestHandler: RequestRetrier {
     
     func should(
         _ manager: SessionManager,
-        retry request: Request,
+        retry request: Alamofire.Request,
         with error: Error,
         completion: @escaping RequestRetryCompletion)
     {
