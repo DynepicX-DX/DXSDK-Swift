@@ -181,10 +181,36 @@ public class PlayPortalClient {
     createRequest: CreateRequest? = nil,
     handleFailure: HandleFailure? = nil,
     handleSuccess: HandleSuccess<Any>? = nil,
-    _ completion: @escaping (Error?, Any?) -> Void
+    _ completion: ((Error?, Any?) -> Void)?
     ) -> Void
   {
     
+  }
+  
+  func request(
+    url: String,
+    method: HTTPMethod,
+    queryParameters: HTTPQueryParameters? = nil,
+    body: HTTPBody? = nil,
+    headers: HTTPHeaderFields? = nil,
+    createRequest: CreateRequest? = nil,
+    handleFailure: HandleFailure? = nil,
+    handleSuccess: HandleSuccess<Data>? = nil,
+    _ completion: ((Error?) -> Void)?
+    ) -> Void
+  {
+    request(
+      url: url,
+      method: method,
+      queryParameters: queryParameters,
+      body: body,
+      headers: headers,
+      createRequest: createRequest,
+      handleFailure: handleFailure,
+      handleSuccess: { response, data -> Data in data }
+    ) { error, _ in
+      completion?(error)
+    }
   }
   
   func request<Result: Decodable>(
@@ -206,6 +232,7 @@ public class PlayPortalClient {
     let failureHandler = handleFailure ?? defaultFailureHandler
     let successHandler = handleSuccess ?? defaultSuccessHandler
     
+    //  If currently refreshing, just append the request to be made after refresh finishes
     if PlayPortalClient.isRefreshing {
       PlayPortalClient.requestsToRetry.append {
         
@@ -217,11 +244,14 @@ public class PlayPortalClient {
       let urlRequest = requestCreator(url, method, queryParameters, body, headers)
       
       HTTPClient.perform(urlRequest) { error, response, data in
+        
+        //  If there is an error, or response code > 299, an error occurred
         if error != nil || (response?.statusCode != nil && response!.statusCode > 299) {
           guard let response = response else {
             completion?(error, nil); return
           }
           
+          //  If the response code matches tokenRefreshRequired, append request to be made after refresh finishes
           if PlayPortalError.API.ErrorCode.errorCode(for: response) == .tokenRefreshRequired {
             PlayPortalClient.lock.lock(); defer { PlayPortalClient.lock.unlock() }
             
@@ -230,20 +260,26 @@ public class PlayPortalClient {
               self.request(url: url, method: method, queryParameters: queryParameters, body: body, headers: headers, createRequest: createRequest, handleFailure: failureHandler, handleSuccess: successHandler, completion)
             }
             
+            //  If not currently refreshing, start refresh
             if !PlayPortalClient.isRefreshing {
               PlayPortalClient.isRefreshing = true
               RefreshClient.shared.refresh()
             }
+            
+          //  Some other error that doesn't need to be handled by sdk and is passed back to user
           } else {
             completion?(failureHandler(error, response), nil)
           }
           
           
         } else {
+          
+          //  Hopefully we should always get a response and data back...
           guard let response = response, let data = data else {
             completion?(PlayPortalError.API.requestFailedForUnknownReason(message: "Request returned without response."), nil); return
           }
           
+          //  If deserializing response/data is a success, request successful, otherwise failed
           do {
             completion?(nil, try successHandler(response, data))
           } catch {

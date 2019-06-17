@@ -48,12 +48,22 @@ fileprivate enum NotificationRouter: URLRequestConvertible {
   }
 }
 
+class NotificationEndpoints: EndpointsBase {
+  
+  private static let base = NotificationEndpoints.host + "/notifications/v1"
+  
+  static let read = NotificationEndpoints.base
+  static let create = NotificationEndpoints.base
+  static let register = NotificationEndpoints.base + "/register"
+  static let acknowledge = NotificationEndpoints.base + "/acknowledge"
+}
+
 //  Responsible for registering for notifications and making requests to playPORTAL notifications api
-public class PlayPortalNotifications {
+public class PlayPortalNotifications: PlayPortalClient {
   
   public static let shared = PlayPortalNotifications()
   
-  private init() {}
+  private override init() {}
   
   
   //  Request api to add device token to current session.
@@ -62,9 +72,19 @@ public class PlayPortalNotifications {
     _ completion: @escaping (_ error: Error?) -> Void)
     -> Void
   {
-    assert(RequestHandler.shared.refreshToken != nil, "User must be logged in before registering for push notifications.")
-    let request = NotificationRouter.register(refreshToken: RequestHandler.shared.refreshToken ?? "", deviceToken: deviceToken)
-    RequestHandler.shared.request(request, completion)
+    assert(PlayPortalNotifications.refreshToken != nil, "User must be logged in before registering for push notifications.")
+    
+    let body = [
+      "refreshToken": PlayPortalNotifications.refreshToken,
+      "deviceToken": deviceToken
+    ]
+    
+    request(
+      url: NotificationEndpoints.register,
+      method: .put,
+      body: body,
+      completion
+    )
   }
   
   /**
@@ -139,8 +159,18 @@ public class PlayPortalNotifications {
     _ completion: ((_ error: Error?) -> Void)?)
     -> Void
   {
-    let request = NotificationRouter.create(text: text, receiver: receiver, persist: persist)
-    RequestHandler.shared.request(request, completion)
+    let body: [String: Any] = [
+      "text": text,
+      "receiver": receiver,
+      "persist": persist
+    ]
+    
+    request(
+      url: NotificationEndpoints.create,
+      method: .put,
+      body: body,
+      completion
+    )
   }
   
   /**
@@ -161,8 +191,31 @@ public class PlayPortalNotifications {
     _ completion: @escaping (_ error: Error?, _ notifications: [PlayPortalNotification]?) -> Void)
     -> Void
   {
-    let request = NotificationRouter.read(since: since, page: page, limit: limit, acknowledged: acknowledged)
-    RequestHandler.shared.request(request, at: "docs", completion)
+    let params: [String: Any?] = [
+      "since": since,
+      "page": page,
+      "limit": limit,
+      "acknowledged": acknowledged
+    ]
+    
+    let handleSuccess: HandleSuccess<[PlayPortalNotification]> = { response, data in
+      guard let json = (try JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any]
+        , let docs = json["docs"]
+        else {
+          throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize PlayPortalNotification array.")
+      }
+      
+      let data = try JSONSerialization.data(withJSONObject: docs, options: [])
+      return try self.defaultSuccessHandler(response: response, data: data)
+    }
+
+    request(
+      url: NotificationEndpoints.read,
+      method: .get,
+      queryParameters: params,
+      handleSuccess: handleSuccess,
+      completion
+    )
   }
   
   /**
@@ -176,6 +229,15 @@ public class PlayPortalNotifications {
     _ completion: ((_ error: Error?) -> Void)?)
     -> Void
   {
-    RequestHandler.shared.request(NotificationRouter.acknowledge(notificationId: notificationId), completion)
+    let body = [
+      "notificationId": notificationId
+    ]
+    
+    request(
+      url: NotificationEndpoints.acknowledge,
+      method: .post,
+      body: body,
+      completion
+    )
   }
 }
