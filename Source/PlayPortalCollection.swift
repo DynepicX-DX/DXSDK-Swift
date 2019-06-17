@@ -9,6 +9,8 @@ import Foundation
 
 public typealias CollectionType = Codable & Equatable
 
+
+//  todo: - deprecate this
 //  Responsible for 'collection' requests to playPORTAL data api
 public final class PlayPortalCollection {
   

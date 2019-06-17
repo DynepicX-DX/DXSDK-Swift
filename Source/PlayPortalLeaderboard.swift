@@ -6,38 +6,20 @@
 
 import Foundation
 
-//  Available routes for playPORTAL leaderboard api
-fileprivate enum LeaderBoardRouter: URLRequestConvertible {
+class LeaderboardEndpoints: EndpointsBase {
   
-  case get(categories: [String], page: Int?, limit: Int?)
-  case update(score: Double, categories: [String])
+  private static let base = LeaderboardEndpoints.host + "/leaderboard/v1"
   
-  func asURLRequest() -> URLRequest {
-    switch self {
-    case let .get(categories, page, limit):
-      let params: [String: Any?] = [
-        "categories": categories.joined(separator: ","),
-        "page": page,
-        "limit": limit
-      ]
-      return Router.get(url: URLs.Leaderboard.leaderboard, params: params).asURLRequest()
-    case let .update(score, categories):
-      let body: [String: Any] = [
-        "score": score,
-        "categories": categories
-      ]
-      return Router.post(url: URLs.Leaderboard.leaderboard, body: body, params: nil).asURLRequest()
-    }
-  }
+  static let leaderboard = LeaderboardEndpoints.base
 }
 
 
 //  Responsible for making requests to playPORTAL leaderboard api
-public final class PlayPortalLeaderboard {
+public final class PlayPortalLeaderboard: PlayPortalClient {
   
   public static let shared = PlayPortalLeaderboard()
   
-  private init() {}
+  private override init() {}
   
   /**
    Request leaderboard entries.
@@ -56,8 +38,30 @@ public final class PlayPortalLeaderboard {
     _ completion: @escaping (_ error: Error?, _ leaderboardEntries: [PlayPortalLeaderboardEntry]?) -> Void)
     -> Void
   {
-    let request = LeaderBoardRouter.get(categories: categories, page: page, limit: limit)
-    RequestHandler.shared.request(request, at: "docs", completion)
+    
+    let queryParams: [String: Any?] = [
+      "categories": categories.joined(separator: ","),
+      "page": page,
+      "limit": limit
+    ]
+    
+    let handleSuccess: HandleSuccess<[PlayPortalLeaderboardEntry]> = { response, data in
+      guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+        let docs = json["docs"] else {
+          throw PlayPortalError.API.unableToDeserializeResult(message: "Unable to deserialize PlayPortalLeaderboardEntry array.")
+      }
+      
+      let data = try JSONSerialization.data(withJSONObject: docs, options: [])
+      return try self.defaultSuccessHandler(response: response, data: data)
+    }
+    
+    request(
+      url: LeaderboardEndpoints.leaderboard,
+      method: .get,
+      queryParameters: queryParams,
+      handleSuccess: handleSuccess,
+      completion
+    )
   }
   
   /**
@@ -75,7 +79,16 @@ public final class PlayPortalLeaderboard {
     _ completion: ((_ error: Error?, _ leaderboardEntry: PlayPortalLeaderboardEntry?) -> Void)?)
     -> Void
   {
-    let request = LeaderBoardRouter.update(score: score, categories: categories)
-    RequestHandler.shared.request(request, completion)
+    let body: [String: Any] = [
+      "score": score,
+      "categories": categories
+    ]
+
+    request(
+      url: LeaderboardEndpoints.leaderboard,
+      method: .post,
+      body: body,
+      completion
+    )
   }
 }

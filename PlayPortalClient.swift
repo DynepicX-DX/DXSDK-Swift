@@ -172,6 +172,21 @@ public class PlayPortalClient {
     
   }
   
+  func request(
+    url: String,
+    method: HTTPMethod,
+    queryParameters: HTTPQueryParameters? = nil,
+    body: HTTPBody? = nil,
+    headers: HTTPHeaderFields? = nil,
+    createRequest: CreateRequest? = nil,
+    handleFailure: HandleFailure? = nil,
+    handleSuccess: HandleSuccess<Any>? = nil,
+    _ completion: @escaping (Error?, Any?) -> Void
+    ) -> Void
+  {
+    
+  }
+  
   func request<Result: Decodable>(
     url: String,
     method: HTTPMethod,
@@ -181,7 +196,7 @@ public class PlayPortalClient {
     createRequest: CreateRequest? = nil,
     handleFailure: HandleFailure? = nil,
     handleSuccess: HandleSuccess<Result>? = nil,
-    _ completion: @escaping (Error?, Result?) -> Void
+    _ completion: ((Error?, Result?) -> Void)?
     ) -> Void
   {
     //  TODO: - move all refresh code to RefreshClient
@@ -204,7 +219,7 @@ public class PlayPortalClient {
       HTTPClient.perform(urlRequest) { error, response, data in
         if error != nil || (response?.statusCode != nil && response!.statusCode > 299) {
           guard let response = response else {
-            completion(error, nil); return
+            completion?(error, nil); return
           }
           
           if PlayPortalError.API.ErrorCode.errorCode(for: response) == .tokenRefreshRequired {
@@ -220,19 +235,19 @@ public class PlayPortalClient {
               RefreshClient.shared.refresh()
             }
           } else {
-            completion(failureHandler(error, response), nil)
+            completion?(failureHandler(error, response), nil)
           }
           
           
         } else {
           guard let response = response, let data = data else {
-            completion(PlayPortalError.API.requestFailedForUnknownReason(message: "Request returned without response."), nil); return
+            completion?(PlayPortalError.API.requestFailedForUnknownReason(message: "Request returned without response."), nil); return
           }
           
           do {
-            completion(nil, try successHandler(response, data))
+            completion?(nil, try successHandler(response, data))
           } catch {
-            completion(error, nil)
+            completion?(error, nil)
           }
         }
       }
