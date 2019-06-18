@@ -40,9 +40,9 @@ class EndpointsBase {
     case .sandbox:
       return sandboxHost
     case .develop:
-      return URLs.developHost
+      return developHost
     case .production:
-      return URLs.productionHost
+      return productionHost
     }
   }
 }
@@ -86,6 +86,9 @@ public class PlayPortalClient {
   static var requestsToRetry = [() -> Void]()
   static var lock = NSLock()
   
+  func onEvent() {
+    
+  }
   
   //  Standard request creator
   //  Just takes params and creates a url request
@@ -107,7 +110,7 @@ public class PlayPortalClient {
       components.queryItems = queryParameters
         .filter { $0.1 != nil }
         .map { URLQueryItem(name: $0.0, value: String(describing: $0.1!) ) }
-      url = try! components.asURL()
+      url = components.url!
     }
     
     var request = URLRequest(url: url)
@@ -165,13 +168,7 @@ public class PlayPortalClient {
   {
     return try JSONDecoder().decode(Result.self, from: data)
   }
-  
-  
-  //  Override to handle events
-  func onEvent() {
-    
-  }
-  
+
   func request(
     url: String,
     method: HTTPMethod,
@@ -189,7 +186,7 @@ public class PlayPortalClient {
     PlayPortalClient.lock.lock(); defer { PlayPortalClient.lock.unlock() }
     
     let failureHandler = handleFailure ?? defaultFailureHandler
-    let successHandler = handleSuccess ?? { response, data in data }
+    let successHandler = handleSuccess ?? { response, data in try JSONSerialization.jsonObject(with: data, options: []) }
     
     //  If currently refreshing, just append the request to be made after refresh finishes
     if PlayPortalClient.isRefreshing {

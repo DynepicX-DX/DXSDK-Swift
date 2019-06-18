@@ -6,71 +6,21 @@
 
 import Foundation
 
-//  Available routes for playPORTAL data api
-enum DataRouter: URLRequestConvertible {
+class DataEndpoints: EndpointsBase {
   
-  case readPrivateData(userId: String?)
-  case writePrivateData(key: String, value: Any?, userId: String?)
-  case create(bucketName: String, users: [String], isPublic: Bool)
-  case write(bucketName: String, key: String, value: Any?)
-  case read(bucketName: String, key: String?)
-  case readAllBuckets
-  case delete(bucketName: String)
+  private static let base = DataEndpoints.host + "/app/v1"
   
-  func asURLRequest() -> URLRequest {
-    switch self {
-    case let .readPrivateData(userId):
-      var params: [String: Any] = [:]
-      if let userId = userId {
-        params["userId"] = userId
-      }
-      return Router.get(url: URLs.App.data, params: params).asURLRequest()
-    case let .writePrivateData(key, value, userId):
-      var body: [String: Any?] = [
-        "key": key,
-        "value": value
-      ]
-      if let userId = userId {
-        body["userId"] = userId
-      }
-      return Router.post(url: URLs.App.data, body: body, params: nil).asURLRequest()
-    case let .create(bucketName, users, isPublic):
-      let body: [String: Any] = [
-        "id": bucketName,
-        "users": users,
-        "public": isPublic
-      ]
-      return Router.put(url: URLs.App.bucket, body: body, params: nil).asURLRequest()
-    case let .write(bucketName, key, value):
-      let body: [String: Any?] = [
-        "id": bucketName,
-        "key": key,
-        "value": value
-      ]
-      return Router.post(url: URLs.App.bucket, body: body, params: nil).asURLRequest()
-    case let .read(bucketName, key):
-      let params = [
-        "id": bucketName,
-        "key": key
-      ]
-      return Router.get(url: URLs.App.bucket, params: params).asURLRequest()
-    case .readAllBuckets:
-      return Router.get(url: URLs.App.bucketList, params: nil).asURLRequest()
-    case let .delete(bucketName):
-      let body = [
-        "id": bucketName
-      ]
-      return Router.delete(url: URLs.App.bucket, body: body, params: nil).asURLRequest()
-    }
-  }
+  static let data = DataEndpoints.base + "/data"
+  static let bucket = DataEndpoints.base + "/bucket"
+  static let bucketList = DataEndpoints.base + "/bucket/list"
 }
 
 //  Responsible for making requests to playPORTAL app api
-public final class PlayPortalData {
+public final class PlayPortalData: PlayPortalClient {
   
   public static let shared = PlayPortalData()
   
-  private init() {}
+  private override init() {}
   
   /**
    Read a user's private app data.
@@ -84,8 +34,17 @@ public final class PlayPortalData {
     completion: @escaping (_ error: Error?, _ data: Any?) -> Void)
     -> Void
   {
-    let request = DataRouter.readPrivateData(userId: userId)
-    RequestHandler.shared.request(request, completion)
+    var params: [String: Any] = [:]
+    if let userId = userId {
+      params["userId"] = userId
+    }
+    
+    request(
+      url: DataEndpoints.data,
+      method: .get,
+      queryParameters: params,
+      completionWithAnyResult: completion
+    )
   }
   
   /**
@@ -109,8 +68,21 @@ public final class PlayPortalData {
       let json = try? JSONSerialization.jsonObject(with: encoded, options: .allowFragments) as? [String: Any] {
       val = json?["value"]
     }
-    let request = DataRouter.writePrivateData(key: key, value: val, userId: userId)
-    RequestHandler.shared.request(request, completion)
+    
+    var body: [String: Any?] = [
+      "key": key,
+      "value": val
+    ]
+    if let userId = userId {
+      body["userId"] = userId
+    }
+    
+    request(
+      url: DataEndpoints.data,
+      method: .post,
+      body: body,
+      completionWithAnyResult: completion
+    )
   }
   
   /**
@@ -129,16 +101,25 @@ public final class PlayPortalData {
     _ completion: ((_ error: Error?) -> Void)?)
     -> Void
   {
-    let request = DataRouter.create(bucketName: bucketName, users: users, isPublic: isPublic)
-    RequestHandler.shared.request(request) { error in
-      if let error = error as? PlayPortalError.API
-        , case PlayPortalError.API.requestFailed(.alreadyExists, _) = error
-      {
-        completion?(nil)
-      } else {
-        completion?(error)
-      }
-    }
+    let body: [String: Any] = [
+      "id": bucketName,
+      "users": users,
+      "public": isPublic
+    ]
+    
+    request(
+      url: DataEndpoints.bucket,
+      method: .put,
+      body: body,
+      completionWithNoResult: { error in
+        if let error = error as? PlayPortalError.API
+          , case PlayPortalError.API.requestFailed(.alreadyExists, _) = error
+        {
+          completion?(nil)
+        } else {
+          completion?(error)
+        }
+    })
   }
   
   /**
@@ -164,8 +145,29 @@ public final class PlayPortalData {
       let json = try? JSONSerialization.jsonObject(with: encoded, options: .allowFragments) as? [String: Any] {
       val = json?["value"]
     }
-    let request = DataRouter.write(bucketName: bucketName, key: key, value: val)
-    RequestHandler.shared.request(request, at: "data", completion)
+    
+    let body: [String: Any?] = [
+      "id": bucketName,
+      "key": key,
+      "value": val
+    ]
+    
+    let handleSuccess: HandleSuccess<Any> = { response, data in
+      guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+        let data = json?["data"]
+        else {
+          throw PlayPortalError.API.unableToDeserializeResult(message: "Couldn't retrieve 'data' from result.")
+      }
+      return data
+    }
+    
+    request(
+      url: DataEndpoints.bucket,
+      method: .post,
+      body: body,
+      handleSuccess: handleSuccess,
+      completionWithAnyResult: completion
+    )
   }
   
   /**
@@ -184,24 +186,39 @@ public final class PlayPortalData {
     _ completion: @escaping (_ error: Error?, _ value: Any?) -> Void)
     -> Void
   {
-    let request = DataRouter.read(bucketName: bucketName, key: key)
-    RequestHandler.shared.request(request, at: "data") { error, data in
-      if let error = error {
-        completion(error, nil)
+    let params = [
+      "id": bucketName,
+      "key": key
+    ]
+    
+    let handleSuccess: HandleSuccess<Any> = { response, data in
+      guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+        let data = json?["data"]
+        else {
+          throw PlayPortalError.API.unableToDeserializeResult(message: "Couldn't retrieve 'data' from result.")
+      }
+      if let key = key,
+        !key.isEmpty,
+        let json = data as? [String: Any]
+      {
+        let keyPath = key.components(separatedBy: ".")
+        return json.valueAtNestedKey(keyPath)
       } else {
-        if let key = key,
-          let json = data as? [String: Any],
-          let nestedValue = json[key] {
-          completion(nil, nestedValue)
-        } else {
-          completion(nil, data)
-        }
+        return data
       }
     }
+    
+    request(
+      url: DataEndpoints.bucket,
+      method: .get,
+      queryParameters: params,
+      handleSuccess: handleSuccess,
+      completionWithAnyResult: completion
+    )
   }
   
   /**
-   Read all buckets that the curernt user has access to.
+   Read all buckets that the current user has access to.
    - Parameter completion: The closure called when the request finishes.
    - Parameter error: The error returned for an unsuccessful request.
    - Parameter buckets: An array of the names of the buckets the current user has access to.
@@ -211,7 +228,11 @@ public final class PlayPortalData {
     _ completion: @escaping (_ error: Error?, _ buckets: [String]?) -> Void)
     -> Void
   {
-    RequestHandler.shared.request(DataRouter.readAllBuckets, completion)
+    request(
+      url: DataEndpoints.bucketList,
+      method: .get,
+      completionWithDecodableResult: completion
+    )
   }
   
   /**
@@ -229,8 +250,38 @@ public final class PlayPortalData {
     _ completion: ((_ error: Error?, _ bucket: Any?) -> Void)?)
     -> Void
   {
-    let request = DataRouter.write(bucketName: bucketName, key: key, value: nil)
-    RequestHandler.shared.request(request, at: key, completion)
+    read(fromBucket: bucketName) { error, bucket in
+      if let error = error {
+        completion?(error, nil)
+      } else if var bucket = bucket as? [String: Any] {
+        bucket.removeValue(forKey: key)
+        
+        let body: [String: Any?] = [
+          "id": bucketName,
+          "key": "",
+          "value": bucket
+        ]
+        
+        let handleSuccess: HandleSuccess<Any> = { response, data in
+          guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+            let data = json?["data"]
+            else {
+              throw PlayPortalError.API.unableToDeserializeResult(message: "Couldn't retrieve 'data' from result.")
+          }
+          return data
+        }
+        
+        self.request(
+          url: DataEndpoints.bucket,
+          method: .post,
+          body: body,
+          handleSuccess: handleSuccess,
+          completionWithAnyResult: completion
+        )
+      } else {
+        completion?(PlayPortalError.API.requestFailedForUnknownReason(message: "Bucket was not of expected type."), nil)
+      }
+    }
   }
   
   /**
@@ -245,7 +296,15 @@ public final class PlayPortalData {
     _ completion: ((_ error: Error?) -> Void)?)
     -> Void
   {
-    let request = DataRouter.delete(bucketName: bucketName)
-    RequestHandler.shared.request(request, completion)
+    let body = [
+      "id": bucketName
+    ]
+    
+    request(
+      url: DataEndpoints.bucket,
+      method: .delete,
+      body: body,
+      completionWithNoResult: completion
+    )
   }
 }

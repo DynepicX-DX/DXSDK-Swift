@@ -45,42 +45,6 @@ public enum PlayPortalEnvironment: String {
   @objc optional func didLogoutSuccessfully() -> Void
 }
 
-
-//  Available routes for playPORTAL oauth api
-fileprivate enum AuthRouter: URLRequestConvertible {
-  
-  case login(clientId: String, clientSecret: String, redirectURI: String, responseType: String, state: String, appLogin: Bool)
-  case refresh(accessToken: String?, refreshToken: String?, clientId: String, clientSecret: String, grantType: String)
-  case logout(refreshToken: String?)
-  
-  func asURLRequest() -> URLRequest {
-    switch self {
-    case let .login(clientId, clientSecret, redirectURI, responseType, state, appLogin):
-      let params = [
-        "client_id": clientId,
-        "client_secret": clientSecret,
-        "redirect_uri": redirectURI,
-        "response_type": responseType,
-        "state": state,
-        "app_login": String(appLogin)
-      ]
-      return Router.get(url: URLs.OAuth.signIn, params: params).asURLRequest()
-    case let .refresh(accessToken, refreshToken, clientId, clientSecret, grantType):
-      let params = [
-        "access_token": accessToken,
-        "refresh_token": refreshToken,
-        "client_id": clientId,
-        "client_secret": clientSecret,
-        "grant_type": grantType
-      ]
-      return Router.post(url: URLs.OAuth.token, body: nil, params: params).asURLRequest()
-    case let .logout(refreshToken):
-      return Router.post(url: URLs.OAuth.logout, body: ["refresh_token": refreshToken], params: nil).asURLRequest()
-    }
-  }
-}
-
-
 //  Available auth endpoints
 class AuthEndpoints: EndpointsBase {
   
@@ -338,7 +302,6 @@ extension PlayPortalAuth: EventSubscriber {
   func on(event: Event) {
     switch event {
     case let .loggedOut(error):
-      RequestHandler.shared.deleteKeys()
       if let error = error {
         loginDelegate?.didLogout?(with: error)
       } else {

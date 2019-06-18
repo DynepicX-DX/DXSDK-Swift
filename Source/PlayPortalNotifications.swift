@@ -8,46 +8,6 @@
 import Foundation
 import UserNotifications
 
-//  Available routes for playPORTAL notifications api
-fileprivate enum NotificationRouter: URLRequestConvertible {
-  
-  case create(text: String, receiver: String, persist: Bool)
-  case register(refreshToken: String, deviceToken: String)
-  case read(since: Int?, page: Int?, limit: Int?, acknowledged: Bool?)
-  case acknowledge(notificationId: String)
-  
-  func asURLRequest() -> URLRequest {
-    switch self {
-    case let .create(text, receiver, persist):
-      let body: [String: Any] = [
-        "text": text,
-        "receiver": receiver,
-        "persist": persist
-      ]
-      return Router.put(url: URLs.Notification.create, body: body, params: nil).asURLRequest()
-    case let .register(refreshToken, deviceToken):
-      let body = [
-        "refreshToken": refreshToken,
-        "deviceToken": deviceToken
-      ]
-      return Router.put(url: URLs.Notification.register, body: body, params: nil).asURLRequest()
-    case let .read(since, page, limit, acknowledged):
-      let params: [String: Any?] = [
-        "since": since,
-        "page": page,
-        "limit": limit,
-        "acknowledged": acknowledged
-      ]
-      return Router.get(url: URLs.Notification.read, params: params).asURLRequest()
-    case let .acknowledge(notificationId):
-      let body = [
-        "notificationId": notificationId
-      ]
-      return Router.post(url: URLs.Notification.acknowledge, body: body, params: nil).asURLRequest()
-    }
-  }
-}
-
 class NotificationEndpoints: EndpointsBase {
   
   private static let base = NotificationEndpoints.host + "/notifications/v1"
