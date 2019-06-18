@@ -83,7 +83,7 @@ public class PlayPortalNotifications: PlayPortalClient {
       url: NotificationEndpoints.register,
       method: .put,
       body: body,
-      completion
+      completionWithNoResult: completion
     )
   }
   
@@ -169,7 +169,7 @@ public class PlayPortalNotifications: PlayPortalClient {
       url: NotificationEndpoints.create,
       method: .put,
       body: body,
-      completion
+      completionWithNoResult: completion
     )
   }
   
@@ -214,7 +214,7 @@ public class PlayPortalNotifications: PlayPortalClient {
       method: .get,
       queryParameters: params,
       handleSuccess: handleSuccess,
-      completion
+      completionWithDecodableResult: completion
     )
   }
   
@@ -237,7 +237,7 @@ public class PlayPortalNotifications: PlayPortalClient {
       url: NotificationEndpoints.acknowledge,
       method: .post,
       body: body,
-      completion
+      completionWithNoResult: completion
     )
   }
 }

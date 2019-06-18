@@ -42,7 +42,7 @@ public final class PlayPortalImage: PlayPortalClient {
       url: ImageEndpoints.static + "/" + imageId,
       method: .get,
       handleSuccess: { _, data in data },
-      completion
+      completionWithDecodableResult: completion
     )
   }
 }

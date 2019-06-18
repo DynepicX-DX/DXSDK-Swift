@@ -181,48 +181,7 @@ public class PlayPortalClient {
     createRequest: CreateRequest? = nil,
     handleFailure: HandleFailure? = nil,
     handleSuccess: HandleSuccess<Any>? = nil,
-    _ completion: ((Error?, Any?) -> Void)?
-    ) -> Void
-  {
-    
-  }
-  
-  func request(
-    url: String,
-    method: HTTPMethod,
-    queryParameters: HTTPQueryParameters? = nil,
-    body: HTTPBody? = nil,
-    headers: HTTPHeaderFields? = nil,
-    createRequest: CreateRequest? = nil,
-    handleFailure: HandleFailure? = nil,
-    handleSuccess: HandleSuccess<Data>? = nil,
-    _ completion: ((Error?) -> Void)?
-    ) -> Void
-  {
-    request(
-      url: url,
-      method: method,
-      queryParameters: queryParameters,
-      body: body,
-      headers: headers,
-      createRequest: createRequest,
-      handleFailure: handleFailure,
-      handleSuccess: { response, data -> Data in data }
-    ) { error, _ in
-      completion?(error)
-    }
-  }
-  
-  func request<Result: Decodable>(
-    url: String,
-    method: HTTPMethod,
-    queryParameters: HTTPQueryParameters? = nil,
-    body: HTTPBody? = nil,
-    headers: HTTPHeaderFields? = nil,
-    createRequest: CreateRequest? = nil,
-    handleFailure: HandleFailure? = nil,
-    handleSuccess: HandleSuccess<Result>? = nil,
-    _ completion: ((Error?, Result?) -> Void)?
+    completionWithAnyResult: ((Error?, Any?) -> Void)?
     ) -> Void
   {
     //  TODO: - move all refresh code to RefreshClient
@@ -230,13 +189,23 @@ public class PlayPortalClient {
     PlayPortalClient.lock.lock(); defer { PlayPortalClient.lock.unlock() }
     
     let failureHandler = handleFailure ?? defaultFailureHandler
-    let successHandler = handleSuccess ?? defaultSuccessHandler
+    let successHandler = handleSuccess ?? { response, data in data }
     
     //  If currently refreshing, just append the request to be made after refresh finishes
     if PlayPortalClient.isRefreshing {
       PlayPortalClient.requestsToRetry.append {
         
-        self.request(url: url, method: method, queryParameters: queryParameters, body: body, headers: headers, createRequest: createRequest, handleFailure: failureHandler, handleSuccess: successHandler, completion)
+        self.request(
+          url: url,
+          method: method,
+          queryParameters: queryParameters,
+          body: body,
+          headers: headers,
+          createRequest: createRequest,
+          handleFailure: failureHandler,
+          handleSuccess: successHandler,
+          completionWithAnyResult: completionWithAnyResult
+        )
       }
     } else {
       
@@ -248,7 +217,7 @@ public class PlayPortalClient {
         //  If there is an error, or response code > 299, an error occurred
         if error != nil || (response?.statusCode != nil && response!.statusCode > 299) {
           guard let response = response else {
-            completion?(error, nil); return
+            completionWithAnyResult?(error, nil); return
           }
           
           //  If the response code matches tokenRefreshRequired, append request to be made after refresh finishes
@@ -257,7 +226,17 @@ public class PlayPortalClient {
             
             PlayPortalClient.requestsToRetry.append {
               
-              self.request(url: url, method: method, queryParameters: queryParameters, body: body, headers: headers, createRequest: createRequest, handleFailure: failureHandler, handleSuccess: successHandler, completion)
+              self.request(
+                url: url,
+                method: method,
+                queryParameters: queryParameters,
+                body: body,
+                headers: headers,
+                createRequest: createRequest,
+                handleFailure: failureHandler,
+                handleSuccess: successHandler,
+                completionWithAnyResult: completionWithAnyResult
+              )
             }
             
             //  If not currently refreshing, start refresh
@@ -266,9 +245,9 @@ public class PlayPortalClient {
               RefreshClient.shared.refresh()
             }
             
-          //  Some other error that doesn't need to be handled by sdk and is passed back to user
+            //  Some other error that doesn't need to be handled by sdk and is passed back to user
           } else {
-            completion?(failureHandler(error, response), nil)
+            completionWithAnyResult?(failureHandler(error, response), nil)
           }
           
           
@@ -276,17 +255,67 @@ public class PlayPortalClient {
           
           //  Hopefully we should always get a response and data back...
           guard let response = response, let data = data else {
-            completion?(PlayPortalError.API.requestFailedForUnknownReason(message: "Request returned without response."), nil); return
+            completionWithAnyResult?(PlayPortalError.API.requestFailedForUnknownReason(message: "Request returned without response."), nil); return
           }
           
           //  If deserializing response/data is a success, request successful, otherwise failed
           do {
-            completion?(nil, try successHandler(response, data))
+            completionWithAnyResult?(nil, try successHandler(response, data))
           } catch {
-            completion?(error, nil)
+            completionWithAnyResult?(error, nil)
           }
         }
       }
     }
+  }
+  
+  func request(
+    url: String,
+    method: HTTPMethod,
+    queryParameters: HTTPQueryParameters? = nil,
+    body: HTTPBody? = nil,
+    headers: HTTPHeaderFields? = nil,
+    createRequest: CreateRequest? = nil,
+    handleFailure: HandleFailure? = nil,
+    handleSuccess: HandleSuccess<Data>? = nil,
+    completionWithNoResult: ((Error?) -> Void)?
+    ) -> Void
+  {
+    request(
+      url: url,
+      method: method,
+      queryParameters: queryParameters,
+      body: body,
+      headers: headers,
+      createRequest: createRequest,
+      handleFailure: handleFailure,
+      handleSuccess: handleSuccess,
+      completionWithAnyResult: { error, _ in completionWithNoResult?(error) }
+    )
+  }
+  
+  func request<Result: Decodable>(
+    url: String,
+    method: HTTPMethod,
+    queryParameters: HTTPQueryParameters? = nil,
+    body: HTTPBody? = nil,
+    headers: HTTPHeaderFields? = nil,
+    createRequest: CreateRequest? = nil,
+    handleFailure: HandleFailure? = nil,
+    handleSuccess: HandleSuccess<Result>? = nil,
+    completionWithDecodableResult: ((Error?, Result?) -> Void)?
+    ) -> Void
+  {
+    request(
+      url: url,
+      method: method,
+      queryParameters: queryParameters,
+      body: body,
+      headers: headers,
+      createRequest: createRequest,
+      handleFailure: handleFailure,
+      handleSuccess: handleSuccess ?? { response, data in try JSONDecoder().decode(Result.self, from: data) },
+      completionWithAnyResult: { error, result in completionWithDecodableResult?(error, result as? Result) }
+    )
   }
 }

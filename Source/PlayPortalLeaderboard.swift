@@ -60,7 +60,7 @@ public final class PlayPortalLeaderboard: PlayPortalClient {
       method: .get,
       queryParameters: queryParams,
       handleSuccess: handleSuccess,
-      completion
+      completionWithDecodableResult: completion
     )
   }
   
@@ -88,7 +88,7 @@ public final class PlayPortalLeaderboard: PlayPortalClient {
       url: LeaderboardEndpoints.leaderboard,
       method: .post,
       body: body,
-      completion
+      completionWithDecodableResult: completion
     )
   }
 }
