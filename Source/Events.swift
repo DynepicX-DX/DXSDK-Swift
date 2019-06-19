@@ -43,7 +43,7 @@ class EventHandler {
   
   func addSubscriptions() {
     //  todo: remove
-    subscribe(PlayPortalAuth.shared)
+    subscribe(PlayPortalAuthClient.shared)
   }
   
   func publish(_ event: Event) {

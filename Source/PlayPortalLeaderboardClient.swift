@@ -1,5 +1,5 @@
 //
-//  PlayPortalLeaderboard.swift
+//  PlayPortalLeaderboardClient.swift
 //
 //  Created by Lincoln Fraley on 10/22/18.
 //
@@ -15,9 +15,9 @@ class LeaderboardEndpoints: EndpointsBase {
 
 
 //  Responsible for making requests to playPORTAL leaderboard api
-public final class PlayPortalLeaderboard: PlayPortalClient {
+public final class PlayPortalLeaderboardClient: PlayPortalHTTPClient {
   
-  public static let shared = PlayPortalLeaderboard()
+  public static let shared = PlayPortalLeaderboardClient()
   
   private override init() {}
   
@@ -31,7 +31,7 @@ public final class PlayPortalLeaderboard: PlayPortalClient {
    - Parameter leaderboardEntries: The leaderboard entries returned for a successful request.
    - Returns: Void
    */
-  public func getLeaderboard(
+  public func getLeaderboardEntries(
     _ page: Int? = nil,
     _ limit: Int? = nil,
     forCategories categories: [String],

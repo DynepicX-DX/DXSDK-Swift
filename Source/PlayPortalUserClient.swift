@@ -1,5 +1,5 @@
 //
-//  PlayPortalUser.swift
+//  PlayPortalUserClient.swift
 //
 //  Created by Lincoln Fraley on 10/22/18.
 //
@@ -20,9 +20,9 @@ class UserEndpoints: EndpointsBase {
 
 
 //  Responsible for making requests to playPORTAL user api
-public final class PlayPortalUser: PlayPortalClient {
+public final class PlayPortalUserClient: PlayPortalHTTPClient {
   
-  public static let shared = PlayPortalUser()
+  public static let shared = PlayPortalUserClient()
   
   private override init() {}
   
@@ -39,7 +39,7 @@ public final class PlayPortalUser: PlayPortalClient {
    
    - Returns: Void
    */
-  public func getProfile(
+  public func getMyProfile(
     completion: @escaping (_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void)
     -> Void
   {
@@ -59,7 +59,7 @@ public final class PlayPortalUser: PlayPortalClient {
    
    - Returns: Void
    */
-  public func getFriendProfiles(
+  public func getMyFriends(
     completion: @escaping (_ error: Error?, _ friendProfiles: [PlayPortalProfile]?) -> Void)
     -> Void
   {
@@ -119,7 +119,7 @@ public final class PlayPortalUser: PlayPortalClient {
    - Parameter error: The error returned for an unsuccessful request.
    - Parameter users: The random users returned for a successful request.
    */
-  public func searchRandomUsers(
+  public func getRandomUsers(
     count: Int,
     completion: @escaping (_ error: Error?, _ users: [PlayPortalProfile]?) -> Void)
     -> Void
@@ -166,8 +166,8 @@ public final class PlayPortalUser: PlayPortalClient {
           throw PlayPortalError.API.unableToDeserializeResult(message: "Couldn't deserialize access or refresh token from response.")
       }
       
-      PlayPortalUser.accessToken = accessToken
-      PlayPortalUser.refreshToken = refreshToken
+      PlayPortalUserClient.accessToken = accessToken
+      PlayPortalUserClient.refreshToken = refreshToken
       
       return try self.defaultSuccessHandler(response: response, data: data)
     }

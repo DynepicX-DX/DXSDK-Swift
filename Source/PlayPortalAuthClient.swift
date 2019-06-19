@@ -1,5 +1,5 @@
 //
-//  PlayPortalAuth.swift
+//  PlayPortalAuthClient.swift
 //
 //  Created by Lincoln Fraley on 10/22/18.
 //
@@ -59,19 +59,19 @@ class AuthEndpoints: EndpointsBase {
 /**
  Responsible for user authentication and token management
  */
-public final class PlayPortalAuth: PlayPortalClient {
+public final class PlayPortalAuthClient: PlayPortalHTTPClient {
   
   
   //  MARK: - Properties
   
   //  TODO - remove properties that were moved to playportalclient
-  public static let shared = PlayPortalAuth()
+  public static let shared = PlayPortalAuthClient()
   private(set) var environment = PlayPortalEnvironment.sandbox
   //    private var clientId = ""
   //    private var clientSecret = ""
   var appId: String {
     get {
-      return PlayPortalAuth.clientId + PlayPortalAuth.clientSecret
+      return PlayPortalAuthClient.clientId + PlayPortalAuthClient.clientSecret
     }
   }
   private var redirectURI = ""
@@ -120,9 +120,9 @@ public final class PlayPortalAuth: PlayPortalClient {
     }
     
     //  Set configuration
-    PlayPortalAuth.environment = environment
-    PlayPortalAuth.clientId = clientId
-    PlayPortalAuth.clientSecret = clientSecret
+    PlayPortalAuthClient.environment = environment
+    PlayPortalAuthClient.clientId = clientId
+    PlayPortalAuthClient.clientSecret = clientSecret
     self.redirectURI = redirectURI
   }
   
@@ -144,9 +144,9 @@ public final class PlayPortalAuth: PlayPortalClient {
     EventHandler.shared.addSubscriptions()
     self.loginDelegate = loginDelegate
     
-    if PlayPortalAuth.isAuthenticated {
+    if PlayPortalAuthClient.isAuthenticated {
       //  If authenticated, request current user's profile
-      PlayPortalUser.shared.getProfile(completion: completion)
+      PlayPortalUserClient.shared.getMyProfile(completion: completion)
     } else {
       //  If not authenticated, set `isAuthenticatedCompletion` to be used after SSO flow finishes
       isAuthenticatedCompletion = completion
@@ -169,12 +169,12 @@ public final class PlayPortalAuth: PlayPortalClient {
     }
     
     components.queryItems = [
-      URLQueryItem(name: "client_id", value: PlayPortalAuth.clientId),
-      URLQueryItem(name: "client_secret", value: PlayPortalAuth.clientSecret),
+      URLQueryItem(name: "client_id", value: PlayPortalAuthClient.clientId),
+      URLQueryItem(name: "client_secret", value: PlayPortalAuthClient.clientSecret),
       URLQueryItem(name: "redirect_uri", value: redirectURI),
       URLQueryItem(name: "response_type", value: "implicit"),
       URLQueryItem(name: "state", value: "state"),
-      URLQueryItem(name: "app_login", value: String(PlayPortalAuth.environment != .sandbox))
+      URLQueryItem(name: "app_login", value: String(PlayPortalAuthClient.environment != .sandbox))
     ]
     guard let url = components.url else {
       fatalError("Couldn't create login url.")
@@ -210,12 +210,12 @@ public final class PlayPortalAuth: PlayPortalClient {
     
     EventHandler.shared.publish(Event.authenticated(accessToken: accessToken, refreshToken: refreshToken))
     
-    PlayPortalAuth.accessToken = accessToken
-    PlayPortalAuth.refreshToken = refreshToken
+    PlayPortalAuthClient.accessToken = accessToken
+    PlayPortalAuthClient.refreshToken = refreshToken
     
     //  Request current user's profile
     if let completion = isAuthenticatedCompletion {
-      PlayPortalUser.shared.getProfile(completion: completion)
+      PlayPortalUserClient.shared.getMyProfile(completion: completion)
     }
   }
   
@@ -268,7 +268,7 @@ public final class PlayPortalAuth: PlayPortalClient {
     
     var body = [String: String]()
     
-    if let refreshToken = PlayPortalAuth.refreshToken {
+    if let refreshToken = PlayPortalAuthClient.refreshToken {
       body["refresh_token"] = refreshToken
     }
     
@@ -278,13 +278,13 @@ public final class PlayPortalAuth: PlayPortalClient {
       body: body,
       handleSuccess: { _, data in data }
     ) { error, _ in
-      PlayPortalAuth.lock.lock(); defer { PlayPortalAuth.lock.unlock() }
+      PlayPortalAuthClient.lock.lock(); defer { PlayPortalAuthClient.lock.unlock() }
       
       URLSession.shared.getAllTasks { $0.forEach { $0.cancel() }}
       globalStorageHandler.delete("accessToken")
       globalStorageHandler.delete("refreshToken")
-      PlayPortalAuth.isRefreshing = false
-      PlayPortalAuth.requestsToRetry.removeAll()
+      PlayPortalAuthClient.isRefreshing = false
+      PlayPortalAuthClient.requestsToRetry.removeAll()
       
       self.onEvent()
       
@@ -297,7 +297,7 @@ public final class PlayPortalAuth: PlayPortalClient {
   }
 }
 
-extension PlayPortalAuth: EventSubscriber {
+extension PlayPortalAuthClient: EventSubscriber {
   
   func on(event: Event) {
     switch event {

@@ -1,5 +1,5 @@
 //
-//  PlayPortalData.swift
+//  PlayPortalDataClient.swift
 //
 //  Created by Lincoln Fraley on 10/22/18.
 //
@@ -16,9 +16,9 @@ class DataEndpoints: EndpointsBase {
 }
 
 //  Responsible for making requests to playPORTAL app api
-public final class PlayPortalData: PlayPortalClient {
+public final class PlayPortalDataClient: PlayPortalHTTPClient {
   
-  public static let shared = PlayPortalData()
+  public static let shared = PlayPortalDataClient()
   
   private override init() {}
   
@@ -29,7 +29,7 @@ public final class PlayPortalData: PlayPortalClient {
    - Parameter error: The error returned for an unsuccessful request.
    - Parameter data: The private app data returned for a successful request.
    */
-  public func readPrivateData(
+  public func getPrivateAppData(
     userId: String? = nil,
     completion: @escaping (_ error: Error?, _ data: Any?) -> Void)
     -> Void
@@ -56,7 +56,7 @@ public final class PlayPortalData: PlayPortalClient {
    - Parameter error: The error returned for an unsuccessful request.
    - Parameter data: The updated data returned for a successful request.
    */
-  public func writePrivateData<V: Codable>(
+  public func updatePrivateAppData<V: Codable>(
     atKey key: String,
     withValue value: V,
     userId: String? = nil,
@@ -124,7 +124,7 @@ public final class PlayPortalData: PlayPortalClient {
   
   /**
    Write data to a bucket.
-   - Parameter toBucket: The name of the bucket being written to.
+   - Parameter bucketNamed: The name of the bucket being written to.
    - Parameter atKey: At what key in the bucket the data will be written to. For nested keys, use a period-separated string eg. 'root.sub'.
    - Parameter withValue: The value being added to the bucket.
    - Parameter completion: The closure called when the request finishes.
@@ -132,8 +132,8 @@ public final class PlayPortalData: PlayPortalClient {
    - Parameter bucket: The bucket the data was added to returned for a successful request.
    - Returns: Void
    */
-  public func write<V: Codable>(
-    toBucket bucketName: String,
+  public func update<V: Codable>(
+    bucketNamed bucketName: String,
     atKey key: String,
     withValue value: V,
     _  completion: ((_ error: Error?, _ data: Any?) -> Void)?)
@@ -172,7 +172,7 @@ public final class PlayPortalData: PlayPortalClient {
   
   /**
    Read data from a bucket.
-   - Parameter fromBucket: Name of the bucket being read from.
+   - Parameter bucketNamed: Name of the bucket being read from.
    - Parameter atKey: If provided, will read data from the bucket at this key, otherwise the entire bucket is returned;
    defaults to nil. For nested keys, use a period-separated string eg. 'root.sub'.
    - Parameter completion: The closure called when the request finishes.
@@ -180,8 +180,8 @@ public final class PlayPortalData: PlayPortalClient {
    - Parameter bucket: A `PlayPortalDataBucket` instance containing the data at `atKey` returned for a successful request.
    - Returns: Void
    */
-  public func read(
-    fromBucket bucketName: String,
+  public func get(
+    bucketNamed bucketName: String,
     atKey key: String? = nil,
     _ completion: @escaping (_ error: Error?, _ value: Any?) -> Void)
     -> Void
@@ -224,7 +224,7 @@ public final class PlayPortalData: PlayPortalClient {
    - Parameter buckets: An array of the names of the buckets the current user has access to.
    - Returns: Void
    */
-  public func readAllBuckets(
+  public func getAllBuckets(
     _ completion: @escaping (_ error: Error?, _ buckets: [String]?) -> Void)
     -> Void
   {
@@ -250,7 +250,7 @@ public final class PlayPortalData: PlayPortalClient {
     _ completion: ((_ error: Error?, _ bucket: Any?) -> Void)?)
     -> Void
   {
-    read(fromBucket: bucketName) { error, bucket in
+    get(bucketNamed: bucketName) { error, bucket in
       if let error = error {
         completion?(error, nil)
       } else if var bucket = bucket as? [String: Any] {

@@ -17,9 +17,9 @@ class ImageEndpoints: EndpointsBase {
 
 
 //  Responsible for making requests to playPORTAL image api
-public final class PlayPortalImage: PlayPortalClient {
+public final class PlayPortalImageClient: PlayPortalHTTPClient {
   
-  public static let shared = PlayPortalImage()
+  public static let shared = PlayPortalImageClient()
   
   private override init() {}
   

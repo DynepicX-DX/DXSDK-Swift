@@ -1,5 +1,5 @@
 //
-//  PlayPortalNotifications.swift
+//  PlayPortalNotificationClient.swift
 //  Alamofire
 //
 //  Created by Lincoln Fraley on 12/19/18.
@@ -19,9 +19,9 @@ class NotificationEndpoints: EndpointsBase {
 }
 
 //  Responsible for registering for notifications and making requests to playPORTAL notifications api
-public class PlayPortalNotifications: PlayPortalClient {
+public class PlayPortalNotificationClient: PlayPortalHTTPClient {
   
-  public static let shared = PlayPortalNotifications()
+  public static let shared = PlayPortalNotificationClient()
   
   private override init() {}
   
@@ -32,10 +32,10 @@ public class PlayPortalNotifications: PlayPortalClient {
     _ completion: @escaping (_ error: Error?) -> Void)
     -> Void
   {
-    assert(PlayPortalNotifications.refreshToken != nil, "User must be logged in before registering for push notifications.")
+    assert(PlayPortalNotificationClient.refreshToken != nil, "User must be logged in before registering for push notifications.")
     
     let body = [
-      "refreshToken": PlayPortalNotifications.refreshToken,
+      "refreshToken": PlayPortalNotificationClient.refreshToken,
       "deviceToken": deviceToken
     ]
     
@@ -143,7 +143,7 @@ public class PlayPortalNotifications: PlayPortalClient {
    - Parameter error: The error returned for an unsuccessful request.
    - Parameter notifications: The notifications returned for an unsuccessful request.
    */
-  public func readNotifications(
+  public func getNotifications(
     since: Int? = nil,
     page: Int? = nil,
     limit: Int? = nil,

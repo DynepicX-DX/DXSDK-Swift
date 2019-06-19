@@ -1,5 +1,5 @@
 //
-//  PlayPortalClient.swift
+//  PlayPortalHTTPClient.swift
 //  Alamofire
 //
 //  Created by Lincoln Fraley on 4/24/19.
@@ -36,7 +36,7 @@ class EndpointsBase {
   static let developHost = "https://develop-api.goplayportal.com"
   
   static var host: String {
-    switch (PlayPortalClient.environment) {
+    switch (PlayPortalHTTPClient.environment) {
     case .sandbox:
       return sandboxHost
     case .develop:
@@ -50,7 +50,7 @@ class EndpointsBase {
 /**
  Class used internally by the SDK
  */
-public class PlayPortalClient {
+public class PlayPortalHTTPClient {
   
   
   //  MARK: - Properties
@@ -78,7 +78,7 @@ public class PlayPortalClient {
   }
   
   static var isAuthenticated: Bool {
-    return PlayPortalClient.accessToken != nil && PlayPortalClient.refreshToken != nil
+    return PlayPortalHTTPClient.accessToken != nil && PlayPortalHTTPClient.refreshToken != nil
   }
   
   
@@ -183,14 +183,14 @@ public class PlayPortalClient {
   {
     //  TODO: - move all refresh code to RefreshClient
     
-    PlayPortalClient.lock.lock(); defer { PlayPortalClient.lock.unlock() }
+    PlayPortalHTTPClient.lock.lock(); defer { PlayPortalHTTPClient.lock.unlock() }
     
     let failureHandler = handleFailure ?? defaultFailureHandler
     let successHandler = handleSuccess ?? { response, data in try JSONSerialization.jsonObject(with: data, options: []) }
     
     //  If currently refreshing, just append the request to be made after refresh finishes
-    if PlayPortalClient.isRefreshing {
-      PlayPortalClient.requestsToRetry.append {
+    if PlayPortalHTTPClient.isRefreshing {
+      PlayPortalHTTPClient.requestsToRetry.append {
         
         self.request(
           url: url,
@@ -206,7 +206,7 @@ public class PlayPortalClient {
       }
     } else {
       
-      let requestCreator = createRequest ?? standardAuthRequestCreator(accessToken: PlayPortalClient.accessToken)
+      let requestCreator = createRequest ?? standardAuthRequestCreator(accessToken: PlayPortalHTTPClient.accessToken)
       let urlRequest = requestCreator(url, method, queryParameters, body, headers)
       
       HTTPClient.perform(urlRequest) { error, response, data in
@@ -219,9 +219,9 @@ public class PlayPortalClient {
           
           //  If the response code matches tokenRefreshRequired, append request to be made after refresh finishes
           if PlayPortalError.API.ErrorCode.errorCode(for: response) == .tokenRefreshRequired {
-            PlayPortalClient.lock.lock(); defer { PlayPortalClient.lock.unlock() }
+            PlayPortalHTTPClient.lock.lock(); defer { PlayPortalHTTPClient.lock.unlock() }
             
-            PlayPortalClient.requestsToRetry.append {
+            PlayPortalHTTPClient.requestsToRetry.append {
               
               self.request(
                 url: url,
@@ -237,8 +237,8 @@ public class PlayPortalClient {
             }
             
             //  If not currently refreshing, start refresh
-            if !PlayPortalClient.isRefreshing {
-              PlayPortalClient.isRefreshing = true
+            if !PlayPortalHTTPClient.isRefreshing {
+              PlayPortalHTTPClient.isRefreshing = true
               RefreshClient.shared.refresh()
             }
             

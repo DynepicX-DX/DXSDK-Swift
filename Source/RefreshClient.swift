@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RefreshClient: PlayPortalClient {
+class RefreshClient: PlayPortalHTTPClient {
   
   static let shared = RefreshClient()
   
@@ -56,7 +56,7 @@ class RefreshClient: PlayPortalClient {
       RefreshClient.accessToken = accessToken
       RefreshClient.refreshToken = refreshToken
       RefreshClient.isRefreshing = false
-      let requestsToRetry = PlayPortalClient.requestsToRetry
+      let requestsToRetry = PlayPortalHTTPClient.requestsToRetry
       RefreshClient.requestsToRetry.removeAll()
       
       RefreshClient.lock.unlock()

@@ -65,6 +65,6 @@ public final class PlayPortalLoginButton: UIButton {
    - Returns: Void
    */
   @objc func loginTapped() {
-    PlayPortalAuth.shared.login(from: from)
+    PlayPortalAuthClient.shared.login(from: from)
   }
 }
