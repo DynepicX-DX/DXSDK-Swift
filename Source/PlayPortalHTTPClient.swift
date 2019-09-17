@@ -31,16 +31,13 @@ typealias HandleSuccess<Result> = (
 
 class EndpointsBase {
   
-  static let sandboxHost = "https://sandbox.playportal.io"
-  static let productionHost = "https://api.playportal.io"
-  static let developHost = "https://develop-api.goplayportal.com"
-  
+  static let sandboxHost = "https://sandbox.afcreate.com"
+  static let productionHost = "https://api.afcreate.com"
+
   static var host: String {
     switch (PlayPortalHTTPClient.environment) {
     case .sandbox:
       return sandboxHost
-    case .develop:
-      return developHost
     case .production:
       return productionHost
     }

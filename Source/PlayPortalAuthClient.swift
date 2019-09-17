@@ -11,7 +11,6 @@ import SafariServices
 public enum PlayPortalEnvironment: String {
   
   case sandbox = "SANDBOX"
-  case develop = "DEVELOP"
   case production = "PRODUCTION"
 }
 
