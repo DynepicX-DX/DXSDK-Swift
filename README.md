@@ -4,12 +4,12 @@ To use this library, you will first need to install the Cocoapods dependency man
 
 Next, follow [this](https://guides.cocoapods.org/using/using-cocoapods.html) guide to setup your Xcode project to use Cocoapods.
 
-Then, in your **Podfile**, add this line `pod 'PPSDK-Swift', :git => 'https://gitlab.com/afcreate/afcreatesdk-swift'`. Your **Podfile** should look something like this:
+Then, in your **Podfile**, add this line `pod 'PPSDK-Swift', :git => 'https://gitlab.afcreate.com/sdks/swift'`. Your **Podfile** should look something like this:
 
 	target 'YourProjectName' do
     	use_frameworks!
 
-  		pod 'PPSDK-Swift', :git => 'https://gitlab.com/afcreate/afcreatesdk-swift'
+  		pod 'PPSDK-Swift', :git => 'https://gitlab.afcreate.com/sdks/swift'
 
 	end
 	
