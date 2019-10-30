@@ -6,10 +6,10 @@ Pod::Spec.new do |spec|
   Swift SDK providing access to playPORTAL services.
                    DESC
 
-  spec.homepage     = "https://gitlab.com/afcreate/afcreatesdk-swift"
+  spec.homepage     = "https://gitlab.afcreate.com/sdks/swift"
   spec.license      = "Apache"
   spec.author             = { "Lincoln Fraley" => "lincoln@dynepic.com" }
-  spec.source       = { :git => "https://gitlab.com/afcreate/afcreatesdk-swift" }
+  spec.source       = { :git => "https://gitlab.afcreate.com/sdks/swift" }
   spec.source_files  = "Source/*.swift"
   spec.swift_version = '4.2'
   spec.ios.deployment_target = '10.0'
