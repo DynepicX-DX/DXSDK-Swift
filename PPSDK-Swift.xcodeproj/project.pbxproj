@@ -34,11 +34,6 @@
 		1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55E2184BD3200CA3528 /* AnonUser.png */; };
 		1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55F2184BD3200CA3528 /* AnonUserCover.png */; };
 		1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5602184BD3200CA3528 /* QuestionMark.jpg */; };
-		1CA147132265127E00E06282 /* SSOButtonFlatTransparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA1470E2265127E00E06282 /* SSOButtonFlatTransparent.png */; };
-		1CA147142265127E00E06282 /* SSOButtonGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA1470F2265127E00E06282 /* SSOButtonGradient.png */; };
-		1CA147152265127E00E06282 /* SSOButtonFlatColor.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA147102265127E00E06282 /* SSOButtonFlatColor.png */; };
-		1CA147162265127E00E06282 /* SSOButtonFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA147112265127E00E06282 /* SSOButtonFlat.png */; };
-		1CA147172265127E00E06282 /* SSOButtonDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA147122265127E00E06282 /* SSOButtonDefault.png */; };
 		1CD1E3D9217F441900C2B083 /* PPSDK_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */; };
 		1CD1E3DB217F441900C2B083 /* PPSDK_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1CE0F8C8220DF81C00FCB87C /* PlayPortalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0F8C6220DF81C00FCB87C /* PlayPortalNotification.swift */; };
@@ -88,11 +83,6 @@
 		1C89E55E2184BD3200CA3528 /* AnonUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUser.png; sourceTree = "<group>"; };
 		1C89E55F2184BD3200CA3528 /* AnonUserCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUserCover.png; sourceTree = "<group>"; };
 		1C89E5602184BD3200CA3528 /* QuestionMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = QuestionMark.jpg; sourceTree = "<group>"; };
-		1CA1470E2265127E00E06282 /* SSOButtonFlatTransparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlatTransparent.png; sourceTree = "<group>"; };
-		1CA1470F2265127E00E06282 /* SSOButtonGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonGradient.png; sourceTree = "<group>"; };
-		1CA147102265127E00E06282 /* SSOButtonFlatColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlatColor.png; sourceTree = "<group>"; };
-		1CA147112265127E00E06282 /* SSOButtonFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlat.png; sourceTree = "<group>"; };
-		1CA147122265127E00E06282 /* SSOButtonDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonDefault.png; sourceTree = "<group>"; };
 		1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PPSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPSDK_Swift.h; sourceTree = "<group>"; };
 		1CD1E3CE217F441900C2B083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -218,10 +208,7 @@
 				1C477F8A217F977600B42160 /* PlayPortalUser.swift */,
 				1C32F784218A000A00B9F773 /* PlayPortalUtils.swift */,
 				1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */,
-				1C8468B921CAAB7800A540C8 /* RequestHandler.swift */,
-				1C3A99F521979A790041DB2E /* Router.swift */,
 				1C8468B721CAAB3C00A540C8 /* StorageHandler.swift */,
-				1CF68EA221B6C73D001CC433 /* URLs.swift */,
 				1C89E5522184BD2B00CA3528 /* Utils.swift */,
 			);
 			path = Source;
@@ -412,20 +399,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PPSDK-Swift-PPSDK-SwiftTests/Pods-PPSDK-Swift-PPSDK-SwiftTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-PPSDK-Swift-PPSDK-SwiftTests/Pods-PPSDK-Swift-PPSDK-SwiftTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-PPSDK-Swift-PPSDK-SwiftTests/Pods-PPSDK-Swift-PPSDK-SwiftTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
