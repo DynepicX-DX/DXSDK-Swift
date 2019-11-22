@@ -9,7 +9,7 @@ Pod::Spec.new do |spec|
   spec.homepage     = "https://gitlab.afcreate.com/sdks/swift"
   spec.license      = "Apache"
   spec.author             = { "Lincoln Fraley" => "lincoln@dynepic.com" }
-  spec.source       = { :git => "https://gitlab.afcreate.com/sdks/swift" }
+  spec.source       = { :git => spec.homepage }
   spec.source_files  = "Source/*.swift"
   spec.swift_version = '4.2'
   spec.ios.deployment_target = '10.0'
