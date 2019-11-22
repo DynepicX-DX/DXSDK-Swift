@@ -26,6 +26,22 @@
 		1C6732282265223E00438F90 /* SSOButtonFlatColor.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6732232265223E00438F90 /* SSOButtonFlatColor.png */; };
 		1C6B6C852198B1C800380305 /* PPSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */; };
 		1C70554D218892CA007EB006 /* PlayPortalLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */; };
+		1C7D6A482388128D0051DC1F /* PlayPortalClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A382388128C0051DC1F /* PlayPortalClass.swift */; };
+		1C7D6A492388128D0051DC1F /* PlayPortalImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A392388128C0051DC1F /* PlayPortalImageClient.swift */; };
+		1C7D6A4A2388128D0051DC1F /* PlayPortalCourseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A3A2388128C0051DC1F /* PlayPortalCourseClient.swift */; };
+		1C7D6A4B2388128D0051DC1F /* PlayPortalClassClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A3B2388128C0051DC1F /* PlayPortalClassClient.swift */; };
+		1C7D6A4C2388128D0051DC1F /* PlayPortalXAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A3C2388128C0051DC1F /* PlayPortalXAPIClient.swift */; };
+		1C7D6A4D2388128D0051DC1F /* PlayPortalLesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A3D2388128C0051DC1F /* PlayPortalLesson.swift */; };
+		1C7D6A4E2388128D0051DC1F /* PlayPortalLessonClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A3E2388128D0051DC1F /* PlayPortalLessonClient.swift */; };
+		1C7D6A4F2388128D0051DC1F /* PlayPortalStudentComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A3F2388128D0051DC1F /* PlayPortalStudentComment.swift */; };
+		1C7D6A502388128D0051DC1F /* PlayPortalAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A402388128D0051DC1F /* PlayPortalAuthClient.swift */; };
+		1C7D6A512388128D0051DC1F /* PlayPortalLeaderboardClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A412388128D0051DC1F /* PlayPortalLeaderboardClient.swift */; };
+		1C7D6A522388128D0051DC1F /* PlayPortalDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A422388128D0051DC1F /* PlayPortalDataClient.swift */; };
+		1C7D6A532388128D0051DC1F /* PlayPortalHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A432388128D0051DC1F /* PlayPortalHTTPClient.swift */; };
+		1C7D6A542388128D0051DC1F /* PlayPortalUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A442388128D0051DC1F /* PlayPortalUserClient.swift */; };
+		1C7D6A552388128D0051DC1F /* PlayPortalCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A452388128D0051DC1F /* PlayPortalCourse.swift */; };
+		1C7D6A562388128D0051DC1F /* PlayPortalNotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A462388128D0051DC1F /* PlayPortalNotificationClient.swift */; };
+		1C7D6A572388128D0051DC1F /* PlayPortalStudentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A472388128D0051DC1F /* PlayPortalStudentClient.swift */; };
 		1C8468B821CAAB3C00A540C8 /* StorageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8468B721CAAB3C00A540C8 /* StorageHandler.swift */; };
 		1C8468BC21CAAB7800A540C8 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8468BA21CAAB7800A540C8 /* Events.swift */; };
 		1C89E5542184BD2B00CA3528 /* PlayPortalProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */; };
@@ -34,11 +50,6 @@
 		1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55E2184BD3200CA3528 /* AnonUser.png */; };
 		1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55F2184BD3200CA3528 /* AnonUserCover.png */; };
 		1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5602184BD3200CA3528 /* QuestionMark.jpg */; };
-		1CA147132265127E00E06282 /* SSOButtonFlatTransparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA1470E2265127E00E06282 /* SSOButtonFlatTransparent.png */; };
-		1CA147142265127E00E06282 /* SSOButtonGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA1470F2265127E00E06282 /* SSOButtonGradient.png */; };
-		1CA147152265127E00E06282 /* SSOButtonFlatColor.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA147102265127E00E06282 /* SSOButtonFlatColor.png */; };
-		1CA147162265127E00E06282 /* SSOButtonFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA147112265127E00E06282 /* SSOButtonFlat.png */; };
-		1CA147172265127E00E06282 /* SSOButtonDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA147122265127E00E06282 /* SSOButtonDefault.png */; };
 		1CD1E3D9217F441900C2B083 /* PPSDK_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1E3D8217F441900C2B083 /* PPSDK_SwiftTests.swift */; };
 		1CD1E3DB217F441900C2B083 /* PPSDK_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1CE0F8C8220DF81C00FCB87C /* PlayPortalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0F8C6220DF81C00FCB87C /* PlayPortalNotification.swift */; };
@@ -80,6 +91,22 @@
 		1C6732222265223E00438F90 /* SSOButtonGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonGradient.png; sourceTree = "<group>"; };
 		1C6732232265223E00438F90 /* SSOButtonFlatColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlatColor.png; sourceTree = "<group>"; };
 		1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboardEntry.swift; sourceTree = "<group>"; };
+		1C7D6A382388128C0051DC1F /* PlayPortalClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalClass.swift; sourceTree = "<group>"; };
+		1C7D6A392388128C0051DC1F /* PlayPortalImageClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalImageClient.swift; sourceTree = "<group>"; };
+		1C7D6A3A2388128C0051DC1F /* PlayPortalCourseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalCourseClient.swift; sourceTree = "<group>"; };
+		1C7D6A3B2388128C0051DC1F /* PlayPortalClassClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalClassClient.swift; sourceTree = "<group>"; };
+		1C7D6A3C2388128C0051DC1F /* PlayPortalXAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalXAPIClient.swift; sourceTree = "<group>"; };
+		1C7D6A3D2388128C0051DC1F /* PlayPortalLesson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLesson.swift; sourceTree = "<group>"; };
+		1C7D6A3E2388128D0051DC1F /* PlayPortalLessonClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLessonClient.swift; sourceTree = "<group>"; };
+		1C7D6A3F2388128D0051DC1F /* PlayPortalStudentComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalStudentComment.swift; sourceTree = "<group>"; };
+		1C7D6A402388128D0051DC1F /* PlayPortalAuthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalAuthClient.swift; sourceTree = "<group>"; };
+		1C7D6A412388128D0051DC1F /* PlayPortalLeaderboardClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalLeaderboardClient.swift; sourceTree = "<group>"; };
+		1C7D6A422388128D0051DC1F /* PlayPortalDataClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalDataClient.swift; sourceTree = "<group>"; };
+		1C7D6A432388128D0051DC1F /* PlayPortalHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalHTTPClient.swift; sourceTree = "<group>"; };
+		1C7D6A442388128D0051DC1F /* PlayPortalUserClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalUserClient.swift; sourceTree = "<group>"; };
+		1C7D6A452388128D0051DC1F /* PlayPortalCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalCourse.swift; sourceTree = "<group>"; };
+		1C7D6A462388128D0051DC1F /* PlayPortalNotificationClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalNotificationClient.swift; sourceTree = "<group>"; };
+		1C7D6A472388128D0051DC1F /* PlayPortalStudentClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalStudentClient.swift; sourceTree = "<group>"; };
 		1C8468B721CAAB3C00A540C8 /* StorageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageHandler.swift; sourceTree = "<group>"; };
 		1C8468BA21CAAB7800A540C8 /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPortalProfile.swift; sourceTree = "<group>"; };
@@ -88,11 +115,6 @@
 		1C89E55E2184BD3200CA3528 /* AnonUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUser.png; sourceTree = "<group>"; };
 		1C89E55F2184BD3200CA3528 /* AnonUserCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUserCover.png; sourceTree = "<group>"; };
 		1C89E5602184BD3200CA3528 /* QuestionMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = QuestionMark.jpg; sourceTree = "<group>"; };
-		1CA1470E2265127E00E06282 /* SSOButtonFlatTransparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlatTransparent.png; sourceTree = "<group>"; };
-		1CA1470F2265127E00E06282 /* SSOButtonGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonGradient.png; sourceTree = "<group>"; };
-		1CA147102265127E00E06282 /* SSOButtonFlatColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlatColor.png; sourceTree = "<group>"; };
-		1CA147112265127E00E06282 /* SSOButtonFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlat.png; sourceTree = "<group>"; };
-		1CA147122265127E00E06282 /* SSOButtonDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonDefault.png; sourceTree = "<group>"; };
 		1CD1E3CA217F441900C2B083 /* PPSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PPSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPSDK_Swift.h; sourceTree = "<group>"; };
 		1CD1E3CE217F441900C2B083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -192,19 +214,27 @@
 		1CD1E3E6217F45D700C2B083 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1C7D6A402388128D0051DC1F /* PlayPortalAuthClient.swift */,
+				1C7D6A382388128C0051DC1F /* PlayPortalClass.swift */,
+				1C7D6A3B2388128C0051DC1F /* PlayPortalClassClient.swift */,
+				1C7D6A452388128D0051DC1F /* PlayPortalCourse.swift */,
+				1C7D6A3A2388128C0051DC1F /* PlayPortalCourseClient.swift */,
+				1C7D6A422388128D0051DC1F /* PlayPortalDataClient.swift */,
+				1C7D6A432388128D0051DC1F /* PlayPortalHTTPClient.swift */,
+				1C7D6A392388128C0051DC1F /* PlayPortalImageClient.swift */,
+				1C7D6A412388128D0051DC1F /* PlayPortalLeaderboardClient.swift */,
+				1C7D6A3D2388128C0051DC1F /* PlayPortalLesson.swift */,
+				1C7D6A3E2388128D0051DC1F /* PlayPortalLessonClient.swift */,
+				1C7D6A462388128D0051DC1F /* PlayPortalNotificationClient.swift */,
+				1C7D6A472388128D0051DC1F /* PlayPortalStudentClient.swift */,
+				1C7D6A3F2388128D0051DC1F /* PlayPortalStudentComment.swift */,
+				1C7D6A442388128D0051DC1F /* PlayPortalUserClient.swift */,
+				1C7D6A3C2388128C0051DC1F /* PlayPortalXAPIClient.swift */,
 				1C30807122B934A1004A8AD6 /* HTTPClient.swift */,
 				1C30807022B934A1004A8AD6 /* PlayPortalClient.swift */,
 				1C30807222B934A1004A8AD6 /* RefreshClient.swift */,
-				1CE0F8C6220DF81C00FCB87C /* PlayPortalNotification.swift */,
-				1CE0F8C7220DF81C00FCB87C /* PlayPortalNotifications.swift */,
 				1C8468BA21CAAB7800A540C8 /* Events.swift */,
-				1C8468B721CAAB3C00A540C8 /* StorageHandler.swift */,
 				1C3A99F221979A790041DB2E /* Extensions.swift */,
-				1C32F784218A000A00B9F773 /* PlayPortalUtils.swift */,
-				1C70554B218892CA007EB006 /* PlayPortalLeaderboardEntry.swift */,
-				1C89E54E2184BD2A00CA3528 /* PlayPortalImage.swift */,
-				1C89E54A2184BD2A00CA3528 /* PlayPortalProfile.swift */,
-				1C89E5522184BD2B00CA3528 /* Utils.swift */,
 				1C477F89217F977500B42160 /* PlayPortalAuth.swift */,
 				1C477F88217F977500B42160 /* PlayPortalData.swift */,
 				1C477F87217F977500B42160 /* PlayPortalError.swift */,
@@ -218,10 +248,7 @@
 				1C477F8A217F977600B42160 /* PlayPortalUser.swift */,
 				1C32F784218A000A00B9F773 /* PlayPortalUtils.swift */,
 				1CD1E3CD217F441900C2B083 /* PPSDK_Swift.h */,
-				1C8468B921CAAB7800A540C8 /* RequestHandler.swift */,
-				1C3A99F521979A790041DB2E /* Router.swift */,
 				1C8468B721CAAB3C00A540C8 /* StorageHandler.swift */,
-				1CF68EA221B6C73D001CC433 /* URLs.swift */,
 				1C89E5522184BD2B00CA3528 /* Utils.swift */,
 			);
 			path = Source;
@@ -442,21 +469,37 @@
 				1C477F94217F977600B42160 /* PlayPortalLoginButton.swift in Sources */,
 				1CE0F8C9220DF81C00FCB87C /* PlayPortalNotifications.swift in Sources */,
 				1C3A99F621979A7A0041DB2E /* Extensions.swift in Sources */,
+				1C7D6A4A2388128D0051DC1F /* PlayPortalCourseClient.swift in Sources */,
+				1C7D6A492388128D0051DC1F /* PlayPortalImageClient.swift in Sources */,
+				1C7D6A4B2388128D0051DC1F /* PlayPortalClassClient.swift in Sources */,
 				1C477F8E217F977600B42160 /* PlayPortalError.swift in Sources */,
 				1C477F91217F977600B42160 /* PlayPortalUser.swift in Sources */,
 				1C30807322B934A2004A8AD6 /* PlayPortalClient.swift in Sources */,
+				1C7D6A482388128D0051DC1F /* PlayPortalClass.swift in Sources */,
+				1C7D6A552388128D0051DC1F /* PlayPortalCourse.swift in Sources */,
+				1C7D6A4E2388128D0051DC1F /* PlayPortalLessonClient.swift in Sources */,
+				1C7D6A532388128D0051DC1F /* PlayPortalHTTPClient.swift in Sources */,
 				1C89E5542184BD2B00CA3528 /* PlayPortalProfile.swift in Sources */,
+				1C7D6A522388128D0051DC1F /* PlayPortalDataClient.swift in Sources */,
+				1C7D6A562388128D0051DC1F /* PlayPortalNotificationClient.swift in Sources */,
 				1C8468BC21CAAB7800A540C8 /* Events.swift in Sources */,
 				1C32F787218A000B00B9F773 /* PlayPortalUtils.swift in Sources */,
 				1C70554D218892CA007EB006 /* PlayPortalLeaderboardEntry.swift in Sources */,
 				1CE0F8C8220DF81C00FCB87C /* PlayPortalNotification.swift in Sources */,
+				1C7D6A512388128D0051DC1F /* PlayPortalLeaderboardClient.swift in Sources */,
+				1C7D6A572388128D0051DC1F /* PlayPortalStudentClient.swift in Sources */,
+				1C7D6A4F2388128D0051DC1F /* PlayPortalStudentComment.swift in Sources */,
 				1C89E55C2184BD2B00CA3528 /* Utils.swift in Sources */,
 				1C477F90217F977600B42160 /* PlayPortalAuth.swift in Sources */,
 				1C477F8F217F977600B42160 /* PlayPortalData.swift in Sources */,
 				1C30807522B934A2004A8AD6 /* RefreshClient.swift in Sources */,
 				1C30807422B934A2004A8AD6 /* HTTPClient.swift in Sources */,
+				1C7D6A4D2388128D0051DC1F /* PlayPortalLesson.swift in Sources */,
 				1C477F93217F977600B42160 /* PlayPortalLeaderboard.swift in Sources */,
+				1C7D6A542388128D0051DC1F /* PlayPortalUserClient.swift in Sources */,
 				1C89E5582184BD2B00CA3528 /* PlayPortalImage.swift in Sources */,
+				1C7D6A4C2388128D0051DC1F /* PlayPortalXAPIClient.swift in Sources */,
+				1C7D6A502388128D0051DC1F /* PlayPortalAuthClient.swift in Sources */,
 				1C8468B821CAAB3C00A540C8 /* StorageHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
