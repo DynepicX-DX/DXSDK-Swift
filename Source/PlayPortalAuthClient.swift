@@ -14,6 +14,16 @@ public enum PlayPortalEnvironment: String {
   case production = "PRODUCTION"
 }
 
+public protocol PlayPortalAuthDelegate {
+  
+  func didLogin(with profile: PlayPortalProfile)
+  
+  func didFailToLogin(with error: Error)
+  
+  func loggedOut(with error: Error?)
+  
+}
+
 
 //  Can be optionally implemented to handle any SSO errors, errors during refresh, or successful logouts
 @objc public protocol PlayPortalLoginDelegate: class {
@@ -77,6 +87,8 @@ public final class PlayPortalAuthClient: PlayPortalHTTPClient {
   private var isAuthenticatedCompletion: ((_ error: Error?, _ userProfile: PlayPortalProfile?) -> Void)?
   private weak var loginDelegate: PlayPortalLoginDelegate?
   private var safariViewController: SFSafariViewController?
+  
+  private var authDelegate: PlayPortalAuthDelegate?
   
   
   //  MARK: - Init/Deinit
@@ -153,6 +165,26 @@ public final class PlayPortalAuthClient: PlayPortalHTTPClient {
     }
   }
   
+  public func authenticate(authDelegate: PlayPortalAuthDelegate) {
+    EventHandler.shared.addSubscriptions()
+    self.authDelegate = authDelegate
+    
+    if PlayPortalAuthClient.isAuthenticated {
+      //  If authenticated, request current user's profile
+      PlayPortalUserClient.shared.getMyProfile { error, profile in
+        if let error = error {
+          authDelegate.didFailToLogin(with: error)
+        } else if let profile = profile {
+          authDelegate.didLogin(with: profile)
+        } else {
+          authDelegate.didFailToLogin(with: PlayPortalError.API.requestFailedForUnknownReason(message: "Profile not returned after authentication."))
+        }
+      }
+    } else {
+      authDelegate.loggedOut(with: nil)
+    }
+  }
+  
   /**
    Opens playPORTAL SSO.
    
@@ -212,9 +244,18 @@ public final class PlayPortalAuthClient: PlayPortalHTTPClient {
     PlayPortalAuthClient.accessToken = accessToken
     PlayPortalAuthClient.refreshToken = refreshToken
     
-    //  Request current user's profile
-    if let completion = isAuthenticatedCompletion {
-      PlayPortalUserClient.shared.getMyProfile(completion: completion)
+    PlayPortalUserClient.shared.getMyProfile { error, profile in
+      if let completion = self.isAuthenticatedCompletion {
+        return completion(error, profile)
+      }
+
+      if let error = error {
+        self.authDelegate?.didFailToLogin(with: error)
+      } else if let profile = profile {
+        self.authDelegate?.didLogin(with: profile)
+      } else {
+        self.authDelegate?.didFailToLogin(with: PlayPortalError.API.requestFailedForUnknownReason(message: "Profile not returned after authentication."))
+      }
     }
   }
   
