@@ -14,6 +14,6 @@ public struct PlayPortalStudentComment: Codable {
   public let author: PlayPortalProfile
   public var course: String?
   public var lesson: String?
-  public let `class`: String
+  public var `class`: String?
   public let text: String
 }

@@ -10,15 +10,15 @@ import Foundation
 public struct PlayPortalLesson: Codable {
   
   public let lessonId: String
-  public let courseId: String
+  public var courseId: String?
   public let name: String
-  public let description: String
-  public let profilePic: String
+  public var description: String?
+  public var profilePic: String?
   public var coverPhoto: String?
-  public let media: String
+  public var media: String?
   public var expectedCompletionTime: Int?
-  public let instructorGraded: Bool
-  public let `public`: Bool
+  public var instructorGraded: Bool?
+  public var `public`: Bool?
 }
 
 public struct PlayPortalLessonProgress<Answers: Codable>: Codable {
@@ -28,6 +28,6 @@ public struct PlayPortalLessonProgress<Answers: Codable>: Codable {
   public let pass: Bool
   public var score: Int?
   public var answers: Answers?
-  public let started: String
+  public var started: String?
   public var completed: String?
 }
