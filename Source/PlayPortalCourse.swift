@@ -12,6 +12,6 @@ public struct PlayPortalCourse: Codable {
   public let courseId: String
   public let name: String
   public let description: String
-  public let profilePic: String
+  public var profilePic: String?
   public var coverPhoto: String?
 }
