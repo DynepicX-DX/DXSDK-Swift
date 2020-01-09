@@ -173,11 +173,11 @@ public final class PlayPortalLessonClient: PlayPortalHTTPClient {
       `Error` argument if the request fails; otherwise, called with an instance of
       `PlayPortalLessonProgress`.
    */
-  public func startLesson<Answers: Codable>(
+  public func startLesson(
     classId: String,
     lessonId: String,
     studentId: String? = nil,
-    _ completion: @escaping (_ error: Error?, _ progress: PlayPortalLessonProgress<Answers>?) -> Void)
+    _ completion: @escaping (_ error: Error?, _ progress: PlayPortalLessonProgress?) -> Void)
     -> Void
   {
     let body: [String: Any] = [
@@ -207,11 +207,11 @@ public final class PlayPortalLessonClient: PlayPortalHTTPClient {
       `Error` argument if the request fails; otherwise, called with an instance of
       `PlayPortalLessonProgress`.
    */
-  public func getStudentsProgress<Answers: Codable>(
+  public func getStudentsProgress(
     classId: String,
     lessonId: String,
     studentId: String? = nil,
-    _ completion: @escaping (_ error: Error?, _ progress: PlayPortalLessonProgress<Answers>?) -> Void)
+    _ completion: @escaping (_ error: Error?, _ progress: PlayPortalLessonProgress?) -> Void)
     -> Void
   {
     let params: [String: Any] = [
@@ -239,11 +239,11 @@ public final class PlayPortalLessonClient: PlayPortalHTTPClient {
    - Parameter completion: The closure invoked when the request finishes. Called with an
       `Error` argument if the request fails; otherwise, called with the requested progress history.
    */
-  public func getStudentsProgressHistory<Answers: Codable>(
+  public func getStudentsProgressHistory(
     classId: String,
     lessonId: String,
     studentId: String? = nil,
-    _ completion: @escaping (_ error: Error?, _ history: [PlayPortalLessonProgress<Answers>]?) -> Void
+    _ completion: @escaping (_ error: Error?, _ history: [PlayPortalLessonProgress]?) -> Void
     ) -> Void
   {
     let params: [String: Any] = [
@@ -279,29 +279,22 @@ public final class PlayPortalLessonClient: PlayPortalHTTPClient {
       `Error` argument if the request fails; otherwise, called with an instance of
       `PlayPortalLessonProgress`.
    */
-  public func updateStudentsProgress<Answers: Codable>(
+  public func updateStudentsProgress(
     classId: String,
     lessonId: String,
     pass: Bool,
     studentId: String? = nil,
     complete: Bool? = nil,
-    answers: Answers? = nil,
     score: Int? = nil,
-    _ completion: @escaping (_ error: Error?, _ progress: PlayPortalLessonProgress<Answers>?) -> Void
+    _ completion: @escaping (_ error: Error?, _ progress: PlayPortalLessonProgress?) -> Void
     ) -> Void
   {
-    var _answers: Any? = answers
-    if let encoded = try? JSONEncoder().encode(["answers": answers]),
-      let json = try? JSONSerialization.jsonObject(with: encoded, options: .allowFragments) as? [String: Any] {
-      _answers = json?["answers"]
-    }
     let body: [String: Any] = [
       "classId": classId,
       "lessonId": lessonId,
       "pass": pass,
       "studentId": studentId as Any,
       "complete": complete as Any,
-      "answers": _answers as Any,
       "score": score as Any,
     ]
     
