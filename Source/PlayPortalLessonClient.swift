@@ -275,6 +275,10 @@ public final class PlayPortalLessonClient: PlayPortalHTTPClient {
       This will overwrite previous data structures, so the entire structure must be included with
       every update.
    - Parameter score: A numeric score for the lesson.
+   - Parameter startTime: A parseable date to mark the start of the student's session. Suggested
+      format is ISO date, eg. 2020-01-07T21:45:35.649Z.
+   - Parameter endTime: A parseable date to mark the end of the student's session. Suggested
+      format is ISO date, eg. 2020-01-07T21:45:35.649Z.
    - Parameter completion: The closure invoked when the request finishes. Called with an
       `Error` argument if the request fails; otherwise, called with an instance of
       `PlayPortalLessonProgress`.
@@ -286,16 +290,20 @@ public final class PlayPortalLessonClient: PlayPortalHTTPClient {
     studentId: String? = nil,
     complete: Bool? = nil,
     score: Int? = nil,
+    startTime: String? = nil,
+    endTime: String? = nil,
     _ completion: @escaping (_ error: Error?, _ progress: PlayPortalLessonProgress?) -> Void
     ) -> Void
   {
-    let body: [String: Any] = [
+    let body: [String: Any?] = [
       "classId": classId,
       "lessonId": lessonId,
       "pass": pass,
-      "studentId": studentId as Any,
-      "complete": complete as Any,
-      "score": score as Any,
+      "studentId": studentId,
+      "complete": complete,
+      "score": score,
+      "startTime": startTime,
+      "endTime": endTime
     ]
     
     request(
