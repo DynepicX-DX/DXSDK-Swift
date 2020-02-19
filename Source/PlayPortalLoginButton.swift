@@ -15,6 +15,7 @@ public enum PlayPortalLoginButtonImage: String {
   case flatColor = "SSOButtonFlatColor"
   case flatTransparent = "SSOButtonFlatTransparent"
   case gradient = "SSOButtonGradient"
+  case dark = "SSOButtonDark"
 }
 
 //  Responsible for initializing SSO flow when tapped.
