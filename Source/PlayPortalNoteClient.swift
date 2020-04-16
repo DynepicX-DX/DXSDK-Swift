@@ -89,6 +89,8 @@ public final class PlayPortalNoteClient: PlayPortalHTTPClient {
    - Parameter classId: A class ID to which the notes are related.
    - Parameter studentId: A student ID to whom the notes are related.
    - Parameter courseId: A course ID to which the desired notes are related.
+   - Parameter completion: Closure invoked when the request finishes. Called with an `Error`
+      argument if the request fails; otherwise, called with the requested notes.
    */
   public func getNoteList(
     lessondId: String?,
@@ -114,6 +116,12 @@ public final class PlayPortalNoteClient: PlayPortalHTTPClient {
     )
   }
   
+  /**
+   Deletes a note by ID.
+   - Parameter noteId: ID of the note to be deleted.
+   - Parameter completion: Closure invoked when the request finishes. Called with an `Error`
+      argument if the request fails.
+   */
   public func deleteNote(
     noteId: String,
     _ completion: @escaping (_ error: Error?) -> Void
