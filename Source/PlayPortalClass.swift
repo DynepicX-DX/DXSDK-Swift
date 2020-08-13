@@ -8,9 +8,10 @@
 import Foundation
 
 public struct PlayPortalClass: Codable {
-  
-  public let groupId: String
-  public let name: String
-  public let joinCode: String
-  public var course: PlayPortalCourse?
+    
+    public let groupId: String
+    public let name: String
+    public let joinCode: String
+    public var course: PlayPortalCourse?
+    public let studentId: String
 }
