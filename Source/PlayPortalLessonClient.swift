@@ -327,7 +327,7 @@ public final class PlayPortalLessonClient: PlayPortalHTTPClient {
      - Parameter completion: Closure invoked when the request finishes. Called with an `Error` argument if the request fails;
         otherwise, called with the lessons for that student.
      */
-    public func getLesonsLockStatus(
+    public func getLessonsLockStatus(
         classId: String,
         _ completion: @escaping (_ error: Error?, _ lessons: [PlayPortalLesson]?) -> Void
     ) {
@@ -483,5 +483,10 @@ public final class PlayPortalLessonClient: PlayPortalHTTPClient {
             body: body,
             completionWithNoResult: completion
         )
+    }
+    
+    struct PaginatedResponse<Result: Codable> {
+        
+        let result: Result
     }
 }
