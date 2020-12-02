@@ -1,7 +1,7 @@
 PODS:
   - KeychainSwift (12.0.0)
-  - Nimble (8.0.4)
-  - Quick (2.2.0)
+  - Nimble (9.0.0)
+  - Quick (3.0.0)
 
 DEPENDENCIES:
   - KeychainSwift (~> 12.0)
@@ -16,9 +16,9 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   KeychainSwift: d5e776578587ee5958ce36601df22f168f65138a
-  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
-  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
+  Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
+  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
 
-PODFILE CHECKSUM: a6198462b31bb26758356e44ddf0aa62a1aac163
+PODFILE CHECKSUM: 288d083381f915c8bae5701a6c6ce512bdae3d40
 
 COCOAPODS: 1.8.3

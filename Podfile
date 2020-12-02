@@ -1,11 +1,11 @@
 platform :ios, '9.0'
 
-target 'PPSDK-Swift' do
+target 'DXSDK-Swift' do
   use_frameworks!
   
   pod 'KeychainSwift', '~> 12.0'
 
-  target 'PPSDK-SwiftTests' do
+  target 'DXSDK-SwiftTests' do
       pod 'Quick'
       pod 'Nimble'
   end

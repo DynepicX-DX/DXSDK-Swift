@@ -19,7 +19,7 @@ class Utils {
    */
   static func getImageAsset(byName name: String) -> UIImage? {
     let frameworkBundle = Bundle(for: Utils.self)
-    guard let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("PPSDK-Swift-Assets.bundle")
+    guard let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("DXSDK-Swift-Assets.bundle")
       , let resourceBundle = Bundle(url: bundleURL)
       else {
         return nil
@@ -30,7 +30,7 @@ class Utils {
 
 class Synchronized<T> {
   
-  private let queue = DispatchQueue(label: "com.dynepic.PPSDK-Swift.SynchronizedQueue-\(Int.random(in: 0..<Int.max))", attributes: .concurrent)
+  private let queue = DispatchQueue(label: "com.dynepic.DXSDK-Swift.SynchronizedQueue-\(Int.random(in: 0..<Int.max))", attributes: .concurrent)
   private var _value: T
   public var value: T {
     get {

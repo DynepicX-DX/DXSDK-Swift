@@ -1,13 +1,13 @@
 //
 //  RefreshClient.swift
-//  PPSDK-Swift
+//  DXSDK-Swift
 //
 //  Created by Lincoln Fraley on 4/25/19.
 //
 
 import Foundation
 
-class RefreshClient: PlayPortalHTTPClient {
+class RefreshClient: DXHTTPClient {
   
   static let shared = RefreshClient()
   
@@ -48,7 +48,7 @@ class RefreshClient: PlayPortalHTTPClient {
         else {
           
           //  TODO - change this
-          EventHandler.shared.publish(.loggedOut(error: PlayPortalError.API.unableToDeserializeResult(message: "Couldn't parse access or refresh token from refresh response."))); return
+          EventHandler.shared.publish(.loggedOut(error: DXError.API.unableToDeserializeResult(message: "Couldn't parse access or refresh token from refresh response."))); return
       }
       
       RefreshClient.lock.lock()
@@ -56,7 +56,7 @@ class RefreshClient: PlayPortalHTTPClient {
       RefreshClient.accessToken = accessToken
       RefreshClient.refreshToken = refreshToken
       RefreshClient.isRefreshing = false
-      let requestsToRetry = PlayPortalHTTPClient.requestsToRetry
+      let requestsToRetry = DXHTTPClient.requestsToRetry
       RefreshClient.requestsToRetry.removeAll()
       
       RefreshClient.lock.unlock()

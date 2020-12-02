@@ -43,7 +43,7 @@ class EventHandler {
   
   func addSubscriptions() {
     //  todo: remove
-    subscribe(PlayPortalAuthClient.shared)
+    subscribe(DXAuthClient.shared)
   }
   
   func publish(_ event: Event) {

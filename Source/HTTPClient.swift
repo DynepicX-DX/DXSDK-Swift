@@ -1,6 +1,6 @@
 //
 //  HTTPClient.swift
-//  PPSDK-Swift
+//  DXSDK-Swift
 //
 //  Created by Lincoln Fraley on 4/24/19.
 //

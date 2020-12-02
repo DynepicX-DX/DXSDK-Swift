@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import UIKit
 
 //  MARK: - Data
 extension Data {
@@ -105,7 +106,7 @@ public extension UIImageView {
       completion?(nil)
       return
     }
-    PlayPortalImageClient.shared.getImage(forImageId: imageId) { error, data in
+    DXImageClient.shared.getImage(forImageId: imageId) { error, data in
       DispatchQueue.main.async { [weak self] in
         self?.image = data.map { UIImage(data: $0) } ?? nil
       }
@@ -131,7 +132,7 @@ public extension UIImageView {
       completion?(nil)
       return
     }
-    PlayPortalImageClient.shared.getImage(forImageId: imageId) { error, data in
+    DXImageClient.shared.getImage(forImageId: imageId) { error, data in
       if let image = data.map({ UIImage(data: $0) }) {
         DispatchQueue.main.async { [weak self] in
           self?.image = image
@@ -159,7 +160,7 @@ public extension UIImageView {
       completion?(nil)
       return
     }
-    PlayPortalImageClient.shared.getImage(forImageId: imageId) { error, data in
+    DXImageClient.shared.getImage(forImageId: imageId) { error, data in
       if let image = data.map({ UIImage(data: $0) }) {
         DispatchQueue.main.async { [weak self] in
           self?.image = image
