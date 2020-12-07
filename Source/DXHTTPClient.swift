@@ -31,8 +31,8 @@ typealias HandleSuccess<Result> = (
 
 class EndpointsBase {
     
-    static let sandboxHost = "https://sandbox.afcreate.com"
-    static let productionHost = "https://api.afcreate.com"
+    static let sandboxHost = "https://sandbox.motar.io"
+    static let productionHost = "https://motar.io"
     
     static var host: String {
         switch (DXHTTPClient.environment) {
