@@ -10,12 +10,12 @@ import UIKit
 
 public enum DXLoginButtonImage: String {
   
-  case `default` = "SSOButtonDefault"
-  case flat = "SSOButtonFlat"
-  case flatColor = "SSOButtonFlatColor"
-  case flatTransparent = "SSOButtonFlatTransparent"
-  case gradient = "SSOButtonGradient"
-  case dark = "SSOButtonDark"
+    case dark = "SSOButtonDark"
+    case light = "SSOButtonLight"
+    case solidDark = "SSOButtonSolidDark"
+    case solidLight = "SSOButtonSolidLight"
+    case gradientDark = "SSOButtonGradientDark"
+    case gradientLight = "SSOButtonGradientLight"
 }
 
 //  Responsible for initializing SSO flow when tapped.
@@ -29,7 +29,7 @@ public final class DXLoginButton: UIButton {
    - Parameter from: UIViewController that will present SFSafariViewController; defaults to topmost UIViewController.
    - Parameter image: Image to use for login button.
    */
-  public init(from viewController: UIViewController? = nil, image: DXLoginButtonImage = .default) {
+  public init(from viewController: UIViewController? = nil, image: DXLoginButtonImage) {
     self.from = viewController
     
     // Width ratio is 279w / 55h

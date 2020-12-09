@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "DXSDK-Swift"
-  spec.version      = "1.0.1"
+  spec.version      = "1.0.2"
   spec.summary      = "DX SDK for Swift."
   spec.description  = <<-DESC
   Swift SDK providing access to DX services.

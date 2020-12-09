@@ -13,11 +13,6 @@
 		1C3A99F621979A7A0041DB2E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3A99F221979A790041DB2E /* Extensions.swift */; };
 		1C477F8E217F977600B42160 /* DXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F87217F977500B42160 /* DXError.swift */; };
 		1C477F94217F977600B42160 /* DXLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8D217F977600B42160 /* DXLoginButton.swift */; };
-		1C6732242265223E00438F90 /* SSOButtonFlatTransparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C67321F2265223E00438F90 /* SSOButtonFlatTransparent.png */; };
-		1C6732252265223E00438F90 /* SSOButtonFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6732202265223E00438F90 /* SSOButtonFlat.png */; };
-		1C6732262265223E00438F90 /* SSOButtonDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6732212265223E00438F90 /* SSOButtonDefault.png */; };
-		1C6732272265223E00438F90 /* SSOButtonGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6732222265223E00438F90 /* SSOButtonGradient.png */; };
-		1C6732282265223E00438F90 /* SSOButtonFlatColor.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6732232265223E00438F90 /* SSOButtonFlatColor.png */; };
 		1C6B6C852198B1C800380305 /* DXSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD1E3CA217F441900C2B083 /* DXSDK_Swift.framework */; };
 		1C70554D218892CA007EB006 /* DXLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70554B218892CA007EB006 /* DXLeaderboardEntry.swift */; };
 		1C7D6A482388128D0051DC1F /* DXClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D6A382388128C0051DC1F /* DXClass.swift */; };
@@ -43,6 +38,12 @@
 		1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55E2184BD3200CA3528 /* AnonUser.png */; };
 		1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55F2184BD3200CA3528 /* AnonUserCover.png */; };
 		1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5602184BD3200CA3528 /* QuestionMark.jpg */; };
+		1C9D0BE225816B4E0016D8FC /* SSOButtonLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BDC25816B4E0016D8FC /* SSOButtonLight.png */; };
+		1C9D0BE325816B4E0016D8FC /* SSOButtonSolidLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BDD25816B4E0016D8FC /* SSOButtonSolidLight.png */; };
+		1C9D0BE425816B4E0016D8FC /* SSOButtonDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BDE25816B4E0016D8FC /* SSOButtonDark.png */; };
+		1C9D0BE525816B4E0016D8FC /* SSOButtonGradientLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BDF25816B4E0016D8FC /* SSOButtonGradientLight.png */; };
+		1C9D0BE625816B4E0016D8FC /* SSOButtonGradientDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BE025816B4E0016D8FC /* SSOButtonGradientDark.png */; };
+		1C9D0BE725816B4E0016D8FC /* SSOButtonSolidDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BE125816B4E0016D8FC /* SSOButtonSolidDark.png */; };
 		1CD100E82577E14300F7899C /* DXSDK-Swift in Resources */ = {isa = PBXBuildFile; fileRef = 1CD100E62577E14300F7899C /* DXSDK-Swift */; };
 		1CD100E92577E14300F7899C /* DXSDK-SwiftTests in Resources */ = {isa = PBXBuildFile; fileRef = 1CD100E72577E14300F7899C /* DXSDK-SwiftTests */; };
 		1CD1E3DB217F441900C2B083 /* DXSDK_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD1E3CD217F441900C2B083 /* DXSDK_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -72,11 +73,6 @@
 		1C3A99F221979A790041DB2E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1C477F87217F977500B42160 /* DXError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DXError.swift; sourceTree = "<group>"; };
 		1C477F8D217F977600B42160 /* DXLoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DXLoginButton.swift; sourceTree = "<group>"; };
-		1C67321F2265223E00438F90 /* SSOButtonFlatTransparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlatTransparent.png; sourceTree = "<group>"; };
-		1C6732202265223E00438F90 /* SSOButtonFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlat.png; sourceTree = "<group>"; };
-		1C6732212265223E00438F90 /* SSOButtonDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonDefault.png; sourceTree = "<group>"; };
-		1C6732222265223E00438F90 /* SSOButtonGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonGradient.png; sourceTree = "<group>"; };
-		1C6732232265223E00438F90 /* SSOButtonFlatColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonFlatColor.png; sourceTree = "<group>"; };
 		1C70554B218892CA007EB006 /* DXLeaderboardEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DXLeaderboardEntry.swift; sourceTree = "<group>"; };
 		1C7D6A382388128C0051DC1F /* DXClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DXClass.swift; sourceTree = "<group>"; };
 		1C7D6A392388128C0051DC1F /* DXImageClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DXImageClient.swift; sourceTree = "<group>"; };
@@ -101,6 +97,12 @@
 		1C89E55E2184BD3200CA3528 /* AnonUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUser.png; sourceTree = "<group>"; };
 		1C89E55F2184BD3200CA3528 /* AnonUserCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUserCover.png; sourceTree = "<group>"; };
 		1C89E5602184BD3200CA3528 /* QuestionMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = QuestionMark.jpg; sourceTree = "<group>"; };
+		1C9D0BDC25816B4E0016D8FC /* SSOButtonLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonLight.png; sourceTree = "<group>"; };
+		1C9D0BDD25816B4E0016D8FC /* SSOButtonSolidLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonSolidLight.png; sourceTree = "<group>"; };
+		1C9D0BDE25816B4E0016D8FC /* SSOButtonDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonDark.png; sourceTree = "<group>"; };
+		1C9D0BDF25816B4E0016D8FC /* SSOButtonGradientLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonGradientLight.png; sourceTree = "<group>"; };
+		1C9D0BE025816B4E0016D8FC /* SSOButtonGradientDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonGradientDark.png; sourceTree = "<group>"; };
+		1C9D0BE125816B4E0016D8FC /* SSOButtonSolidDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonSolidDark.png; sourceTree = "<group>"; };
 		1CD100E62577E14300F7899C /* DXSDK-Swift */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "DXSDK-Swift"; sourceTree = "<group>"; };
 		1CD100E72577E14300F7899C /* DXSDK-SwiftTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "DXSDK-SwiftTests"; sourceTree = "<group>"; };
 		1CD1E3CA217F441900C2B083 /* DXSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DXSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,11 +153,12 @@
 		1CC6076A2180B5D600B47385 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1C6732212265223E00438F90 /* SSOButtonDefault.png */,
-				1C6732202265223E00438F90 /* SSOButtonFlat.png */,
-				1C6732232265223E00438F90 /* SSOButtonFlatColor.png */,
-				1C67321F2265223E00438F90 /* SSOButtonFlatTransparent.png */,
-				1C6732222265223E00438F90 /* SSOButtonGradient.png */,
+				1C9D0BDE25816B4E0016D8FC /* SSOButtonDark.png */,
+				1C9D0BE025816B4E0016D8FC /* SSOButtonGradientDark.png */,
+				1C9D0BDF25816B4E0016D8FC /* SSOButtonGradientLight.png */,
+				1C9D0BDC25816B4E0016D8FC /* SSOButtonLight.png */,
+				1C9D0BE125816B4E0016D8FC /* SSOButtonSolidDark.png */,
+				1C9D0BDD25816B4E0016D8FC /* SSOButtonSolidLight.png */,
 				1C89E55E2184BD3200CA3528 /* AnonUser.png */,
 				1C89E55F2184BD3200CA3528 /* AnonUserCover.png */,
 				1C89E5602184BD3200CA3528 /* QuestionMark.jpg */,
@@ -349,16 +352,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C6732282265223E00438F90 /* SSOButtonFlatColor.png in Resources */,
+				1C9D0BE225816B4E0016D8FC /* SSOButtonLight.png in Resources */,
 				1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */,
-				1C6732272265223E00438F90 /* SSOButtonGradient.png in Resources */,
 				1CD100E82577E14300F7899C /* DXSDK-Swift in Resources */,
-				1C6732262265223E00438F90 /* SSOButtonDefault.png in Resources */,
+				1C9D0BE725816B4E0016D8FC /* SSOButtonSolidDark.png in Resources */,
+				1C9D0BE625816B4E0016D8FC /* SSOButtonGradientDark.png in Resources */,
 				1CD100E92577E14300F7899C /* DXSDK-SwiftTests in Resources */,
-				1C6732242265223E00438F90 /* SSOButtonFlatTransparent.png in Resources */,
+				1C9D0BE525816B4E0016D8FC /* SSOButtonGradientLight.png in Resources */,
+				1C9D0BE325816B4E0016D8FC /* SSOButtonSolidLight.png in Resources */,
 				1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */,
-				1C6732252265223E00438F90 /* SSOButtonFlat.png in Resources */,
 				1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */,
+				1C9D0BE425816B4E0016D8FC /* SSOButtonDark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
