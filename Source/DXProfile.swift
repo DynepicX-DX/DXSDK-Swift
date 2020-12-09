@@ -6,7 +6,7 @@
 
 import Foundation
 
-//  Struct representing a playPORTAL user's profile.
+//  Struct representing a DX user's profile.
 public struct DXProfile: Codable {
   
   public let userId: String
@@ -40,14 +40,14 @@ public struct DXProfile: Codable {
     fatalError("`DXProfile` instances should only be initialized by decoding.")
   }
   
-  //  Represents possible playPORTAL user types
+  //  Represents possible DX user types
   public enum UserType: String, Codable {
     case adult = "adult"
     case child = "child"
     case teenMinor = "teen-minor"
   }
   
-  //  Represents possible playPORTAL account types
+  //  Represents possible DX account types
   public enum AccountType: String, Codable {
     case parent = "Parent"
     case kid = "Kid"

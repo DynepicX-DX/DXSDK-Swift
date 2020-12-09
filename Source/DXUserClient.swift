@@ -19,7 +19,7 @@ class UserEndpoints: EndpointsBase {
 }
 
 
-//  Responsible for making requests to playPORTAL user api
+//  Responsible for making requests to DX user api
 public final class DXUserClient: DXHTTPClient {
   
   public static let shared = DXUserClient()
@@ -31,7 +31,7 @@ public final class DXUserClient: DXHTTPClient {
   }
   
   /**
-   Get currently authenticated user's playPORTAL profile.
+   Get currently authenticated user's DX profile.
    
    - Parameter completion: The closure called when the request finishes.
    - Parameter error: The error returned on an unsuccessful request.
@@ -51,7 +51,7 @@ public final class DXUserClient: DXHTTPClient {
   }
   
   /**
-   Get currently authenticated user's playPORTAL friends' profiles.
+   Get currently authenticated user's DX friends' profiles.
    
    - Parameter completion: The closure called when the request finishes.
    - Parameter error: The error returned on an unsuccessful request.
@@ -137,7 +137,7 @@ public final class DXUserClient: DXHTTPClient {
   }
   
   /**
-   Create an anonymous user that can be used in place of a user created through the playPORTAL signup flow.
+   Create an anonymous user that can be used in place of a user created through the DX signup flow.
    - Parameter clientId: Client id associated with the app.
    - Parameter dateOfBirth: Date string representing the user's date of birth. This is required to create the appropriate type of account for the user.
    - Parameter deviceToken: Device token used for push notifications for this user.

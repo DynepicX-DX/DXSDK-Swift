@@ -19,7 +19,7 @@ class NotificationEndpoints: EndpointsBase {
   static let acknowledge = NotificationEndpoints.base + "/acknowledge"
 }
 
-//  Responsible for registering for notifications and making requests to playPORTAL notifications api
+//  Responsible for registering for notifications and making requests to DX notifications api
 public class DXNotificationClient: DXHTTPClient {
   
   public static let shared = DXNotificationClient()
@@ -51,10 +51,10 @@ public class DXNotificationClient: DXHTTPClient {
   /**
    Register for remote notifications.
    - Parameter options: The authorization options you want your app to have.
-   - Parameter deviceToken: If your app already uses remote notifications, you can send in your existing device token to register with the playPORTAL notifications api.
+   - Parameter deviceToken: If your app already uses remote notifications, you can send in your existing device token to register with the DX notifications api.
    - Parameter completion: The closure invoked when the request finishes.
    - Parameter error: The error returned for an unsuccessful request. This error can result from an error during the `UNUserNotificationCenter` authorization process
-   or be an error returned from the playPORTAL notifications api.
+   or be an error returned from the DX notifications api.
    */
   public func register(
     options: [UNAuthorizationOptions] = [.badge, .sound, .alert],
@@ -106,9 +106,9 @@ public class DXNotificationClient: DXHTTPClient {
   }
   
   /**
-   Create and send a notification to another playPORTAL user.
+   Create and send a notification to another DX user.
    - Parameter text: The notification text; this is what would be displayed in the alert.
-   - Parameter receiver: The playPORTAL user that will receive the notification.
+   - Parameter receiver: The DX user that will receive the notification.
    - Parameter persist: Should the notification be saved; if `true`, `receiver` will be able to retrieve the notification when requesting their notifications.
    - Parameter completion: The closure invoked when the request finishes.
    - Parameter error: The error returned for an unsuccessful request.
@@ -180,7 +180,7 @@ public class DXNotificationClient: DXHTTPClient {
   }
   
   /**
-   Acknowledge that a playPORTAL notification has been seen.
+   Acknowledge that a DX notification has been seen.
    - Parameter notificationId: The id of the notification being acknowledged.
    - Parameter completion: The closure invoked when the request finishes.
    - Parameter error: The error returned for an unsuccessful request.

@@ -7,7 +7,7 @@
 
 import Foundation
 
-//  Struct representing a playPORTAL notification
+//  Struct representing a DX notification
 public struct DXNotification: Codable {
   
   public let notificationId: String

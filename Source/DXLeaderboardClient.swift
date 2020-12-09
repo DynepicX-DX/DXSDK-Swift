@@ -14,7 +14,7 @@ class LeaderboardEndpoints: EndpointsBase {
 }
 
 
-//  Responsible for making requests to playPORTAL leaderboard api
+//  Responsible for making requests to DX leaderboard api
 public final class DXLeaderboardClient: DXHTTPClient {
   
   public static let shared = DXLeaderboardClient()

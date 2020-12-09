@@ -7,7 +7,7 @@
 import Foundation
 import SafariServices
 
-//  Available playPORTAL environments
+//  Available DX environments
 public enum DXEnvironment: String {
   
   case sandbox = "SANDBOX"
@@ -73,7 +73,6 @@ public final class DXAuthClient: DXHTTPClient {
   
   //  MARK: - Properties
   
-  //  TODO - remove properties that were moved to playportalclient
   public static let shared = DXAuthClient()
   private(set) var environment = DXEnvironment.sandbox
   //    private var clientId = ""
@@ -105,10 +104,10 @@ public final class DXAuthClient: DXHTTPClient {
   /**
    Configures the sdk with an app's credentials, environment and redirect URI.
    
-   - Parameter forEnvironment: playPORTAL environment the sdk will make requests to.
+   - Parameter forEnvironment: DX environment the sdk will make requests to.
    - Parameter withClientId: Client id associated with the app.
    - Parameter andClientSecret: Client secret associated with the app.
-   - Parameter andRedirectURI: The redirect uri the playPORTAL SSO will use to return an authenticated user's tokens.
+   - Parameter andRedirectURI: The redirect uri the DX SSO will use to return an authenticated user's tokens.
    
    - Returns: Void
    */
@@ -143,7 +142,7 @@ public final class DXAuthClient: DXHTTPClient {
    - Parameter loginDelegate: Optionally include login delegate.
    - Parameter completion: The closure invoked after requesting the user's profile.
    - Parameter error: The error returned from an unsuccessful request.
-   - Parameter userProfile: The playPORTAL user profile returned from a successful request.
+   - Parameter userProfile: The DX user profile returned from a successful request.
    
    - Returns: Void
    */
@@ -186,7 +185,7 @@ public final class DXAuthClient: DXHTTPClient {
   }
   
   /**
-   Opens playPORTAL SSO.
+   Opens DX SSO.
    
    - Parameter delegate: DXLoginDelegate to handle any SSO errors.
    - Parameter from: UIViewController to present SFSafariViewController; defaults to topmost view controller.
@@ -218,9 +217,9 @@ public final class DXAuthClient: DXHTTPClient {
   }
   
   /**
-   This function must be invoked in the AppDelegate's application(_:handleOpen:) method to handle a successful redirect from the playPORTAL SSO.
+   This function must be invoked in the AppDelegate's application(_:handleOpen:) method to handle a successful redirect from the DX SSO.
    
-   - Parameters url: The redirect URI called by playPORTAL SSO containing a user's tokens.
+   - Parameters url: The redirect URI called by DX SSO containing a user's tokens.
    
    - Returns: Void
    */

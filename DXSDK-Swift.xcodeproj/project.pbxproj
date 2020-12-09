@@ -10,7 +10,6 @@
 		1C0C57322577E30B00BB639F /* DXCourseObjective.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0C57312577E30B00BB639F /* DXCourseObjective.swift */; };
 		1C30807422B934A2004A8AD6 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C30807122B934A1004A8AD6 /* HTTPClient.swift */; };
 		1C30807522B934A2004A8AD6 /* RefreshClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C30807222B934A1004A8AD6 /* RefreshClient.swift */; };
-		1C32F787218A000B00B9F773 /* DXUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C32F784218A000A00B9F773 /* DXUtils.swift */; };
 		1C3A99F621979A7A0041DB2E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3A99F221979A790041DB2E /* Extensions.swift */; };
 		1C477F8E217F977600B42160 /* DXError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F87217F977500B42160 /* DXError.swift */; };
 		1C477F94217F977600B42160 /* DXLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C477F8D217F977600B42160 /* DXLoginButton.swift */; };
@@ -70,7 +69,6 @@
 		1C0C57312577E30B00BB639F /* DXCourseObjective.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DXCourseObjective.swift; sourceTree = "<group>"; };
 		1C30807122B934A1004A8AD6 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		1C30807222B934A1004A8AD6 /* RefreshClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshClient.swift; sourceTree = "<group>"; };
-		1C32F784218A000A00B9F773 /* DXUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DXUtils.swift; sourceTree = "<group>"; };
 		1C3A99F221979A790041DB2E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1C477F87217F977500B42160 /* DXError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DXError.swift; sourceTree = "<group>"; };
 		1C477F8D217F977600B42160 /* DXLoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DXLoginButton.swift; sourceTree = "<group>"; };
@@ -220,7 +218,6 @@
 				1C477F8D217F977600B42160 /* DXLoginButton.swift */,
 				1CE0F8C6220DF81C00FCB87C /* DXNotification.swift */,
 				1C89E54A2184BD2A00CA3528 /* DXProfile.swift */,
-				1C32F784218A000A00B9F773 /* DXUtils.swift */,
 				1CD1E3CD217F441900C2B083 /* DXSDK_Swift.h */,
 				1C8468B721CAAB3C00A540C8 /* StorageHandler.swift */,
 				1C89E5522184BD2B00CA3528 /* Utils.swift */,
@@ -450,7 +447,6 @@
 				1C7D6A522388128D0051DC1F /* DXDataClient.swift in Sources */,
 				1C7D6A562388128D0051DC1F /* DXNotificationClient.swift in Sources */,
 				1C8468BC21CAAB7800A540C8 /* Events.swift in Sources */,
-				1C32F787218A000B00B9F773 /* DXUtils.swift in Sources */,
 				1C70554D218892CA007EB006 /* DXLeaderboardEntry.swift in Sources */,
 				1CE896362448BF6C00344EB8 /* DXAssessmentQuestion.swift in Sources */,
 				1CE0F8C8220DF81C00FCB87C /* DXNotification.swift in Sources */,

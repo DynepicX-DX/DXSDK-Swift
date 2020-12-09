@@ -6,7 +6,7 @@
 
 import Foundation
 
-//  Represents a playPORTAL user's leaderboard entry
+//  Represents a DX user's leaderboard entry
 public struct DXLeaderboardEntry: Codable {
   
   public let score: Double

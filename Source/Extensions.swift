@@ -93,15 +93,15 @@ extension UIApplication {
 public extension UIImageView {
   
   /**
-   Get playPORTAL image by id and set as `UIImageView.image`.
+   Get DX image by id and set as `UIImageView.image`.
    
-   - Parameter forImageId: Id corresponding to playPORTAL image.
+   - Parameter forImageId: Id corresponding to DX image.
    - Parameter completion: The closure called when the request finishes.
    - Parameter error: The error returned for an unsuccessful request.
    
    - Returns: Void
    */
-  func playPortalImage(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
+  func dxImage(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
     guard let imageId = imageId else {
       completion?(nil)
       return
@@ -115,16 +115,16 @@ public extension UIImageView {
   }
   
   /**
-   Get playPORTAL profile pic by id and set as `UIImageView.image`.
+   Get DX profile pic by id and set as `UIImageView.image`.
    If profile pic id is nil or the image is unable to be requested, will use a default image.
    
-   - Parameter forImageId: Id corresponding to the playPORTAL user's profile pic; if image is nil, use a default image.
+   - Parameter forImageId: Id corresponding to the DX user's profile pic; if image is nil, use a default image.
    - Parameter completion: The closure called when the request finishes.
    - Parameter error: The error returned for an unsuccessful request.
    
    - Returns: Void
    */
-  func playPortalProfilePic(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
+  func dxProfilePic(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
     DispatchQueue.main.async { [weak self] in
       self?.image = Utils.getImageAsset(byName: "anonUser")
     }
@@ -143,16 +143,16 @@ public extension UIImageView {
   }
   
   /**
-   Get playPORTAL cover photo by id and set as `UIImageView.image`.
+   Get DX cover photo by id and set as `UIImageView.image`.
    If cover photo id is nil or the image is unable to be requested, will use a default image.
    
-   - Parameter forImageId: Id corresponding to the playPORTAL user's cover photo; if image is nil, use a default image.
+   - Parameter forImageId: Id corresponding to the DX user's cover photo; if image is nil, use a default image.
    - Parameter completion: The closure called when the request finishes.
    - Parameter error: The error returned for an unsuccessful request.
    
    - Returns: Void
    */
-  func playPortalCoverPhoto(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
+  func dxCoverPhoto(forImageId imageId: String?, _ completion: ((_ error: Error?) -> Void)?) -> Void {
     DispatchQueue.main.async { [weak self] in
       self?.image = Utils.getImageAsset(byName: "anonUserCover")
     }

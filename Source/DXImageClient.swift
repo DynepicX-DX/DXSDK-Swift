@@ -16,7 +16,7 @@ class ImageEndpoints: EndpointsBase {
 }
 
 
-//  Responsible for making requests to playPORTAL image api
+//  Responsible for making requests to DX image api
 public final class DXImageClient: DXHTTPClient {
   
   public static let shared = DXImageClient()
@@ -24,7 +24,7 @@ public final class DXImageClient: DXHTTPClient {
   private override init() {}
   
   /**
-   Make request for playPORTAL image by its id
+   Make request for DX image by its id
    
    - Parameter forImageId: Id of the image being requested
    - Parameter completion: The closure called when the request finishes.

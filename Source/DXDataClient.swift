@@ -15,7 +15,7 @@ class DataEndpoints: EndpointsBase {
   static let bucketList = DataEndpoints.base + "/bucket/list"
 }
 
-//  Responsible for making requests to playPORTAL app api
+//  Responsible for making requests to DX app api
 public final class DXDataClient: DXHTTPClient {
   
   public static let shared = DXDataClient()
