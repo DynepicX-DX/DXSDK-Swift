@@ -145,40 +145,40 @@ public final class DXUserClient: DXHTTPClient {
    - Parameter error: The error returned for an unsuccessful request.
    - Parameter anonymousUser: The anonymous user created for a successful request.
    */
-  public func createAnonymousUser(
-    clientId: String,
-    dateOfBirth: String,
-    deviceToken: Data? = nil,
-    completion: @escaping (_ error: Error?, _ anonymousUser: DXProfile?) -> Void)
-    -> Void
-  {
-    let body: [String: Any?] = [
-      "clientId": clientId,
-      "dateOfBirth": dateOfBirth,
-      "deviceToken": deviceToken,
-      "anonymous": true
-    ]
-    
-    let handleSuccess: HandleSuccess<DXProfile> = { response, data in
-      guard let accessToken = response.allHeaderFields["access_token"] as? String
-        , let refreshToken = response.allHeaderFields["refresh_token"] as? String
-        else {
-          throw DXError.API.unableToDeserializeResult(message: "Couldn't deserialize access or refresh token from response.")
-      }
-      
-      DXUserClient.accessToken = accessToken
-      DXUserClient.refreshToken = refreshToken
-      
-      return try self.defaultSuccessHandler(response: response, data: data)
-    }
-    
-    request(
-      url: UserEndpoints.userProfile,
-      method: .put,
-      body: body,
-      createRequest: defaultRequestCreator,
-      handleSuccess: handleSuccess,
-      completionWithDecodableResult: completion
-    )
-  }
+//  public func createAnonymousUser(
+//    clientId: String,
+//    dateOfBirth: String,
+//    deviceToken: Data? = nil,
+//    completion: @escaping (_ error: Error?, _ anonymousUser: DXProfile?) -> Void)
+//    -> Void
+//  {
+//    let body: [String: Any?] = [
+//      "clientId": clientId,
+//      "dateOfBirth": dateOfBirth,
+//      "deviceToken": deviceToken,
+//      "anonymous": true
+//    ]
+//
+//    let handleSuccess: HandleSuccess<DXProfile> = { response, data in
+//      guard let accessToken = response.allHeaderFields["access_token"] as? String
+//        , let refreshToken = response.allHeaderFields["refresh_token"] as? String
+//        else {
+//          throw DXError.API.unableToDeserializeResult(message: "Couldn't deserialize access or refresh token from response.")
+//      }
+//
+//      DXUserClient.accessToken = accessToken
+//      DXUserClient.refreshToken = refreshToken
+//
+//      return try self.defaultSuccessHandler(response: response, data: data)
+//    }
+//
+//    request(
+//      url: UserEndpoints.userProfile,
+//      method: .put,
+//      body: body,
+//      createRequest: defaultRequestCreator,
+//      handleSuccess: handleSuccess,
+//      completionWithDecodableResult: completion
+//    )
+//  }
 }

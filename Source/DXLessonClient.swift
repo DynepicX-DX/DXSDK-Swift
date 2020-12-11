@@ -47,36 +47,36 @@ public final class DXLessonClient: DXHTTPClient {
      `Error` argument if the request fails; otherwise, called with the newly created
      `DXLesson`.
      */
-    public func createLesson(
-        order: Int,
-        courseId: String,
-        media: String,
-        name: String,
-        description: String,
-        profilePic: String,
-        `public`: Bool? = nil,
-        coverPhoto: String? = nil,
-        _ completion: @escaping (_ error: Error?, _ lesson: DXLesson?) -> Void)
-        -> Void
-    {
-        let body: [String: Any] = [
-            "order": order,
-            "courseId": courseId,
-            "media": media,
-            "name": name,
-            "description": description,
-            "profilePic": profilePic,
-            "public": `public` as Any,
-            "coverPhoto": coverPhoto as Any,
-        ]
-        
-        request(
-            url: LessonEndpoints.lesson,
-            method: .put,
-            body: body,
-            completionWithDecodableResult: completion
-        )
-    }
+//    public func createLesson(
+//        order: Int,
+//        courseId: String,
+//        media: String,
+//        name: String,
+//        description: String,
+//        profilePic: String,
+//        `public`: Bool? = nil,
+//        coverPhoto: String? = nil,
+//        _ completion: @escaping (_ error: Error?, _ lesson: DXLesson?) -> Void)
+//        -> Void
+//    {
+//        let body: [String: Any] = [
+//            "order": order,
+//            "courseId": courseId,
+//            "media": media,
+//            "name": name,
+//            "description": description,
+//            "profilePic": profilePic,
+//            "public": `public` as Any,
+//            "coverPhoto": coverPhoto as Any,
+//        ]
+//        
+//        request(
+//            url: LessonEndpoints.lesson,
+//            method: .put,
+//            body: body,
+//            completionWithDecodableResult: completion
+//        )
+//    }
     
     /**
      Retrieves a single lesson by ID.

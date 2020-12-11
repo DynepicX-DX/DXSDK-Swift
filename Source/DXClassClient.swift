@@ -29,23 +29,23 @@ public final class DXClassClient: DXHTTPClient {
       `Error` argument if the request fails; otherwise, called with the newly created
       `DXClass`.
    */
-  public func createClass(
-    name: String,
-    courseId: String? = nil,
-    _ completion: @escaping (_ error: Error?, _ class: DXClass?) -> Void)
-    -> Void
-  {
-    let body: [String: Any] = [
-      "name": name,
-      "courseId": courseId as Any
-    ]
-    request(
-      url: ClassEndpoints.class,
-      method: .put,
-      body: body,
-      completionWithDecodableResult: completion
-    )
-  }
+//  public func createClass(
+//    name: String,
+//    courseId: String? = nil,
+//    _ completion: @escaping (_ error: Error?, _ class: DXClass?) -> Void)
+//    -> Void
+//  {
+//    let body: [String: Any] = [
+//      "name": name,
+//      "courseId": courseId as Any
+//    ]
+//    request(
+//      url: ClassEndpoints.class,
+//      method: .put,
+//      body: body,
+//      completionWithDecodableResult: completion
+//    )
+//  }
   
   /**
    Retrieves all the classes belonging to the requesting teacher.

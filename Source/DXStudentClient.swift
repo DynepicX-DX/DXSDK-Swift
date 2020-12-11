@@ -34,23 +34,23 @@ public final class DXStudentClient: DXHTTPClient {
    - Parameter completion: The closure invoked when the request finishes. Called with an
       `Error` argument if the request fails.
    */
-  public func addStudent(
-    studentId: String,
-    classId: String,
-    _ completion: ((_ error: Error?) -> Void)?
-  )
-  {
-    let body: [String: Any] = [
-      "studentId": studentId,
-      "classId": classId
-    ]
-    request(
-      url: StudentEndpoints.addStudent,
-      method: .post,
-      body: body,
-      completionWithNoResult: completion
-    )
-  }
+//  public func addStudent(
+//    studentId: String,
+//    classId: String,
+//    _ completion: ((_ error: Error?) -> Void)?
+//  )
+//  {
+//    let body: [String: Any] = [
+//      "studentId": studentId,
+//      "classId": classId
+//    ]
+//    request(
+//      url: StudentEndpoints.addStudent,
+//      method: .post,
+//      body: body,
+//      completionWithNoResult: completion
+//    )
+//  }
   
   /**
    Retrieves students in the specified class.
@@ -60,37 +60,37 @@ public final class DXStudentClient: DXHTTPClient {
    - Parameter completion: The closure invoked when the request finishes. Called with an
       `Error` argument if the request fails; otherwise, called with the requested students.
    */
-  public func getStudents(
-    classId: String,
-    limit: Int? = nil,
-    page: Int? = nil,
-    _ completion: @escaping (_ error: Error?, _ students: [DXProfile]?) -> Void)
-    -> Void
-  {
-    let params: [String: Any?] = [
-      "classId": classId,
-      "limit": limit,
-      "page": page,
-    ]
-    
-    let handleSuccess: HandleSuccess<[DXProfile]> = { response, data in
-      guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-        let docs = json["docs"] else {
-          throw DXError.API.unableToDeserializeResult(message: "Unable to deserialize DXProfile array.")
-      }
-      
-      let data = try JSONSerialization.data(withJSONObject: docs, options: [])
-      return try self.defaultSuccessHandler(response: response, data: data)
-    }
-    
-    request(
-      url: StudentEndpoints.list,
-      method: .get,
-      queryParameters: params,
-      handleSuccess: handleSuccess,
-      completionWithDecodableResult: completion
-    )
-  }
+//  public func getStudents(
+//    classId: String,
+//    limit: Int? = nil,
+//    page: Int? = nil,
+//    _ completion: @escaping (_ error: Error?, _ students: [DXProfile]?) -> Void)
+//    -> Void
+//  {
+//    let params: [String: Any?] = [
+//      "classId": classId,
+//      "limit": limit,
+//      "page": page,
+//    ]
+//
+//    let handleSuccess: HandleSuccess<[DXProfile]> = { response, data in
+//      guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+//        let docs = json["docs"] else {
+//          throw DXError.API.unableToDeserializeResult(message: "Unable to deserialize DXProfile array.")
+//      }
+//
+//      let data = try JSONSerialization.data(withJSONObject: docs, options: [])
+//      return try self.defaultSuccessHandler(response: response, data: data)
+//    }
+//
+//    request(
+//      url: StudentEndpoints.list,
+//      method: .get,
+//      queryParameters: params,
+//      handleSuccess: handleSuccess,
+//      completionWithDecodableResult: completion
+//    )
+//  }
   
   /**
    Removes a student from a specific class.
@@ -99,24 +99,24 @@ public final class DXStudentClient: DXHTTPClient {
    - Parameter completion: The closure invoked when the request finishes. Called with an
       `Error` argument if the request fails.
    */
-  public func removeStudent(
-    studentId: String,
-    classId: String,
-    _ completion: @escaping (_ error: Error?) -> Void)
-    -> Void
-  {
-    let body: [String: Any] = [
-      "studentId": studentId,
-      "classId": classId as Any
-    ]
-    
-    request(
-      url: StudentEndpoints.remove,
-      method: .post,
-      body: body,
-      completionWithNoResult: completion
-    )
-  }
+//  public func removeStudent(
+//    studentId: String,
+//    classId: String,
+//    _ completion: @escaping (_ error: Error?) -> Void)
+//    -> Void
+//  {
+//    let body: [String: Any] = [
+//      "studentId": studentId,
+//      "classId": classId as Any
+//    ]
+//
+//    request(
+//      url: StudentEndpoints.remove,
+//      method: .post,
+//      body: body,
+//      completionWithNoResult: completion
+//    )
+//  }
   
   /**
    Adds a comment about a student.
