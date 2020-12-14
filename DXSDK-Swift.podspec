@@ -6,7 +6,7 @@ Pod::Spec.new do |spec|
   Swift SDK providing access to DX services.
                    DESC
 
-  spec.homepage     = "http://gitlab.motar.io/sdks/swift-temp"
+  spec.homepage     = "https://gitlab.motar.io/sdks/swift-temp"
   spec.license      = "Apache"
   spec.author             = { "Lincoln Fraley" => "lincoln@dynepic.com" }
   spec.source       = { :git => spec.homepage }
