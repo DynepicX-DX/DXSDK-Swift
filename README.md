@@ -4,13 +4,13 @@ To use this library, you will first need to install the Cocoapods dependency man
 
 Next, follow [this](https://guides.cocoapods.org/using/using-cocoapods.html) guide to setup your Xcode project to use Cocoapods.
 
-Then, in your **Podfile**, add this line `pod 'DXSDK-Swift', :git => 'https://gitlab.motar.io/sdks/swift'`. Your **Podfile** should look something like this:
+Then, in your **Podfile**, add this line `pod 'DXSDK-Swift', :git => 'https://github.com/DynepicX-DX/DXSDK-Swift'`. Your **Podfile** should look something like this:
 
 	target 'YourProjectName' do
     	use_frameworks!
 
-  		pod 'DXSDK-Swift', :git => 'https://gitlab.motar.io/sdks/swift'
+  		pod 'DXSDK-Swift', :git => 'https://github.com/DynepicX-DX/DXSDK-Swift'
 
 	end
 	
-Finally, from the command line inside your project's directory, run `pod install`. At this point, you should be good to go!
+Finally, from the command line inside your project's directory, run `pod install`. 
