@@ -11,11 +11,9 @@ import UIKit
 public enum DXLoginButtonImage: String {
   
     case dark = "SSOButtonDark"
+    case gradient = "SSOButtonGradient"
     case light = "SSOButtonLight"
-    case solidDark = "SSOButtonSolidDark"
-    case solidLight = "SSOButtonSolidLight"
-    case gradientDark = "SSOButtonGradientDark"
-    case gradientLight = "SSOButtonGradientLight"
+    case solid = "SSOButtonSolid"
 }
 
 //  Responsible for initializing SSO flow when tapped.

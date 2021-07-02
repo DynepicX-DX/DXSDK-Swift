@@ -38,12 +38,6 @@
 		1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55E2184BD3200CA3528 /* AnonUser.png */; };
 		1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E55F2184BD3200CA3528 /* AnonUserCover.png */; };
 		1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C89E5602184BD3200CA3528 /* QuestionMark.jpg */; };
-		1C9D0BE225816B4E0016D8FC /* SSOButtonLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BDC25816B4E0016D8FC /* SSOButtonLight.png */; };
-		1C9D0BE325816B4E0016D8FC /* SSOButtonSolidLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BDD25816B4E0016D8FC /* SSOButtonSolidLight.png */; };
-		1C9D0BE425816B4E0016D8FC /* SSOButtonDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BDE25816B4E0016D8FC /* SSOButtonDark.png */; };
-		1C9D0BE525816B4E0016D8FC /* SSOButtonGradientLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BDF25816B4E0016D8FC /* SSOButtonGradientLight.png */; };
-		1C9D0BE625816B4E0016D8FC /* SSOButtonGradientDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BE025816B4E0016D8FC /* SSOButtonGradientDark.png */; };
-		1C9D0BE725816B4E0016D8FC /* SSOButtonSolidDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9D0BE125816B4E0016D8FC /* SSOButtonSolidDark.png */; };
 		1CD100E82577E14300F7899C /* DXSDK-Swift in Resources */ = {isa = PBXBuildFile; fileRef = 1CD100E62577E14300F7899C /* DXSDK-Swift */; };
 		1CD100E92577E14300F7899C /* DXSDK-SwiftTests in Resources */ = {isa = PBXBuildFile; fileRef = 1CD100E72577E14300F7899C /* DXSDK-SwiftTests */; };
 		1CD1E3DB217F441900C2B083 /* DXSDK_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD1E3CD217F441900C2B083 /* DXSDK_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -52,6 +46,10 @@
 		1CE896372448BF6C00344EB8 /* DXAssessmentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE896332448BF6C00344EB8 /* DXAssessmentClient.swift */; };
 		1CE896382448BF6C00344EB8 /* DXNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE896342448BF6C00344EB8 /* DXNote.swift */; };
 		1CE896392448BF6C00344EB8 /* DXNoteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE896352448BF6C00344EB8 /* DXNoteClient.swift */; };
+		42B00ECD268F6128003D119F /* SSOButtonSolid.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B00EC9268F6127003D119F /* SSOButtonSolid.png */; };
+		42B00ECE268F6128003D119F /* SSOButtonGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B00ECA268F6127003D119F /* SSOButtonGradient.png */; };
+		42B00ECF268F6128003D119F /* SSOButtonDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B00ECB268F6127003D119F /* SSOButtonDark.png */; };
+		42B00ED0268F6128003D119F /* SSOButtonLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B00ECC268F6128003D119F /* SSOButtonLight.png */; };
 		81165544FC8624CAA0A5588A /* Pods_DXSDK_Swift_DXSDK_SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8359F3B72E4990AF6F24746C /* Pods_DXSDK_Swift_DXSDK_SwiftTests.framework */; };
 		82670D2550BF8BC772C235AB /* Pods_DXSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A32AD988B07C35C456EB19E /* Pods_DXSDK_Swift.framework */; };
 /* End PBXBuildFile section */
@@ -97,12 +95,6 @@
 		1C89E55E2184BD3200CA3528 /* AnonUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUser.png; sourceTree = "<group>"; };
 		1C89E55F2184BD3200CA3528 /* AnonUserCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnonUserCover.png; sourceTree = "<group>"; };
 		1C89E5602184BD3200CA3528 /* QuestionMark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = QuestionMark.jpg; sourceTree = "<group>"; };
-		1C9D0BDC25816B4E0016D8FC /* SSOButtonLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonLight.png; sourceTree = "<group>"; };
-		1C9D0BDD25816B4E0016D8FC /* SSOButtonSolidLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonSolidLight.png; sourceTree = "<group>"; };
-		1C9D0BDE25816B4E0016D8FC /* SSOButtonDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonDark.png; sourceTree = "<group>"; };
-		1C9D0BDF25816B4E0016D8FC /* SSOButtonGradientLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonGradientLight.png; sourceTree = "<group>"; };
-		1C9D0BE025816B4E0016D8FC /* SSOButtonGradientDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonGradientDark.png; sourceTree = "<group>"; };
-		1C9D0BE125816B4E0016D8FC /* SSOButtonSolidDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SSOButtonSolidDark.png; sourceTree = "<group>"; };
 		1CD100E62577E14300F7899C /* DXSDK-Swift */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "DXSDK-Swift"; sourceTree = "<group>"; };
 		1CD100E72577E14300F7899C /* DXSDK-SwiftTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "DXSDK-SwiftTests"; sourceTree = "<group>"; };
 		1CD1E3CA217F441900C2B083 /* DXSDK_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DXSDK_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +107,10 @@
 		1CE896352448BF6C00344EB8 /* DXNoteClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DXNoteClient.swift; sourceTree = "<group>"; };
 		2A271FB6259AEF8AF1CB8798 /* Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift-PPSDK-SwiftTests/Pods-PPSDK-Swift-PPSDK-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		2D5BDB7C0B864E83D9ADA7A6 /* Pods-DXSDK-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DXSDK-Swift.release.xcconfig"; path = "Target Support Files/Pods-DXSDK-Swift/Pods-DXSDK-Swift.release.xcconfig"; sourceTree = "<group>"; };
+		42B00EC9268F6127003D119F /* SSOButtonSolid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SSOButtonSolid.png; path = ../../SSO_MOTAR_png/SSOButtonSolid.png; sourceTree = "<group>"; };
+		42B00ECA268F6127003D119F /* SSOButtonGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SSOButtonGradient.png; path = ../../SSO_MOTAR_png/SSOButtonGradient.png; sourceTree = "<group>"; };
+		42B00ECB268F6127003D119F /* SSOButtonDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SSOButtonDark.png; path = ../../SSO_MOTAR_png/SSOButtonDark.png; sourceTree = "<group>"; };
+		42B00ECC268F6128003D119F /* SSOButtonLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SSOButtonLight.png; path = ../../SSO_MOTAR_png/SSOButtonLight.png; sourceTree = "<group>"; };
 		49D0A53B87D85EE8CCCCAAE5 /* Pods-PPSDK-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift.debug.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift/Pods-PPSDK-Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		5F234D70E7EE9B93C35BFF93 /* Pods-DXSDK-Swift-DXSDK-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DXSDK-Swift-DXSDK-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-DXSDK-Swift-DXSDK-SwiftTests/Pods-DXSDK-Swift-DXSDK-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		69479C60CBE99044F3C31BB7 /* Pods-PPSDK-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-SwiftTests/Pods-PPSDK-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -153,12 +149,10 @@
 		1CC6076A2180B5D600B47385 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1C9D0BDE25816B4E0016D8FC /* SSOButtonDark.png */,
-				1C9D0BE025816B4E0016D8FC /* SSOButtonGradientDark.png */,
-				1C9D0BDF25816B4E0016D8FC /* SSOButtonGradientLight.png */,
-				1C9D0BDC25816B4E0016D8FC /* SSOButtonLight.png */,
-				1C9D0BE125816B4E0016D8FC /* SSOButtonSolidDark.png */,
-				1C9D0BDD25816B4E0016D8FC /* SSOButtonSolidLight.png */,
+				42B00ECB268F6127003D119F /* SSOButtonDark.png */,
+				42B00ECA268F6127003D119F /* SSOButtonGradient.png */,
+				42B00ECC268F6128003D119F /* SSOButtonLight.png */,
+				42B00EC9268F6127003D119F /* SSOButtonSolid.png */,
 				1C89E55E2184BD3200CA3528 /* AnonUser.png */,
 				1C89E55F2184BD3200CA3528 /* AnonUserCover.png */,
 				1C89E5602184BD3200CA3528 /* QuestionMark.jpg */,
@@ -352,17 +346,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C9D0BE225816B4E0016D8FC /* SSOButtonLight.png in Resources */,
 				1C89E5632184BD3200CA3528 /* AnonUserCover.png in Resources */,
+				42B00ECE268F6128003D119F /* SSOButtonGradient.png in Resources */,
 				1CD100E82577E14300F7899C /* DXSDK-Swift in Resources */,
-				1C9D0BE725816B4E0016D8FC /* SSOButtonSolidDark.png in Resources */,
-				1C9D0BE625816B4E0016D8FC /* SSOButtonGradientDark.png in Resources */,
+				42B00ED0268F6128003D119F /* SSOButtonLight.png in Resources */,
 				1CD100E92577E14300F7899C /* DXSDK-SwiftTests in Resources */,
-				1C9D0BE525816B4E0016D8FC /* SSOButtonGradientLight.png in Resources */,
-				1C9D0BE325816B4E0016D8FC /* SSOButtonSolidLight.png in Resources */,
 				1C89E5642184BD3200CA3528 /* QuestionMark.jpg in Resources */,
 				1C89E5622184BD3200CA3528 /* AnonUser.png in Resources */,
-				1C9D0BE425816B4E0016D8FC /* SSOButtonDark.png in Resources */,
+				42B00ECD268F6128003D119F /* SSOButtonSolid.png in Resources */,
+				42B00ECF268F6128003D119F /* SSOButtonDark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
