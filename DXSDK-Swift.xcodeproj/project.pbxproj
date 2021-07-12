@@ -50,6 +50,8 @@
 		42B00ECE268F6128003D119F /* SSOButtonGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B00ECA268F6127003D119F /* SSOButtonGradient.png */; };
 		42B00ECF268F6128003D119F /* SSOButtonDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B00ECB268F6127003D119F /* SSOButtonDark.png */; };
 		42B00ED0268F6128003D119F /* SSOButtonLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 42B00ECC268F6128003D119F /* SSOButtonLight.png */; };
+		42CDF678269CDD6500528A67 /* DXQuestionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CDF677269CDD6500528A67 /* DXQuestionClient.swift */; };
+		42CDF67A269CDDB800528A67 /* DXQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CDF679269CDDB800528A67 /* DXQuestion.swift */; };
 		81165544FC8624CAA0A5588A /* Pods_DXSDK_Swift_DXSDK_SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8359F3B72E4990AF6F24746C /* Pods_DXSDK_Swift_DXSDK_SwiftTests.framework */; };
 		82670D2550BF8BC772C235AB /* Pods_DXSDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A32AD988B07C35C456EB19E /* Pods_DXSDK_Swift.framework */; };
 /* End PBXBuildFile section */
@@ -111,6 +113,8 @@
 		42B00ECA268F6127003D119F /* SSOButtonGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SSOButtonGradient.png; path = ../../SSO_MOTAR_png/SSOButtonGradient.png; sourceTree = "<group>"; };
 		42B00ECB268F6127003D119F /* SSOButtonDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SSOButtonDark.png; path = ../../SSO_MOTAR_png/SSOButtonDark.png; sourceTree = "<group>"; };
 		42B00ECC268F6128003D119F /* SSOButtonLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SSOButtonLight.png; path = ../../SSO_MOTAR_png/SSOButtonLight.png; sourceTree = "<group>"; };
+		42CDF677269CDD6500528A67 /* DXQuestionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DXQuestionClient.swift; sourceTree = "<group>"; };
+		42CDF679269CDDB800528A67 /* DXQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DXQuestion.swift; sourceTree = "<group>"; };
 		49D0A53B87D85EE8CCCCAAE5 /* Pods-PPSDK-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-Swift.debug.xcconfig"; path = "Target Support Files/Pods-PPSDK-Swift/Pods-PPSDK-Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		5F234D70E7EE9B93C35BFF93 /* Pods-DXSDK-Swift-DXSDK-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DXSDK-Swift-DXSDK-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-DXSDK-Swift-DXSDK-SwiftTests/Pods-DXSDK-Swift-DXSDK-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		69479C60CBE99044F3C31BB7 /* Pods-PPSDK-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPSDK-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-PPSDK-SwiftTests/Pods-PPSDK-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -200,6 +204,8 @@
 				1C7D6A412388128D0051DC1F /* DXLeaderboardClient.swift */,
 				1C7D6A3D2388128C0051DC1F /* DXLesson.swift */,
 				1C7D6A3E2388128D0051DC1F /* DXLessonClient.swift */,
+				42CDF679269CDDB800528A67 /* DXQuestion.swift */,
+				42CDF677269CDD6500528A67 /* DXQuestionClient.swift */,
 				1C7D6A462388128D0051DC1F /* DXNotificationClient.swift */,
 				1C7D6A472388128D0051DC1F /* DXStudentClient.swift */,
 				1C7D6A3F2388128D0051DC1F /* DXStudentComment.swift */,
@@ -435,6 +441,7 @@
 				1C7D6A4B2388128D0051DC1F /* DXClassClient.swift in Sources */,
 				1C477F8E217F977600B42160 /* DXError.swift in Sources */,
 				1C7D6A482388128D0051DC1F /* DXClass.swift in Sources */,
+				42CDF678269CDD6500528A67 /* DXQuestionClient.swift in Sources */,
 				1CE896392448BF6C00344EB8 /* DXNoteClient.swift in Sources */,
 				1C7D6A552388128D0051DC1F /* DXCourse.swift in Sources */,
 				1C7D6A4E2388128D0051DC1F /* DXLessonClient.swift in Sources */,
@@ -458,6 +465,7 @@
 				1C7D6A542388128D0051DC1F /* DXUserClient.swift in Sources */,
 				1C7D6A4C2388128D0051DC1F /* DXXAPIClient.swift in Sources */,
 				1C7D6A502388128D0051DC1F /* DXAuthClient.swift in Sources */,
+				42CDF67A269CDDB800528A67 /* DXQuestion.swift in Sources */,
 				1C8468B821CAAB3C00A540C8 /* StorageHandler.swift in Sources */,
 				1CE896382448BF6C00344EB8 /* DXNote.swift in Sources */,
 			);
