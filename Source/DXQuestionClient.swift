@@ -17,6 +17,8 @@ class QuestionEndpoints : EndpointsBase {
         
         public static let shared = DXQuestionClient()
 
+        private override init() {}
+
         /**
          This endpoint allows an instructor or a course manager to get all questions for a specific course.
          - Parameter order: Lessons must be completed in a specific order, specified with this
