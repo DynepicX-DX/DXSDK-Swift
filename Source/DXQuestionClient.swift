@@ -30,14 +30,24 @@ class QuestionEndpoints : EndpointsBase {
             requestingUserId: String,
             courseId: String,
             showRemoved: String? = nil,
-            _ completion: @escaping (_ error: Error?, _ question: DXQuestion?) -> Void)
+            _ completion: @escaping (_ error: Error?, _ questions: [DXQuestion]?) -> Void)
             -> Void
         {
             let params: [String: Any] = [
                 "requestingUserId": requestingUserId,
                 "courseId": courseId,
-                "showRemoved": showRemoved?
+                "showRemoved": showRemoved as Any,
             ]
+            
+            let handleSuccess: HandleSuccess<[DXQuestion]> = { response, data in
+                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                    let docs = json["docs"] else {
+                        throw DXError.API.unableToDeserializeResult(message: "Unable to deserialize DXQuestion array.")
+                }
+                
+                let data = try JSONSerialization.data(withJSONObject: docs, options: [])
+                return try self.defaultSuccessHandler(response: response, data: data)
+            }
             
             request(
                 url: QuestionEndpoints.question,
