@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DXQuestion: Codeable {
+public struct DXQuestion: Codable {
     
     public let requestingUserId: String
     public let courseId: String
