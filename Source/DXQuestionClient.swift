@@ -18,6 +18,7 @@ class QuestionEndpoints : EndpointsBase {
 }
 
 
+
 //  Responsible for making requests to DX question api
 public final class DXQuestionClient: DXHTTPClient {
   
@@ -45,21 +46,10 @@ public final class DXQuestionClient: DXHTTPClient {
         "showRemoved": showRemoved as Any,
     ]
     
-    let handleSuccess: HandleSuccess<[DXQuestion]> = { response, data in
-        guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-            let docs = json["docs"] else {
-                throw DXError.API.unableToDeserializeResult(message: "Unable to deserialize DXQuestion array.")
-        }
-        
-        let data = try JSONSerialization.data(withJSONObject: docs, options: [])
-        return try self.defaultSuccessHandler(response: response, data: data)
-    }
-    
     request(
         url: QuestionEndpoints.question,
         method: .get,
         queryParameters: params,
-        handleSuccess: handleSuccess,
         completionWithDecodableResult: completion
     )
   }
