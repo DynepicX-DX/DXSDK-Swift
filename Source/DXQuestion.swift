@@ -11,14 +11,11 @@ import Foundation
 public struct DXQuestion: Codable {
         
     public let answers: [String]
-    public var __t: String
-    public var _id: String
     public var course: String
     public var text: String
     public var questionType: String
     public var correctAnswerIndex: Int
     public var createdDate: String
-    public var __v: Int
     public var id: String
 
 }
